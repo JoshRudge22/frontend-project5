@@ -33,7 +33,7 @@ function SignUpForm() {
     try {
       const response = await signUp(signUpData);
       setCurrentUser(response.data);
-      history.push(`/profile/${response.data.profile_id}`);
+      history.push(`/profile/${response.data.user.profile_id}`);
     } catch (err) {
       setErrors(err.response?.data);
     }

@@ -24,13 +24,14 @@ function SignInForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const userData = await login(signInData);
-      const profileId = userData.profileId;
-      history.push(`/profile/${profileId}`);
+        const userData = await login(signInData);
+        console.log("Server Response:", userData);
+        const profileId = userData.data.user.profile_id;
+        history.push(`/profile/${profileId}`);
     } catch (err) {
-      setErrors(err.response?.data || {});
+        setErrors(err.response?.data || {});
     }
-  };
+};
 
   return (
     <Container>

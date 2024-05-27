@@ -48,7 +48,7 @@ const NavBar = () => {
       <NavLink className={navStyles.NavLink} to="/">
         <i className="fas fa-stream"></i>Feed
       </NavLink>
-      <NavLink className={navStyles.NavLink} to="/">
+      <NavLink className={navStyles.NavLink} to={`/profile/${currentUser.profile_id}`}>
         <i className="fa-solid fa-user"></i>Profile
       </NavLink>
       <NavLink className={navStyles.NavLink} to="/">
