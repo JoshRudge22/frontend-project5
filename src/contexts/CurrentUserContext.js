@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import { useHistory } from "react-router";
@@ -26,7 +26,18 @@ export const CurrentUserProvider = ({ children }) => {
     handleMount();
   }, []);
 
-  useMemo(() => {
+  const login = async (signInData) => {
+    try {
+      const response = await axios.post("/dj-rest-auth/login/", signInData);
+      setCurrentUser(response.data.user);
+      return response;
+    } catch (error) {
+      console.error("Login failed:", error);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
     axiosReq.interceptors.request.use(
       async (config) => {
         try {
@@ -70,7 +81,7 @@ export const CurrentUserProvider = ({ children }) => {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <SetCurrentUserContext.Provider value={setCurrentUser}>
+      <SetCurrentUserContext.Provider value={{ setCurrentUser, login }}>
         {children}
       </SetCurrentUserContext.Provider>
     </CurrentUserContext.Provider>

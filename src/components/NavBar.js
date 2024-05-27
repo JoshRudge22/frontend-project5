@@ -48,13 +48,13 @@ const NavBar = () => {
       <NavLink className={navStyles.NavLink} to="/">
         <i className="fas fa-stream"></i>Feed
       </NavLink>
-      <NavLink className={navStyles.NavLink} to={`/profile/${currentUser?.profile_id}`}>
+      <NavLink className={navStyles.NavLink} to="/">
         <i className="fa-solid fa-user"></i>Profile
       </NavLink>
-      <NavLink className={navStyles.NavLink} to="/post/create">
+      <NavLink className={navStyles.NavLink} to="/">
         <i className="far fa-plus-square"></i>Add post
       </NavLink>
-      <NavLink className={navStyles.NavLink} to="/liked">
+      <NavLink className={navStyles.NavLink} to="/">
         <i className="fas fa-heart"></i>Liked
       </NavLink>
       <NavLink className={navStyles.NavLink} to="/" onClick={handleSignOut}>
@@ -84,7 +84,7 @@ const NavBar = () => {
           <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
             {loggedInIcons}
             {loggedOutIcons}
-            <NavLink to="/contactus" className={navStyles.NavLink}>
+            <NavLink to="/" className={navStyles.NavLink}>
               <i className="fa-solid fa-file-contract"></i>Contact Us
             </NavLink>
           </Nav>

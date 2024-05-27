@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
 import { useSetCurrentUser } from '../../contexts/CurrentUserContext';
+import axios from 'axios';
 import signStyles from '../../styles/SigningForm.module.css';
+
+const signUp = async (signUpData) => {
+  const response = await axios.post('/dj-rest-auth/registration/', signUpData);
+  return response;
+};
 
 function SignUpForm() {
   const [signUpData, setSignUpData] = useState({
@@ -13,7 +19,7 @@ function SignUpForm() {
   const { username, password1, password2 } = signUpData;
   const [errors, setErrors] = useState({});
   const history = useHistory();
-  const { signUp } = useSetCurrentUser();
+  const setCurrentUser = useSetCurrentUser();
 
   const handleChange = (event) => {
     setSignUpData({
@@ -25,8 +31,9 @@ function SignUpForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await signUp(signUpData);
-      history.push('/');
+      const response = await signUp(signUpData);
+      setCurrentUser(response.data);
+      history.push(`/profile/${response.data.profile_id}`);
     } catch (err) {
       setErrors(err.response?.data);
     }
@@ -45,13 +52,13 @@ function SignUpForm() {
             name="username"
             value={username}
             onChange={handleChange}
-          ></Form.Control>
+          />
         </Form.Group>
         {errors.username && errors.username.map((message, idx) => (
           <Alert key={idx} variant="warning">{message}</Alert>
         ))}
         <Form.Group controlId="password1">
-          <Form.Label>Password</Form.Label>
+          <Form.Label className={signStyles.label}>Password</Form.Label>
           <Form.Control
             className={signStyles.input}
             type="password"
@@ -59,13 +66,13 @@ function SignUpForm() {
             name="password1"
             value={password1}
             onChange={handleChange}
-          ></Form.Control>
+          />
         </Form.Group>
         {errors.password1 && errors.password1.map((message, idx) => (
           <Alert key={idx} variant="warning">{message}</Alert>
         ))}
         <Form.Group controlId="password2">
-          <Form.Label>Confirm Password</Form.Label>
+          <Form.Label className={signStyles.label}>Confirm Password</Form.Label>
           <Form.Control
             className={signStyles.input}
             type="password"
@@ -73,7 +80,7 @@ function SignUpForm() {
             name="password2"
             value={password2}
             onChange={handleChange}
-          ></Form.Control>
+          />
         </Form.Group>
         {errors.password2 && errors.password2.map((message, idx) => (
           <Alert key={idx} variant="warning">{message}</Alert>
@@ -83,7 +90,7 @@ function SignUpForm() {
           <Alert key={idx} variant="warning" className="mt-3">{message}</Alert>
         ))}
       </Form>
-      <p>Already have an account? Click on <Link to="/login">Login</Link></p>
+      <p>Already have an account? Click on <Link to="/signin">Login</Link></p>
     </Container>
   );
 }
