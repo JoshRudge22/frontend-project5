@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
-import Poststyles from '../../styles/CreatingPost.module.css'
+import Poststyles from '../../styles/CreatingPost.module.css';
 import Buttonstyles from '../../styles/Buttons.module.css';
 
-const CreatePost = () => {
+const CreatePost = ({ onPostCreated }) => {
     const [image, setImage] = useState(null);
     const [video, setVideo] = useState(null);
     const [caption, setCaption] = useState('');
@@ -58,13 +58,14 @@ const CreatePost = () => {
         formData.append('caption', caption);
 
         try {
-            const response = await axios.post('/api/posts/', formData, {
+            const response = await axios.post('/posts/', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             });
             console.log('Post created successfully:', response.data);
+            onPostCreated(response.data);
             setImage(null);
             setVideo(null);
             setCaption('');
@@ -87,12 +88,12 @@ const CreatePost = () => {
                 <div>
                     <Form.Label className={Poststyles.label} htmlFor="image">Image:</Form.Label>
                     <input type="file" id="image" accept="image/*" onChange={handleImageChange} />
-                    {imagePreview && <img src={imagePreview} alt="/" />}
+                    {imagePreview && <img src={imagePreview} alt="Preview" />}
                     {errors.image && <p>{errors.image}</p>}
                 </div>
                 <div>
                     <Form.Label className={Poststyles.label} htmlFor="video">Video:</Form.Label>
-                    <input className={Poststyles.label} type="file" id="video" accept="video/*" onChange={handleVideoChange} />
+                    <input type="file" id="video" accept="video/*" onChange={handleVideoChange} />
                     {videoPreview && <video src={videoPreview} controls />}
                     {errors.video && <p>{errors.video}</p>}
                 </div>
@@ -101,7 +102,7 @@ const CreatePost = () => {
                     <textarea id="caption" value={caption} onChange={handleCaptionChange} />
                     {errors.caption && <p>{errors.caption}</p>}
                 </div>
-                <Button className={Buttonstyles} type="submit" disabled={loading}>Create Post</Button>
+                <Button className={Buttonstyles.button} type="submit" disabled={loading}>Create Post</Button>
                 {loading && <p>Loading...</p>}
             </Form>
         </div>

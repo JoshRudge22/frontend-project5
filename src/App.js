@@ -6,6 +6,7 @@ import SignInForm from './pages/auth/SignInForm';
 import SignUpForm from './pages/auth/SignUpForm';
 import ProfilePage from './pages/profile/ProfilePage';
 import CreatePost from './pages/posts/CreatePost';
+import FeedPage from './pages/feed/FeedPage';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <NavBar />
       <Container>
         <Switch>
-          <Route exact path="/" render={() => <h1>Home Page</h1>} />
+          <Route exact path="/" render={() => <FeedPage />} />
           <Route exact path="/signin" render={() => <SignInForm />} />
           <Route exact path="/signup" render={() => <SignUpForm />} />
           <Route exact path="/profiles/:profileId" render={() => <ProfilePage />} />
