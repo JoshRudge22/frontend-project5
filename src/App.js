@@ -5,6 +5,7 @@ import { Container } from 'react-bootstrap';
 import SignInForm from './pages/auth/SignInForm';
 import SignUpForm from './pages/auth/SignUpForm';
 import ProfilePage from './pages/profile/ProfilePage';
+import CreatePost from './pages/posts/CreatePost';
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
           <Route exact path="/" render={() => <h1>Home Page</h1>} />
           <Route exact path="/signin" render={() => <SignInForm />} />
           <Route exact path="/signup" render={() => <SignUpForm />} />
-          <Route exact path="/profile/:profileId" render={() => <ProfilePage />} />
+          <Route exact path="/profiles/:profileId" render={() => <ProfilePage />} />
+          <Route exact path="/posts/create" render={() => <CreatePost />} />
           <Route render={() => <p>Page Not Found!</p>} />
         </Switch>
       </Container>

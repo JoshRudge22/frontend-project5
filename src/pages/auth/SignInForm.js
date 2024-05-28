@@ -27,7 +27,7 @@ function SignInForm() {
         const userData = await login(signInData);
         console.log("Server Response:", userData);
         const profileId = userData.data.user.profile_id;
-        history.push(`/profile/${profileId}`);
+        history.push(`/profiles/${profileId}`);
     } catch (err) {
         setErrors(err.response?.data || {});
     }
