@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { axiosReq } from "../../api/axiosDefaults";
 import { Form, Button } from 'react-bootstrap';
 import Poststyles from '../../styles/CreatingPost.module.css';
 import Buttonstyles from '../../styles/Buttons.module.css';
@@ -47,10 +47,23 @@ const CreatePost = ({ onPostCreated }) => {
         setCaption(e.target.value);
     };
 
+    const validateForm = () => {
+        const newErrors = {};
+        if (!caption.trim()) newErrors.caption = "Caption cannot be empty";
+        if (image && video) newErrors.media = "Please upload either an image or a video, not both";
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setErrors({});
+
+        if (!validateForm()) {
+            setLoading(false);
+            return;
+        }
 
         const formData = new FormData();
         if (image) formData.append('image', image);
@@ -58,12 +71,7 @@ const CreatePost = ({ onPostCreated }) => {
         formData.append('caption', caption);
 
         try {
-            const response = await axios.post('/posts/', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            });
+            const response = await axiosReq.post('/posts/', formData);
             console.log('Post created successfully:', response.data);
             onPostCreated(response.data);
             setImage(null);
@@ -75,6 +83,8 @@ const CreatePost = ({ onPostCreated }) => {
             console.error('There was an error creating the post!', error);
             if (error.response && error.response.data) {
                 setErrors(error.response.data);
+            } else {
+                setErrors({ general: "An error occurred while creating the post" });
             }
         } finally {
             setLoading(false);
@@ -88,20 +98,22 @@ const CreatePost = ({ onPostCreated }) => {
                 <div>
                     <Form.Label className={Poststyles.label} htmlFor="image">Image:</Form.Label>
                     <input type="file" id="image" accept="image/*" onChange={handleImageChange} />
-                    {imagePreview && <img src={imagePreview} alt="Preview" />}
-                    {errors.image && <p>{errors.image}</p>}
+                    {imagePreview && <img src={imagePreview} alt="Preview" className={Poststyles.preview} />}
+                    {errors.image && <p className={Poststyles.error}>{errors.image}</p>}
                 </div>
                 <div>
                     <Form.Label className={Poststyles.label} htmlFor="video">Video:</Form.Label>
                     <input type="file" id="video" accept="video/*" onChange={handleVideoChange} />
-                    {videoPreview && <video src={videoPreview} controls />}
-                    {errors.video && <p>{errors.video}</p>}
+                    {videoPreview && <video src={videoPreview} controls className={Poststyles.preview} />}
+                    {errors.video && <p className={Poststyles.error}>{errors.video}</p>}
                 </div>
                 <div>
                     <Form.Label className={Poststyles.label} htmlFor="caption">Caption:</Form.Label>
-                    <textarea id="caption" value={caption} onChange={handleCaptionChange} />
-                    {errors.caption && <p>{errors.caption}</p>}
+                    <textarea id="caption" value={caption} onChange={handleCaptionChange} className={Poststyles.textarea} />
+                    {errors.caption && <p className={Poststyles.error}>{errors.caption}</p>}
                 </div>
+                {errors.media && <p className={Poststyles.error}>{errors.media}</p>}
+                {errors.general && <p className={Poststyles.error}>{errors.general}</p>}
                 <Button className={Buttonstyles.button} type="submit" disabled={loading}>Create Post</Button>
                 {loading && <p>Loading...</p>}
             </Form>
