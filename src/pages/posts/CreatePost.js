@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { axiosReq } from "../../api/axiosDefaults";
 import { Form, Button } from 'react-bootstrap';
 import Poststyles from '../../styles/CreatingPost.module.css';
 import Buttonstyles from '../../styles/Buttons.module.css';
 
-const CreatePost = ({ onPostCreated }) => {
+const CreatePost = () => {
     const [image, setImage] = useState(null);
     const [video, setVideo] = useState(null);
     const [caption, setCaption] = useState('');
@@ -12,6 +13,7 @@ const CreatePost = ({ onPostCreated }) => {
     const [videoPreview, setVideoPreview] = useState('');
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
+    const history = useHistory();
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -73,12 +75,7 @@ const CreatePost = ({ onPostCreated }) => {
         try {
             const response = await axiosReq.post('/posts/', formData);
             console.log('Post created successfully:', response.data);
-            onPostCreated(response.data);
-            setImage(null);
-            setVideo(null);
-            setCaption('');
-            setImagePreview('');
-            setVideoPreview('');
+            history.push('/');  // Redirect to the feed page
         } catch (error) {
             console.error('There was an error creating the post!', error);
             if (error.response && error.response.data) {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navbar, Container, Nav, Form, Button, ListGroup } from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown, Form, Button, ListGroup } from "react-bootstrap";
 import navStyles from '../styles/NavBar.module.css';
 import btnStyles from '../styles/Buttons.module.css';
 import { NavLink, useHistory } from 'react-router-dom';
@@ -51,9 +51,10 @@ const NavBar = () => {
       <NavLink className={navStyles.NavLink} to={`/profiles/${currentUser.profile_id}`}>
         <i className="fa-solid fa-user"></i>Profile
       </NavLink>
-      <NavLink className={navStyles.NavLink} to="/posts/create">
-        <i className="far fa-plus-square"></i>Add post
-      </NavLink>
+      <NavDropdown title="Posts" id="navbarScrollingDropdown">
+        <NavDropdown.Item onClick={() => history.push("/posts/create")}>Add Post</NavDropdown.Item>
+        <NavDropdown.Item onClick={() => history.push("/posts/list")}>Post List</NavDropdown.Item>
+      </NavDropdown>
       <NavLink className={navStyles.NavLink} to="/">
         <i className="fas fa-heart"></i>Liked
       </NavLink>
@@ -65,6 +66,9 @@ const NavBar = () => {
 
   const loggedOutIcons = !currentUser && (
     <>
+      <NavLink className={navStyles.NavLink} to="/">
+        <i className="fas fa-stream"></i>Feed
+      </NavLink>
       <NavLink className={navStyles.NavLink} to="/signin">
         <i className="fas fa-sign-in-alt"></i>Sign in
       </NavLink>

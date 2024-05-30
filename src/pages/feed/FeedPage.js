@@ -1,46 +1,64 @@
 import React, { useState, useEffect } from 'react';
-import { axiosReq } from '../../api/axiosDefaults';
-import FeedPagestyles from '../../styles/FeedPage.module.css';
+import axios from 'axios';
+import feedStyles from '../../styles/FeedPage.module.css';
 
 const FeedPage = () => {
-    const [posts, setPosts] = useState([]);
+  const [feedData, setFeedData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    const fetchPosts = async () => {
-        try {
-            const response = await axiosReq.get('/posts/');
-            console.log('API response:', response.data);
-
-            if (Array.isArray(response.data.results)) {
-                setPosts(response.data.results);
-            } else {
-                console.error('Error: API did not return an array of results');
-                setPosts([]);
-            }
-        } catch (error) {
-            console.error('Error fetching posts:', error);
-            setPosts([]);
-        }
+  useEffect(() => {
+    const fetchFeedData = async () => {
+      try {
+        const response = await axios.get('/feed/');
+        setFeedData(response.data.results);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
     };
 
-    useEffect(() => {
-        fetchPosts();
-    }, []);
+    fetchFeedData();
+  }, []);
 
-    return (
-        <div className={FeedPagestyles.container}>
-            {posts.length > 0 ? (
-                posts.map(post => (
-                    <div key={post.id} className={FeedPagestyles.post}>
-                        {post.image && <img src={post.image} alt="Post" className={FeedPagestyles.postImage} />}
-                        {post.video && <video src={post.video} controls className={FeedPagestyles.postVideo} />}
-                        <p>{post.caption}</p>
-                    </div>
-                ))
-            ) : (
-                <p>No posts available</p>
-            )}
-        </div>
-    );
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
+  if (!Array.isArray(feedData) || feedData.length === 0) {
+    return <p>No data available</p>;
+  }
+
+  return (
+    <div>
+      <h2 className={feedStyles.feed}>Feed</h2>
+      <ul>
+        {feedData.map(item => {
+          return (
+            <li key={item.id} className={feedStyles.ul}>
+              <h3>{item.caption}</h3>
+              {item.image && (
+                <img src={item.image} alt={item.caption} />
+              )}
+              {item.video && (
+                <video controls>
+                  <source src={item.video} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              )}
+              <p className={feedStyles.context}>{item.caption}</p>
+              <h4 className={feedStyles.username}>{item.owner}</h4>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
 };
 
 export default FeedPage;
