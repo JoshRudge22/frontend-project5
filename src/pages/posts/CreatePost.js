@@ -75,7 +75,7 @@ const CreatePost = () => {
         try {
             const response = await axiosReq.post('/posts/', formData);
             console.log('Post created successfully:', response.data);
-            history.push('/');  // Redirect to the feed page
+            history.push('/');
         } catch (error) {
             console.error('There was an error creating the post!', error);
             if (error.response && error.response.data) {

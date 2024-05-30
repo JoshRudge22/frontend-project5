@@ -6,6 +6,7 @@ import SignInForm from './pages/auth/SignInForm';
 import SignUpForm from './pages/auth/SignUpForm';
 import ProfilePage from './pages/profile/ProfilePage';
 import CreatePost from './pages/posts/CreatePost';
+import PostList from './pages/posts/PostList'
 import FeedPage from './pages/feed/FeedPage';
 
 
@@ -20,6 +21,7 @@ function App() {
           <Route exact path="/signup" render={() => <SignUpForm />} />
           <Route exact path="/profiles/:profileId" render={() => <ProfilePage />} />
           <Route exact path="/posts/create" render={() => <CreatePost />} />
+          <Route exact path="/posts/list" render={() => <PostList />} />
           <Route render={() => <p>Page Not Found!</p>} />
         </Switch>
       </Container>
