@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Comments from '../../components/Comments';
 import feedStyles from '../../styles/FeedPage.module.css';
 
 const FeedPage = () => {
@@ -53,6 +54,7 @@ const FeedPage = () => {
               )}
               <p className={feedStyles.context}>{item.caption}</p>
               <h4 className={feedStyles.username}>{item.owner}</h4>
+              <Comments postId={item.id} />
             </li>
           );
         })}

@@ -9,8 +9,8 @@ const PostList = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await axiosReq.get('/posts');
-                setPosts(response.data);
+                const response = await axiosReq.get('/posts/user');
+                setPosts(response.data.results);  // Access the results array
             } catch (error) {
                 console.error('Error fetching posts:', error);
                 setError('Error fetching posts');
