@@ -111,7 +111,7 @@ const CreatePost = () => {
                 </div>
                 {errors.media && <p className={Poststyles.error}>{errors.media}</p>}
                 {errors.general && <p className={Poststyles.error}>{errors.general}</p>}
-                <Button className={Buttonstyles.button} type="submit" disabled={loading}>Create Post</Button>
+                <Button className={Buttonstyles.save} type="submit" disabled={loading}>Create Post</Button>
                 {loading && <p>Loading...</p>}
             </Form>
         </div>

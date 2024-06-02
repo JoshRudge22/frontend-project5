@@ -31,9 +31,8 @@ const ProfilePage = () => {
         console.log('Fetched profile data:', profileData);
         setFormData({
           bio: profileData.bio,
-          profileImage: null,
           currentProfileImage: profileData.profile_image,
-          profileId: profileData.id
+          profileId: profileData.profile_id
         });
       } catch (error) {
         console.error('Error fetching profile data:', error);
@@ -57,13 +56,14 @@ const ProfilePage = () => {
     const formDataToSend = new FormData();
     formDataToSend.append('bio', formData.bio);
     if (formData.profileImage) {
-      formDataToSend.append('profileImage', formData.profileImage);
+      formDataToSend.append('profile_image', formData.profileImage);
     }
     try {
-      if (!formData.profileId) {
-        throw new Error('Profile ID is null');
-      }
-      await axios.put(`/profiles/${formData.profileId}/`, formDataToSend);
+      await axios.patch(`/profiles/update/${formData.profileId}/`, formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
       alert('Profile updated successfully!');
     } catch (error) {
       console.error('Error updating profile:', error);
