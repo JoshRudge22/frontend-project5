@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { axiosReq } from "../api/axiosDefaults";
 import { Form, Button } from 'react-bootstrap';
 import commentStyles from '../styles/Comments.module.css';
+import buttonStyles from '../styles/Buttons.module.css';
 
 const Comments = ({ postId }) => {
     const [comments, setComments] = useState([]);
@@ -78,21 +79,8 @@ const Comments = ({ postId }) => {
     };
 
     return (
-        <div>
-            <h2>Comments</h2>
+        <div className={commentStyles.container}>
             {error && <p>{error}</p>}
-            <div>
-                <h3>Add a Comment</h3>
-                <Form.Group>
-                    <Form.Control
-                        as="textarea"
-                        rows={3}
-                        value={newComment}
-                        onChange={(e) => setNewComment(e.target.value)}
-                    />
-                </Form.Group>
-                <Button className={commentStyles.submit} onClick={handleAddComment}>Submit</Button>
-            </div>
             <div>
                 <h3>All Comments</h3>
                 {comments.map(comment => (
@@ -100,25 +88,32 @@ const Comments = ({ postId }) => {
                         {editComment === comment.id ? (
                             <>
                                 <Form.Group>
-                                    <Form.Control
-                                        as="textarea"
-                                        rows={3}
-                                        value={editContent}
-                                        onChange={(e) => setEditContent(e.target.value)}
-                                    />
+                                    <Form.Control as="textarea" rows={3} value={editContent} onChange={(e) => setEditContent(e.target.value)}/>
                                 </Form.Group>
-                                <Button onClick={() => handleEditComment(comment.id)}>Save</Button>
-                                <Button onClick={() => setEditComment(null)}>Cancel</Button>
+                                <Button className={buttonStyles.edit} onClick={() => handleEditComment(comment.id)}>Save</Button>
+                                <Button className={buttonStyles.delete} onClick={() => setEditComment(null)}>Cancel</Button>
                             </>
                         ) : (
                             <>
-                                <p>{comment.content}</p>
-                                <Button onClick={() => { setEditComment(comment.id); setEditContent(comment.content); }}>Edit</Button>
-                                <Button onClick={() => handleDeleteComment(comment.id)}>Delete</Button>
+                                 <p>{comment.owner} says: {comment.content}</p>
+                                <Button className={buttonStyles.edit} onClick={() => { setEditComment(comment.id); setEditContent(comment.content); }}>Edit</Button>
+                                <Button className={buttonStyles.delete} onClick={() => handleDeleteComment(comment.id)}>Delete</Button>
                             </>
                         )}
                     </div>
                 ))}
+            </div>
+            <div>
+                <h3>Add a Comment</h3>
+                <Form.Group>
+                    <Form.Control className={commentStyles.delete}
+                        as="textarea"
+                        rows={3}
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                    />
+                </Form.Group>
+                <Button className={buttonStyles.save} onClick={handleAddComment}>Submit</Button>
             </div>
         </div>
     );

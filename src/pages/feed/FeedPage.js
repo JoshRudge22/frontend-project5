@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Comments from '../../components/Comments';
+import Likes from '../../components/Likes';
 import feedStyles from '../../styles/FeedPage.module.css';
 
 const FeedPage = () => {
@@ -37,24 +38,24 @@ const FeedPage = () => {
 
   return (
     <div>
-      <h2 className={feedStyles.feed}>Feed</h2>
-      <ul>
+      <h2 className={feedStyles.title}>Your Feed!</h2>
+      <ul className={feedStyles.ul}>
         {feedData.map(item => {
           return (
-            <li key={item.id} className={feedStyles.ul}>
-              <h3>{item.caption}</h3>
-              {item.image && (
+            <li key={item.id} className={feedStyles.container}>
+                <h4 className={feedStyles.username}>{item.owner}</h4>
+                <h3>{item.caption}</h3>
+                {item.image && (
                 <img src={item.image} alt={item.caption} />
-              )}
-              {item.video && (
+                )}
+                {item.video && (
                 <video controls>
-                  <source src={item.video} type="video/mp4" />
-                  Your browser does not support the video tag.
+                    <source src={item.video} type="video/mp4" />
+                    Your browser does not support the video tag.
                 </video>
-              )}
-              <p className={feedStyles.context}>{item.caption}</p>
-              <h4 className={feedStyles.username}>{item.owner}</h4>
-              <Comments postId={item.id} />
+            )}
+            <Comments postId={item.id} />
+            <Likes postId={item.id} />
             </li>
           );
         })}

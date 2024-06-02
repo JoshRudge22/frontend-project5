@@ -1,0 +1,37 @@
+ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .container {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  
+  .post h3 {
+    margin-top: 10px;
+  }
+  
+  .caption {
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+  
+  .post img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .post video {
+    width: 100%;
+    height: auto;
+  }
+  
+  .username {
+    font-weight: bold;
+    font-size: 40px;
+  }

@@ -1,12 +1,41 @@
-.Button {
-    font-size: 20px;
-    align-self: center;
-    border-radius: 100px;
-    border-color: transparent;
-    padding: 4px 10px; 
-    margin-top: 20px;
-  }
-  
-  .Button:hover {
-    background-color: #0056b3;
-  }
+.edit {
+  background-color: #28a745;
+  font-size: 20px;
+  align-self: center;
+  border-radius: 100px;
+  border-color: transparent;
+  padding: 4px 10px; 
+  margin-top: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.Button:hover {
+  background-color: #e6e9ec; 
+}
+
+.delete {
+  background-color: #dc3545;
+  font-size: 20px;
+  align-self: center;
+  border-radius: 100px;
+  border-color: transparent;
+  padding: 4px 10px; 
+  margin-top: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.save {
+  background-color: #ffc107;
+  font-size: 20px;
+  align-self: center;
+  border-radius: 100px;
+  border-color: transparent;
+  padding: 4px 10px; 
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
