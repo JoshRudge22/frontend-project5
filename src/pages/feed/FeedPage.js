@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import Comments from '../../components/Comments';
 import Likes from '../../components/Likes';
 import feedStyles from '../../styles/FeedPage.module.css';
@@ -43,7 +44,9 @@ const FeedPage = () => {
         {feedData.map(item => {
           return (
             <li key={item.id} className={feedStyles.container}>
-                <h4 className={feedStyles.username}>{item.owner}</h4>
+              <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
+              {item.owner}
+              </Link>
                 <h3>{item.caption}</h3>
                 {item.image && (
                 <img src={item.image} alt={item.caption} />
