@@ -8,6 +8,7 @@ import ProfilePage from './pages/profile/ProfilePage';
 import CreatePost from './pages/posts/CreatePost';
 import PostList from './pages/posts/PostList'
 import FeedPage from './pages/feed/FeedPage';
+import ContactForm from './pages/contact/ContactForm'
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/profiles/:profileId" render={() => <ProfilePage />} />
           <Route exact path="/posts/create" render={() => <CreatePost />} />
           <Route exact path="/posts/list" render={() => <PostList />} />
+          <Route exact path="/contact" render={() => <ContactForm />} />
           <Route render={() => <p>Page Not Found!</p>} />
         </Switch>
       </Container>

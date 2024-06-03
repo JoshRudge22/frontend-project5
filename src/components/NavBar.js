@@ -88,7 +88,7 @@ const NavBar = () => {
           <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
             {loggedInIcons}
             {loggedOutIcons}
-            <NavLink to="/" className={navStyles.NavLink}>
+            <NavLink to="/contact" className={navStyles.NavLink}>
               <i className="fa-solid fa-file-contract"></i>Contact Us
             </NavLink>
           </Nav>
