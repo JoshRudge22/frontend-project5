@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Comments from '../../components/Comments';
+import Likes from '../../components/Likes';
 import feedStyles from '../../styles/FeedPage.module.css';
 
 const FeedPage = () => {
@@ -37,7 +39,7 @@ const FeedPage = () => {
 
   return (
     <div>
-      <h2 className={feedStyles.title}>Discover Feed!</h2>
+      <h2 className={feedStyles.title}>Your Feed!</h2>
       <ul className={feedStyles.ul}>
         {feedData.map(item => {
           return (
@@ -55,6 +57,8 @@ const FeedPage = () => {
                     Your browser does not support the video tag.
                 </video>
             )}
+            <Comments postId={item.id} />
+            <Likes postId={item.id} />
             </li>
           );
         })}

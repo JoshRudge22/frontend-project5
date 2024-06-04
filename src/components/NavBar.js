@@ -45,15 +45,16 @@ const NavBar = () => {
 
   const loggedInIcons = currentUser ? (
     <>
-      <NavLink className={navStyles.NavLink} to="/">
-        <i className="fas fa-stream"></i>Feed
-      </NavLink>
+      <NavDropdown title="Feed" id="navbarScrollingDropdown">
+        <NavDropdown.Item onClick={() => history.push("/")}><i class="fa-solid fa-eye"></i>Discover Feed</NavDropdown.Item>
+        <NavDropdown.Item onClick={() => history.push("/feed")}><i class="fa-solid fa-images"></i>Following Feed</NavDropdown.Item>
+      </NavDropdown>
       <NavLink className={navStyles.NavLink} to={`/profiles/${currentUser.profile_id}`}>
         <i className="fa-solid fa-user"></i>Profile
       </NavLink>
       <NavDropdown title="Posts" id="navbarScrollingDropdown">
-        <NavDropdown.Item onClick={() => history.push("/posts/create")}>Add Post</NavDropdown.Item>
-        <NavDropdown.Item onClick={() => history.push("/posts/list")}>Post List</NavDropdown.Item>
+        <NavDropdown.Item onClick={() => history.push("/posts/create")}><i class="fa-solid fa-plus"></i>Add Post</NavDropdown.Item>
+        <NavDropdown.Item onClick={() => history.push("/posts/list")}><i class="fa-solid fa-list"></i>Post List</NavDropdown.Item>
       </NavDropdown>
       <NavLink className={navStyles.NavLink} to="/">
         <i className="fas fa-heart"></i>Liked

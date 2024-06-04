@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import contactstyles from '../../styles/Contact.module.css';
 import buttonstyles from '../../styles/Buttons.module.css';
 
@@ -11,6 +12,10 @@ const ContactForm = () => {
     number: '',
     message: ''
   });
+
+
+  const history = useHistory();
+
 
   const handleChange = (e) => {
     setFormData({
@@ -31,6 +36,7 @@ const ContactForm = () => {
       if (response.status === 200) {
         alert('Form submitted successfully!');
         setFormData({ name: '', email: '', number: '', message: '' });
+        history.push('/formsubmitted');
       } else {
         const errorMessage = response.data;
         alert('Error: ' + errorMessage);
