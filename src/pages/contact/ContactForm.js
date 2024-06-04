@@ -42,7 +42,7 @@ const ContactForm = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form className={contactstyles.contact} onSubmit={handleSubmit}>
       <Form.Group controlId="formName">
         <Form.Label className={contactstyles.label}>Name:</Form.Label>
         <Form.Control type="text" name="name" value={formData.name} onChange={handleChange} required />

@@ -9,16 +9,22 @@ const FollowButton = ({ userId }) => {
     const fetchFollowers = async () => {
       try {
         const response = await getFollowers();
-        const followers = response.data;
-        const followRelation = followers.find(follow => follow.user === userId);
-        if (followRelation) {
-          setIsFollowing(true);
-          setFollowId(followRelation.id);
+        const followersData = response.data.results; // Access the 'results' property
+        // Ensure that followersData is an array before further processing
+        if (Array.isArray(followersData)) {
+          const followRelation = followersData.find(follow => follow.user.id === userId);
+          if (followRelation) {
+            setIsFollowing(true);
+            setFollowId(followRelation.id);
+          }
+        } else {
+          console.error('Invalid data format for followers:', followersData);
         }
       } catch (error) {
         console.error('Error fetching followers:', error);
       }
     };
+
     fetchFollowers();
   }, [userId]);
 
@@ -28,7 +34,7 @@ const FollowButton = ({ userId }) => {
       setIsFollowing(true);
       setFollowId(response.data.id);
     } catch (error) {
-      console.error('Error following user:', error);
+      console.error('Error following user:', error.response.data);
     }
   };
 
@@ -38,7 +44,7 @@ const FollowButton = ({ userId }) => {
       setIsFollowing(false);
       setFollowId(null);
     } catch (error) {
-      console.error('Error unfollowing user:', error);
+      console.error('Error unfollowing user:', error.response.data);
     }
   };
 

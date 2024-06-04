@@ -13,7 +13,7 @@ export const getFollowers = async () => {
 };
 
 export const followUser = async (userId) => {
-  return await axiosReq.post('followers/', { user_id: userId });
+  return await axiosReq.post('followers/', { user: userId });
 };
 
 export const unfollowUser = async (followId) => {
