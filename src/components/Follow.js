@@ -9,8 +9,7 @@ const FollowButton = ({ userId }) => {
     const fetchFollowers = async () => {
       try {
         const response = await getFollowers();
-        const followersData = response.data.results; // Access the 'results' property
-        // Ensure that followersData is an array before further processing
+        const followersData = response.data.results;
         if (Array.isArray(followersData)) {
           const followRelation = followersData.find(follow => follow.user.id === userId);
           if (followRelation) {

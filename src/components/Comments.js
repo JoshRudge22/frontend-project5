@@ -3,6 +3,7 @@ import { axiosReq } from "../api/axiosDefaults";
 import { Form, Button } from 'react-bootstrap';
 import commentStyles from '../styles/Comments.module.css';
 import buttonStyles from '../styles/Buttons.module.css';
+import { Link } from 'react-router-dom';
 
 const Comments = ({ postId }) => {
     const [comments, setComments] = useState([]);
@@ -95,9 +96,14 @@ const Comments = ({ postId }) => {
                             </>
                         ) : (
                             <>
-                                 <p>{comment.owner} says: {comment.content}</p>
-                                <Button className={buttonStyles.edit} onClick={() => { setEditComment(comment.id); setEditContent(comment.content); }}>Edit</Button>
-                                <Button className={buttonStyles.delete} onClick={() => handleDeleteComment(comment.id)}>Delete</Button>
+                            <p>
+                                <Link to={`/profile/${comment.user}`} className={commentStyles.username}>
+                                    {comment.user}
+                                </Link>{" "}
+                                says: {comment.content}
+                            </p>
+                            <Button className={buttonStyles.edit} onClick={() => { setEditComment(comment.id); setEditContent(comment.content); }}>Edit</Button>
+                            <Button className={buttonStyles.delete} onClick={() => handleDeleteComment(comment.id)}>Delete</Button>
                             </>
                         )}
                     </div>

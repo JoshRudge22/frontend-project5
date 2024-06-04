@@ -57,7 +57,7 @@ const FeedPage = () => {
                     Your browser does not support the video tag.
                 </video>
             )}
-            <Comments postId={item.id} />
+            <Comments postId={item.id} owner={item.owner} />
             <Likes postId={item.id} />
             </li>
           );
