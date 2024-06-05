@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
-import profileStyles from '../../styles/Profile.module.css'
-import buttonStyles from '../../styles/Buttons.module.css'
+import profileStyles from '../../styles/Profile.module.css';
+import buttonStyles from '../../styles/Buttons.module.css';
 
 const getUserProfile = async () => {
   try {
-    const response = await axios.get('/profiles/update/');
+    const response = await axios.get('/profiles/update/<profile_id>');
     return response.data;
   } catch (error) {
     console.error('Error retrieving authenticated user profile:', error);
@@ -18,10 +18,10 @@ const getUserProfile = async () => {
 const ProfilePage = () => {
   const currentUser = useCurrentUser();
   const [formData, setFormData] = useState({
-    bio: "",
+    bio: '',
     profileImage: null,
-    currentProfileImage: "",
-    profileId: null
+    currentProfileImage: '',
+    profileId: null,
   });
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const ProfilePage = () => {
         setFormData({
           bio: profileData.bio,
           currentProfileImage: profileData.profile_image,
-          profileId: profileData.profile_id
+          profileId: profileData.profile_id,
         });
       } catch (error) {
         console.error('Error fetching profile data:', error);
@@ -45,7 +45,7 @@ const ProfilePage = () => {
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'profileImage') {
-      setFormData({ ...formData, profileImage: files[0] });
+      setFormData({ ...formData, profileImage: files[0], currentProfileImage: URL.createObjectURL(files[0]) });
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -54,6 +54,7 @@ const ProfilePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formDataToSend = new FormData();
+    formDataToSend.append('full_name', formData.full_name);
     formDataToSend.append('bio', formData.bio);
     if (formData.profileImage) {
       formDataToSend.append('profile_image', formData.profileImage);
@@ -61,8 +62,8 @@ const ProfilePage = () => {
     try {
       await axios.patch(`/profiles/update/${formData.profileId}/`, formDataToSend, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       });
       alert('Profile updated successfully!');
     } catch (error) {
@@ -71,19 +72,14 @@ const ProfilePage = () => {
     }
   };
 
+  if (!currentUser) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className={profileStyles.container}>
       <h2 className={profileStyles.heading}>Welcome, {currentUser.username}</h2>
       <Form onSubmit={handleSubmit}>
-        <div>
-          <Form.Label htmlFor="bio">Bio:</Form.Label>
-          <textarea
-            id="bio"
-            name="bio"
-            value={formData.bio}
-            onChange={handleInputChange}
-          />
-        </div>
         <div>
           <Form.Label htmlFor="profileImage">Profile Picture:</Form.Label>
           {formData.currentProfileImage && (
@@ -95,14 +91,15 @@ const ProfilePage = () => {
               />
             </div>
           )}
-          <input
-            type="file"
-            id="profileImage"
-            name="profileImage"
-            onChange={handleInputChange}
-          />
+          <input type="file" id="profileImage" name="profileImage" onChange={handleInputChange} />
         </div>
-        <Button className={buttonStyles} type="submit">Update Profile</Button>
+        <div>
+          <Form.Label htmlFor="bio">Bio:</Form.Label>
+          <textarea id="bio" name="bio" value={formData.bio} onChange={handleInputChange} />
+        </div>
+        <Button className={buttonStyles} type="submit">
+          Update Profile
+        </Button>
       </Form>
     </div>
   );
