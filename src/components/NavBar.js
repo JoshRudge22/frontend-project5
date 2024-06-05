@@ -31,36 +31,43 @@ const NavBar = () => {
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get(`/api/users/?search=${searchQuery}`);
-      setSearchResults(response.data);
+      const response = await axios.get(`/profiles/?search=${searchQuery}`);
+      setSearchResults(response.data.results);
     } catch (error) {
       console.error("Error searching users:", error);
     }
   };
 
-  const handleProfileClick = (userId) => {
-    setSearchResults([]);
-    history.push(`/profile/${userId}`);
+  const handleProfileClick = (username) => {
+    history.push(`/profile/${username}`);
   };
 
   const loggedInIcons = currentUser ? (
     <>
       <NavDropdown title="Feed" id="navbarScrollingDropdown">
-        <NavDropdown.Item onClick={() => history.push("/")}><i class="fa-solid fa-eye"></i>Discover Feed</NavDropdown.Item>
-        <NavDropdown.Item onClick={() => history.push("/feed")}><i class="fa-solid fa-images"></i>Following Feed</NavDropdown.Item>
+        <NavDropdown.Item onClick={() => history.push("/")}>
+          <i className="fa-solid fa-eye"></i> Discover Feed
+        </NavDropdown.Item>
+        <NavDropdown.Item onClick={() => history.push("/feed")}>
+          <i className="fa-solid fa-images"></i> Following Feed
+        </NavDropdown.Item>
       </NavDropdown>
       <NavLink className={navStyles.NavLink} to={`/profiles/${currentUser.profile_id}`}>
-        <i className="fa-solid fa-user"></i>Profile
+        <i className="fa-solid fa-user"></i> Profile
       </NavLink>
       <NavDropdown title="Posts" id="navbarScrollingDropdown">
-        <NavDropdown.Item onClick={() => history.push("/posts/create")}><i class="fa-solid fa-plus"></i>Add Post</NavDropdown.Item>
-        <NavDropdown.Item onClick={() => history.push("/posts/list")}><i class="fa-solid fa-list"></i>Post List</NavDropdown.Item>
+        <NavDropdown.Item onClick={() => history.push("/posts/create")}>
+          <i className="fa-solid fa-plus"></i> Add Post
+        </NavDropdown.Item>
+        <NavDropdown.Item onClick={() => history.push("/posts/list")}>
+          <i className="fa-solid fa-list"></i> Post List
+        </NavDropdown.Item>
       </NavDropdown>
       <NavLink className={navStyles.NavLink} to="/">
-        <i className="fas fa-heart"></i>Liked
+        <i className="fas fa-heart"></i> Liked
       </NavLink>
       <NavLink className={navStyles.NavLink} to="/" onClick={handleSignOut}>
-        <i className="fas fa-sign-out-alt"></i>Sign out
+        <i className="fas fa-sign-out-alt"></i> Sign out
       </NavLink>
     </>
   ) : null;
@@ -68,13 +75,13 @@ const NavBar = () => {
   const loggedOutIcons = !currentUser && (
     <>
       <NavLink className={navStyles.NavLink} to="/">
-        <i className="fas fa-stream"></i>Feed
+        <i className="fas fa-stream"></i> Feed
       </NavLink>
       <NavLink className={navStyles.NavLink} to="/signin">
-        <i className="fas fa-sign-in-alt"></i>Sign in
+        <i className="fas fa-sign-in-alt"></i> Sign in
       </NavLink>
       <NavLink to="/signup" className={navStyles.NavLink}>
-        <i className="fas fa-user-plus"></i>Sign up
+        <i className="fas fa-user-plus"></i> Sign up
       </NavLink>
     </>
   );
@@ -82,40 +89,38 @@ const NavBar = () => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand href="/">
-        </Navbar.Brand>
+        <Navbar.Brand href="/"></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
             {loggedInIcons}
             {loggedOutIcons}
             <NavLink to="/contact" className={navStyles.NavLink}>
-              <i className="fa-solid fa-file-contract"></i>Contact Us
+              <i className="fa-solid fa-file-contract"></i> Contact Us
             </NavLink>
           </Nav>
-          <Form className="d-flex" onSubmit={handleSearchSubmit}>
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-              value={searchQuery}
-              onChange={handleSearchInputChange}
-            />
-            <Button className={btnStyles.button} type="submit">Search</Button>
-          </Form>
-          {searchResults.length > 0 && (
-            <ListGroup className={navStyles.searchResults}>
-              {searchResults.map(user => (
-                <ListGroup.Item
-                  key={user.id}
-                  onClick={() => handleProfileClick(user.id)}
-                  className={navStyles.searchResultItem}
-                >
-                  {user.username}
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
+          <Form className="d-flex align-items-center" onSubmit={handleSearchSubmit}>
+          <Form.Control
+            type="search"
+            placeholder="Search"
+            className="me-2"
+            aria-label="Search"
+            value={searchQuery}
+            onChange={handleSearchInputChange}
+          />
+          <Button className={btnStyles.button} type="submit">Search</Button>
+        </Form>
+        {searchResults.length > 0 && (
+          <ListGroup className={navStyles.searchResults}>
+            {searchResults.map(user => (
+              <ListGroup.Item
+                key={user.profile_id}
+                onClick={() => handleProfileClick(user.user)}
+              >
+                {user.user}
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
           )}
         </Navbar.Collapse>
       </Container>
