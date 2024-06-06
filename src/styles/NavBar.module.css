@@ -1,39 +1,45 @@
-.NavLink {
-    color: #0a0a0a; 
-    margin-right: 20px; 
-    padding: 8px 12px; 
-    border-radius: 4px; 
-  }
-  
-  .NavLink:hover {
-    color: #333; 
-    background-color: #f8f9fa; 
-  }
-  
-  .underline {   
-    text-decoration: none;
-  }
-  
-  .underline:hover {
-    text-decoration: underline;
-  }
+.Navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center
+}
 
-  .searchResults {
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    width: 300px;
-    max-height: 400px;
-    overflow-y: auto;
-    z-index: 1000;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .searchResultItem {
-    cursor: pointer;
-  }
-  
-  .searchResultItem:hover {
-    background-color: #f0f0f0;
-  }
+.NavLink {
+  color: #0a0a0a;
+  margin-right: 80px;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.NavLink:hover {
+  color: #333;
+  background-color: #f8f9fa;
+}
+
+.underline {
+  text-decoration: none;
+}
+
+.underline:hover {
+  text-decoration: underline;
+}
+
+.searchResults {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  width: 300px;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 1000;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.searchResultItem {
+  cursor: pointer;
+}
+
+.searchResultItem:hover {
+  background-color: #f0f0f0;
+}

@@ -37,31 +37,31 @@ const FeedPage = () => {
     return <p>No data available</p>;
   }
 
+  const likeTypes = ['Like', 'Love', 'Wow', 'Haha'];
+
   return (
     <div>
       <h2 className={feedStyles.title}>Your Feed!</h2>
       <ul className={feedStyles.ul}>
-        {feedData.map(item => {
-          return (
-            <li key={item.id} className={feedStyles.container}>
-              <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
+        {feedData.map(item => (
+          <li key={item.id} className={feedStyles.container}>
+            <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
               {item.owner}
-              </Link>
-                <h3>{item.caption}</h3>
-                {item.image && (
-                <img src={item.image} alt={item.caption} />
-                )}
-                {item.video && (
-                <video controls>
-                    <source src={item.video} type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
+            </Link>
+            <h3>{item.caption}</h3>
+            {item.image && (
+              <img src={item.image} alt={item.caption} />
+            )}
+            {item.video && (
+              <video controls>
+                <source src={item.video} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             )}
             <Comments postId={item.id} owner={item.owner} />
-            <Likes postId={item.id} />
-            </li>
-          );
-        })}
+            <Likes postId={item.id} likeTypes={likeTypes} /> {/* Pass likeTypes here */}
+          </li>
+        ))}
       </ul>
     </div>
   );
