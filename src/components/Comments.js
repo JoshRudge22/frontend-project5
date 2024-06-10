@@ -83,7 +83,7 @@ const Comments = ({ postId }) => {
         <div className={commentStyles.container}>
             {error && <p>{error}</p>}
             <div>
-                <h3>All Comments</h3>
+                <h3>Comments</h3>
                 {comments.map(comment => (
                     <div key={comment.id}>
                         {editComment === comment.id ? (
@@ -110,7 +110,7 @@ const Comments = ({ postId }) => {
                 ))}
             </div>
             <div>
-                <h3>Add a Comment</h3>
+                <h3 className={commentStyles.add}>Add a Comment</h3>
                 <Form.Group>
                     <Form.Control className={commentStyles.delete}
                         as="textarea"

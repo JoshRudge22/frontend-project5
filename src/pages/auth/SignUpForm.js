@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
-import { useSetCurrentUser } from '../../contexts/CurrentUserContext';
 import axios from 'axios';
 import signStyles from '../../styles/SigningForm.module.css';
 
@@ -19,7 +18,6 @@ function SignUpForm() {
   const { username, password1, password2 } = signUpData;
   const [errors, setErrors] = useState({});
   const history = useHistory();
-  const setCurrentUser = useSetCurrentUser();
 
   const handleChange = (event) => {
     setSignUpData({
@@ -32,10 +30,22 @@ function SignUpForm() {
     event.preventDefault();
     try {
       const response = await signUp(signUpData);
-      setCurrentUser(response.data);
-      history.push(`/profile/${response.data.user.profile_id}`);
+      console.log("Sign Up Response:", response);
+      console.log("Response Data:", response.data);
+  
+      if (response.status === 201) {
+        const profileId = response.data.user.profile_id;
+        if (profileId) {
+          history.push(`/profile/${profileId}`);
+        } else {
+          throw new Error("Profile ID not found in response");
+        }
+      } else {
+        throw new Error("Failed to sign up");
+      }
     } catch (err) {
-      setErrors(err.response?.data);
+      console.log("Error Response:", err.response);
+      setErrors(err.response?.data || { non_field_errors: [err.message] });
     }
   };
 
@@ -52,6 +62,7 @@ function SignUpForm() {
             name="username"
             value={username}
             onChange={handleChange}
+            autoComplete="username"
           />
         </Form.Group>
         {errors.username && errors.username.map((message, idx) => (
@@ -66,6 +77,7 @@ function SignUpForm() {
             name="password1"
             value={password1}
             onChange={handleChange}
+            autoComplete="new-password"
           />
         </Form.Group>
         {errors.password1 && errors.password1.map((message, idx) => (
@@ -80,6 +92,7 @@ function SignUpForm() {
             name="password2"
             value={password2}
             onChange={handleChange}
+            autoComplete="new-password"
           />
         </Form.Group>
         {errors.password2 && errors.password2.map((message, idx) => (
