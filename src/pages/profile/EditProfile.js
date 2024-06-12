@@ -1,8 +1,8 @@
 import React from 'react';
-import ProfileInfo from './ProfileInfo';
+import UpdateProfile from './UpdateProfile'; 
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 
-const ProfilePage = () => {
+const EditProfile = () => {
   const currentUser = useCurrentUser();
 
   if (!currentUser) {
@@ -11,9 +11,9 @@ const ProfilePage = () => {
 
   return (
     <div>
-      <ProfileInfo profileId={currentUser.id} />
+      <UpdateProfile profileId={currentUser.id} />
     </div>
   );
 };
 
-export default ProfilePage;
+export default EditProfile;

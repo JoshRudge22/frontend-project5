@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Navbar, Container, Nav, NavDropdown, Form, Button, ListGroup } from "react-bootstrap";
 import navStyles from '../styles/NavBar.module.css';
 import btnStyles from '../styles/Buttons.module.css';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink, useHistory  } from 'react-router-dom';
 import { useCurrentUser, useSetCurrentUser } from '../contexts/CurrentUserContext';
 import axios from 'axios';
 
@@ -60,6 +60,14 @@ const NavBar = () => {
           <i className="fa-solid fa-list"></i> Post List
         </NavDropdown.Item>
       </NavDropdown>
+      <NavDropdown title="Profile" id="navbarScrollingDropdown" className={navStyles.NavLink}>
+        <NavDropdown.Item onClick={() =>  history.push(`/profiles/${currentUser.profile_id}`)}>
+        <i class="fa-solid fa-user"></i> Profile
+        </NavDropdown.Item>
+        <NavDropdown.Item onClick={() => history.push(`/edit/${currentUser.profile_id}`)}>
+        <i class="fa-solid fa-user-pen"></i> Update Profile
+        </NavDropdown.Item>
+      </NavDropdown>
       <NavDropdown title="Interactions" id="navbarScrollingDropdown" className={navStyles.NavLink}>
         <NavDropdown.Item onClick={() => history.push("/")}>
           <i class="fa-solid fa-comments"></i> Comments
@@ -67,13 +75,15 @@ const NavBar = () => {
         <NavDropdown.Item onClick={() => history.push("/feed")}>
           <i class="fa-solid fa-thumbs-up"></i>Likes
         </NavDropdown.Item>
-      </NavDropdown>
-      <NavLink className={navStyles.NavLink} to={`/profiles/${currentUser.profile_id}`}>
-        <i className="fa-solid fa-user"></i> Profile
-      </NavLink>
-      <NavLink className={navStyles.NavLink} to="/" onClick={handleSignOut}>
+        </NavDropdown>
+        <NavDropdown title="Signing Out" id="navbarScrollingDropdown" className={navStyles.NavLink}>
+        <NavDropdown.Item onClick={handleSignOut}>
         <i className="fas fa-sign-out-alt"></i> Sign out
-      </NavLink>
+        </NavDropdown.Item>
+        <NavDropdown.Item onClick={() => history.push("/contact")}>
+        <i className="fa-solid fa-file-contract"></i> Contact Us
+        </NavDropdown.Item>
+        </NavDropdown>
     </>
   ) : null;
 
@@ -88,6 +98,9 @@ const NavBar = () => {
       <NavLink to="/signup" className={navStyles.NavLink}>
         <i className="fas fa-user-plus"></i> Sign up
       </NavLink>
+      <NavLink to="/contact" className={navStyles.NavLink}>
+        <i className="fa-solid fa-file-contract"></i> Contact Us
+      </NavLink>
     </>
   );
 
@@ -100,9 +113,6 @@ const NavBar = () => {
           <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
             {loggedInIcons}
             {loggedOutIcons}
-            <NavLink to="/contact" className={navStyles.NavLink}>
-              <i className="fa-solid fa-file-contract"></i> Contact Us
-            </NavLink>
           </Nav>
           <Form className="d-flex align-items-center" onSubmit={handleSearchSubmit}>
           <Form.Control

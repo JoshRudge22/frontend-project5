@@ -5,6 +5,7 @@ import { Container } from 'react-bootstrap';
 import SignInForm from './pages/auth/SignInForm';
 import SignUpForm from './pages/auth/SignUpForm';
 import ProfilePage from './pages/profile/ProfilePage';
+import EditProfile from './pages/profile/EditProfile';
 import UsersPage from './pages/profile/UsersPage';
 import CreatePost from './pages/posts/CreatePost';
 import PostList from './pages/posts/PostList'
@@ -26,6 +27,7 @@ function App() {
           <Route exact path="/signin" render={() => <SignInForm />} />
           <Route exact path="/signup" render={() => <SignUpForm />} />
           <Route exact path="/profiles/:profileId" render={() => <ProfilePage />} />
+          <Route exact path="/edit/:profileId" render={() => <EditProfile />} />
           <Route exact path="/profile/:username" render={(props) => <UsersPage {...props} />} />
           <Route exact path="/posts/create" render={() => <CreatePost />} />
           <Route exact path="/posts/list" render={() => <PostList />} />
