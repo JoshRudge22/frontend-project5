@@ -9,6 +9,11 @@ const signUp = async (signUpData) => {
   return response;
 };
 
+const login = async (loginData) => {
+  const response = await axios.post('/dj-rest-auth/login/', loginData);
+  return response;
+};
+
 function SignUpForm() {
   const [signUpData, setSignUpData] = useState({
     username: "",
@@ -29,16 +34,22 @@ function SignUpForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await signUp(signUpData);
-      console.log("Sign Up Response:", response);
-      console.log("Response Data:", response.data);
+      const signUpResponse = await signUp(signUpData);
+      console.log("Sign Up Response:", signUpResponse);
+      console.log("Response Data:", signUpResponse.data);
   
-      if (response.status === 201) {
-        const profileId = response.data.user.profile_id;
-        if (profileId) {
-          history.push(`/profile/${profileId}`);
+      if (signUpResponse.status === 201) {
+        const loginData = {
+          username: signUpData.username,
+          password: signUpData.password1
+        };
+        const loginResponse = await login(loginData);
+        console.log("Login Response:", loginResponse);
+
+        if (loginResponse.status === 200) {
+          history.push(`/feed/`);
         } else {
-          throw new Error("Profile ID not found in response");
+          throw new Error("Failed to log in after registration");
         }
       } else {
         throw new Error("Failed to sign up");
