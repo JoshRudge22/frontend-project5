@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Comments from '../../components/Comments';
-import Likes from '../../components/Likes';
 import feedStyles from '../../styles/FeedPage.module.css';
 
 const FeedPage = () => {
@@ -37,8 +36,6 @@ const FeedPage = () => {
     return <p>No data available</p>;
   }
 
-  const likeTypes = ['Like', 'Love', 'Wow', 'Haha'];
-
   return (
     <div>
       <h2 className={feedStyles.title}>Your Feed!</h2>
@@ -59,7 +56,6 @@ const FeedPage = () => {
               </video>
             )}
             <Comments postId={item.id} owner={item.owner} />
-            <Likes postId={item.id} likeTypes={likeTypes} /> {/* Pass likeTypes here */}
           </li>
         ))}
       </ul>

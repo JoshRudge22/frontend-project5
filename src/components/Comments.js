@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { axiosReq } from "../api/axiosDefaults";
 import { Form, Button } from 'react-bootstrap';
+import LikeButton from '../components/Likes';
 import commentStyles from '../styles/Comments.module.css';
 import buttonStyles from '../styles/Buttons.module.css';
 import { Link } from 'react-router-dom';
@@ -38,9 +39,6 @@ const Comments = ({ postId }) => {
             setError('Post ID is not defined.');
             return;
         }
-
-        console.log("Adding comment to post ID:", postId);
-        console.log("Comment content:", newComment);
 
         try {
             const response = await axiosReq.post(`/posts/${postId}/comments/`, { 
@@ -96,14 +94,15 @@ const Comments = ({ postId }) => {
                             </>
                         ) : (
                             <>
-                            <p>
-                                <Link to={`/profile/${comment.user}`} className={commentStyles.username}>
-                                    {comment.user}
-                                </Link>{" "}
-                                says: {comment.content}
-                            </p>
-                            <Button className={buttonStyles.edit} onClick={() => { setEditComment(comment.id); setEditContent(comment.content); }}>Edit</Button>
-                            <Button className={buttonStyles.delete} onClick={() => handleDeleteComment(comment.id)}>Delete</Button>
+                                <p>
+                                    <Link to={`/profile/${comment.user}`} className={commentStyles.username}>
+                                        {comment.user}
+                                    </Link>{" "}
+                                    says: {comment.content}
+                                </p>
+                                <LikeButton commentId={comment.id} />
+                                <Button className={buttonStyles.edit} onClick={() => { setEditComment(comment.id); setEditContent(comment.content); }}>Edit</Button>
+                                <Button className={buttonStyles.delete} onClick={() => handleDeleteComment(comment.id)}>Delete</Button>
                             </>
                         )}
                     </div>
