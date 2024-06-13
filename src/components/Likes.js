@@ -10,9 +10,9 @@ const LikeButton = ({ postId, commentId }) => {
             try {
                 let response;
                 if (postId) {
-                    response = await axiosReq.get(`/likes/post/${postId}/`);
+                    response = await axiosReq.get(`/likes/posts/${postId}/`);
                 } else if (commentId) {
-                    response = await axiosReq.get(`/likes/comment/${commentId}/`);
+                    response = await axiosReq.get(`/likes/comments/${commentId}/`);
                 }
                 setLikes(response.data);
             } catch (error) {
@@ -26,12 +26,12 @@ const LikeButton = ({ postId, commentId }) => {
     const handleLike = async () => {
         try {
             if (postId) {
-                await axiosRes.post('/likes/',{ post: postId });
-                const response = await axiosReq.get(`/likes/post/${postId}/`);
+                await axiosRes.post('/likes/', { post_id: postId });
+                const response = await axiosReq.get(`/likes/posts/${postId}/`);
                 setLikes(response.data);
             } else if (commentId) {
-                await axiosRes.post('/likes/', { comment: commentId });
-                const response = await axiosReq.get(`/likes/comment/${commentId}/`);
+                await axiosRes.post('/likes/', { comment_id: commentId });
+                const response = await axiosReq.get(`/likes/comments/${commentId}/`);
                 setLikes(response.data);
             }
             setHasLiked(true);

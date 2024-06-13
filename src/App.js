@@ -11,6 +11,7 @@ import UsersPage from './pages/profile/UsersPage';
 import CreatePost from './pages/posts/CreatePost';
 import PostList from './pages/posts/PostList'
 import FeedPage from './pages/feed/FeedPage';
+import CommentsList from './pages/interactions/CommentsList'
 import FollowingFeedPage from './pages/feed/FollowingFeedPage'
 import FollowersList from './pages/follow/FollowersList'
 import FollowingList from './pages/follow/FollowingList'
@@ -29,13 +30,14 @@ function App() {
           <Route exact path="/feed" render={() => <FollowingFeedPage />} />
           <Route exact path="/signin" render={() => <SignInForm />} />
           <Route exact path="/signup" render={() => <SignUpForm />} />
-          <Route exact path="/WelcomePage" render={() => <WelcomePage />} />
+          <Route exact path="/welcomePage" render={() => <WelcomePage />} />
           <Route exact path="/profiles/:profileId" render={() => <ProfilePage />} />
           <Route exact path="/edit/:profileId" render={() => <EditProfile />} />
           <Route exact path="/profile/:username" render={(props) => <UsersPage {...props} />} />
           <Route exact path="/posts/create" render={() => <CreatePost />} />
           <Route exact path="/posts/list" render={() => <PostList />} />
-          <Route exact path="/followersList" render={() => <FollowersList />} />
+          <Route exact path="/commentslist" render={() => <CommentsList />} />
+          <Route exact path="/followerslist" render={() => <FollowersList />} />
           <Route exact path="/followinglist" render={() => <FollowingList />} />
           <Route exact path="/contact" render={() => <ContactForm />} />
           <Route exact path="/submitted" render={() => <FormSubmitted />} />
