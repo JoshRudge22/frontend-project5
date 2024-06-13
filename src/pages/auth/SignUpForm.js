@@ -47,7 +47,7 @@ function SignUpForm() {
         console.log("Login Response:", loginResponse);
 
         if (loginResponse.status === 200) {
-          history.push(`/feed/`);
+          history.push(`/WelcomePage/`);
         } else {
           throw new Error("Failed to log in after registration");
         }
