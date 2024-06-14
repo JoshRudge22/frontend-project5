@@ -62,26 +62,26 @@ const NavBar = () => {
       </NavDropdown>
       <NavDropdown title="Profile" id="navbarScrollingDropdown" className={navStyles.NavLink}>
         <NavDropdown.Item onClick={() =>  history.push(`/profiles/${currentUser.profile_id}`)}>
-        <i class="fa-solid fa-user"></i> Profile
+        <i className="fa-solid fa-user"></i> Profile
         </NavDropdown.Item>
         <NavDropdown.Item onClick={() => history.push(`/edit/${currentUser.profile_id}`)}>
-        <i class="fa-solid fa-user-pen"></i> Update Profile
+        <i className="fa-solid fa-user-pen"></i> Update Profile
         </NavDropdown.Item>
       </NavDropdown>
       <NavDropdown title="Interactions" id="navbarScrollingDropdown" className={navStyles.NavLink}>
         <NavDropdown.Item onClick={() => history.push("/commentslist")}>
-          <i class="fa-solid fa-comments"></i> Comments
+          <i className="fa-solid fa-comments"></i> Comments
         </NavDropdown.Item>
         <NavDropdown.Item onClick={() => history.push("/feed")}>
-          <i class="fa-solid fa-thumbs-up"></i>Likes
+          <i className="fa-solid fa-thumbs-up"></i>Likes
         </NavDropdown.Item>
         </NavDropdown>
         <NavDropdown title="Follow" id="navbarScrollingDropdown" className={navStyles.NavLink}>
-        <NavDropdown.Item onClick={handleSignOut}>
-        <i class="fa-solid fa-user-group"></i> Followers
+        <NavDropdown.Item onClick={() => history.push("/followerslist")}>
+        <i className="fa-solid fa-user-group"></i> Followers
         </NavDropdown.Item>
         <NavDropdown.Item onClick={() => history.push("/contact")}>
-        <i class="fa-solid fa-people-robbery"></i> Following
+        <i className="fa-solid fa-people-robbery"></i> Following
         </NavDropdown.Item>
         </NavDropdown>
         <NavDropdown title="Signing Out" id="navbarScrollingDropdown" className={navStyles.NavLink}>
