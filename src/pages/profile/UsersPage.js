@@ -13,6 +13,7 @@ const UsersPage = () => {
     const fetchProfileData = async () => {
       try {
         const profileResponse = await axios.get(`/profiles/${username}/`);
+        console.log(profileResponse.data);
         setProfileData(profileResponse.data);
         setLoading(false);
       } catch (error) {
@@ -42,7 +43,7 @@ const UsersPage = () => {
       <h2>{profileData.username}'s Profile</h2>
       <p>Bio: {profileData.bio}</p>
       <img src={profileData.profile_image} alt="Profile" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
-      <FollowButton username={username} />
+      <FollowButton username={username} profileId={profileData.id} />
     </div>
   );
 };

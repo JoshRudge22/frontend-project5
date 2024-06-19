@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
-export const FollowButton = ({ username }) => {
+export const FollowButton = ({ profileId,  username }) => {
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
     const checkIfFollowing = async () => {
       try {
+        
         const response = await axios.get(`/followers/${username}/`);
         setIsFollowing(response.data.is_following);
       } catch (error) {
@@ -15,12 +16,13 @@ export const FollowButton = ({ username }) => {
     };
 
     checkIfFollowing();
-  }, [username]);
+  }, [profileId, username]);
 
   const handleFollow = async () => {
     try {
-      const response = await axios.post('/followers/', {
-        following: username,
+      console.log(profileId)
+      const response = await axios.post(`/profiles/${username}/follow/`, {
+        following: profileId,
       });
 
       if (response.status === 201) {
@@ -33,7 +35,7 @@ export const FollowButton = ({ username }) => {
 
   const handleUnfollow = async () => {
     try {
-      const response = await axios.delete(`/unfollow/${username}/`);
+      const response = await axios.delete(`/profiles/${profileId}/unfollow/`);
 
       if (response.status === 204) {
         setIsFollowing(false);
@@ -45,7 +47,7 @@ export const FollowButton = ({ username }) => {
 
   return (
     <>
-      {isFollowing ? (
+      {isFollowing? (
         <button onClick={handleUnfollow}>Unfollow</button>
       ) : (
         <button onClick={handleFollow}>Follow</button>

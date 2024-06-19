@@ -80,7 +80,7 @@ const NavBar = () => {
         <NavDropdown.Item onClick={() => history.push("/followerslist")}>
         <i className="fa-solid fa-user-group"></i> Followers
         </NavDropdown.Item>
-        <NavDropdown.Item onClick={() => history.push("/contact")}>
+        <NavDropdown.Item onClick={() => history.push("/followinglist")}>
         <i className="fa-solid fa-people-robbery"></i> Following
         </NavDropdown.Item>
         </NavDropdown>
