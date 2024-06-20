@@ -1,13 +1,20 @@
 import React from 'react';
-import FollowingList from '../../components/follow/FollowingList';
+import FollowersList from '../../components/follow/FollowersList';
+import { useCurrentUser } from '../../contexts/CurrentUserContext';
 
-const MyFollowingList = ({ username }) => {
+const MyFollowersList = () => {
+  const currentUser = useCurrentUser();
+
+  if (!currentUser) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div>
       <h2>Hello</h2>
-      <FollowingList username={username} />
+      <FollowersList username={currentUser.username} />
     </div>
   );
 };
 
-export default MyFollowingList;
+export default MyFollowersList;
