@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import FollowButton from '../../components/FollowButton';
+import FollowingList from '../follow/FollowingList';
 
 const UsersPage = () => {
   const { username } = useParams();
@@ -44,6 +45,7 @@ const UsersPage = () => {
       <p>Bio: {profileData.bio}</p>
       <img src={profileData.profile_image} alt="Profile" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
       <FollowButton username={username} profileId={profileData.id} />
+      <FollowingList username={username} />
     </div>
   );
 };
