@@ -13,8 +13,8 @@ import PostList from './pages/posts/PostList'
 import FeedPage from './pages/feed/FeedPage';
 import CommentsList from './pages/interactions/CommentsList'
 import FollowingFeedPage from './pages/feed/FollowingFeedPage'
-import FollowersList from './pages/follow/MyFollowersList'
-import FollowingList from './pages/follow/MyFollowingList'
+import MyFollowersList from './pages/follow/MyFollowersList'
+import MyFollowingList from './pages/follow/MyFollowingList'
 import ContactForm from './pages/contact/ContactForm'
 import FormSubmitted from './pages/contact/FormSubmmited';
 
@@ -37,8 +37,8 @@ function App() {
           <Route exact path="/posts/create" render={() => <CreatePost />} />
           <Route exact path="/posts/list" render={() => <PostList />} />
           <Route exact path="/commentslist" render={() => <CommentsList />} />
-          <Route exact path="/followerslist" render={() => <FollowersList />} />
-          <Route exact path="/followinglist" render={() => <FollowingList />} />
+          <Route exact path="/followerslist" render={() => <MyFollowersList />} />
+          <Route exact path="/followinglist" render={() => <MyFollowingList />} />
           <Route exact path="/contact" render={() => <ContactForm />} />
           <Route exact path="/submitted" render={() => <FormSubmitted />} />
           <Route render={() => <p>Page Not Found!</p>} />

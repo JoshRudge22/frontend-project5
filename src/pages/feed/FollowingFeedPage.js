@@ -4,24 +4,26 @@ import { Link } from 'react-router-dom';
 import Comments from '../../components/interactions/Comments';
 import feedStyles from '../../styles/FeedPage.module.css';
 
-const FeedPage = () => {
+const FollowingFeedPage = () => {
   const [feedData, setFeedData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchFeedData = async () => {
+    const fetchFollowingFeed = async () => {
       try {
-        const response = await axios.get('/feed/');
-        setFeedData(response.data.results);
+        const response = await axios.get('/feed/following');
+        console.log("API response for following feed:", response.data);
+        setFeedData(response.data);
         setLoading(false);
       } catch (error) {
+        console.error('Error fetching following feed:', error);
         setError(error.message);
         setLoading(false);
       }
     };
 
-    fetchFeedData();
+    fetchFollowingFeed();
   }, []);
 
   if (loading) {
@@ -33,17 +35,17 @@ const FeedPage = () => {
   }
 
   if (!Array.isArray(feedData) || feedData.length === 0) {
-    return <p>No data available</p>;
+    return <p>No posts available from users you are following</p>;
   }
 
   return (
     <div>
-      <h2 className={feedStyles.title}>Your Feed!</h2>
+      <h2 className={feedStyles.title}>Following Feed!</h2>
       <ul className={feedStyles.ul}>
         {feedData.map(item => (
           <li key={item.id} className={feedStyles.container}>
-            <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
-              {item.owner}
+            <Link to={`/profile/${item.user.username}`} className={feedStyles.username}>
+              {item.user.username}
             </Link>
             <h3>{item.caption}</h3>
             {item.image && (
@@ -55,7 +57,7 @@ const FeedPage = () => {
                 Your browser does not support the video tag.
               </video>
             )}
-            <Comments postId={item.id} owner={item.owner} />
+            <Comments postId={item.id} owner={item.user.username} />
           </li>
         ))}
       </ul>
@@ -63,4 +65,4 @@ const FeedPage = () => {
   );
 };
 
-export default FeedPage;
+export default FollowingFeedPage;
