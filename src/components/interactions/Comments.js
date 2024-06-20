@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { axiosReq } from "../api/axiosDefaults";
+import { axiosReq } from "../../api/axiosDefaults";
 import { Form, Button } from 'react-bootstrap';
-import LikeButton from '../components/Likes';
-import commentStyles from '../styles/Comments.module.css';
-import buttonStyles from '../styles/Buttons.module.css';
+import LikeButton from './Likes';
+import commentStyles from '../../styles/Comments.module.css';
+import buttonStyles from '../../styles/Buttons.module.css';
 import { Link } from 'react-router-dom';
 
 const Comments = ({ postId }) => {

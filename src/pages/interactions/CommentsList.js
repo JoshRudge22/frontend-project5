@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { axiosReq } from '../../api/axiosDefaults';
-import Comments from '../../components/Comments'
+import Comments from '../../components/interactions/Comments'
 
 const CommentsList = () => {
   const [posts, setPosts] = useState([]);

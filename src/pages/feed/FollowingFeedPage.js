@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import Comments from '../../components/Comments';
+import Comments from '../../components/interactions/Comments';
 import feedStyles from '../../styles/FeedPage.module.css';
 
 const FeedPage = () => {

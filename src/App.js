@@ -13,8 +13,8 @@ import PostList from './pages/posts/PostList'
 import FeedPage from './pages/feed/FeedPage';
 import CommentsList from './pages/interactions/CommentsList'
 import FollowingFeedPage from './pages/feed/FollowingFeedPage'
-import FollowersList from './pages/follow/FollowersList'
-import FollowingList from './pages/follow/FollowingList'
+import FollowersList from './pages/follow/MyFollowersList'
+import FollowingList from './pages/follow/MyFollowingList'
 import ContactForm from './pages/contact/ContactForm'
 import FormSubmitted from './pages/contact/FormSubmmited';
 

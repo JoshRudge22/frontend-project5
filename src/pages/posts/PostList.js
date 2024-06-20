@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { axiosReq } from "../../api/axiosDefaults";
-import Comments from '../../components/Comments';
+import Comments from '../../components/interactions/Comments';
 import feedStyles from '../../styles/FeedPage.module.css'
 import buttonStyles from '../../styles/Buttons.module.css'
 

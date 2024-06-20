@@ -1,15 +1,17 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
-export const FollowButton = ({ profileId,  username }) => {
+const FollowButton = ({ profileId, username }) => {
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
     const checkIfFollowing = async () => {
       try {
-        
-        const response = await axios.get(`/followers/${username}/`);
-        setIsFollowing(response.data.is_following);
+        const response = await axios.get(`/following/${username}/`);
+        console.log("API response for following list:", response.data);
+        const { results } = response.data;
+        const followingIds = results.map(follower => follower.following);
+        setIsFollowing(followingIds.includes(profileId));
       } catch (error) {
         console.error(error);
       }
@@ -20,7 +22,6 @@ export const FollowButton = ({ profileId,  username }) => {
 
   const handleFollow = async () => {
     try {
-      console.log(profileId)
       const response = await axios.post(`/profiles/${username}/follow/`, {
         following: profileId,
       });
@@ -46,13 +47,14 @@ export const FollowButton = ({ profileId,  username }) => {
   };
 
   return (
-    <>
-      {isFollowing? (
+    <div>
+      {isFollowing ? (
         <button onClick={handleUnfollow}>Unfollow</button>
       ) : (
         <button onClick={handleFollow}>Follow</button>
       )}
-    </>
+    </div>
   );
 };
+
 export default FollowButton;

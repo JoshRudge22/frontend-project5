@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { axiosReq, axiosRes } from '../api/axiosDefaults';
+import { axiosReq, axiosRes } from '../../api/axiosDefaults';
 
 const LikeButton = ({ postId, commentId }) => {
     const [likes, setLikes] = useState([]);
