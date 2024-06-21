@@ -72,7 +72,7 @@ const NavBar = () => {
         <NavDropdown.Item onClick={() => history.push("/commentslist")}>
           <i className="fa-solid fa-comments"></i> Comments
         </NavDropdown.Item>
-        <NavDropdown.Item onClick={() => history.push("/feed")}>
+        <NavDropdown.Item onClick={() => history.push("/likeslist")}>
           <i className="fa-solid fa-thumbs-up"></i>Likes
         </NavDropdown.Item>
         </NavDropdown>
