@@ -13,11 +13,13 @@ import PostList from './pages/posts/PostList'
 import FeedPage from './pages/feed/FeedPage';
 import CommentsList from './pages/interactions/CommentsList'
 import LikeList from './pages/interactions/LikesList';
+import LikedPost from './pages/interactions/LikedPost';
 import FollowingFeedPage from './pages/feed/FollowingFeedPage'
 import MyFollowersList from './pages/follow/MyFollowersList'
 import MyFollowingList from './pages/follow/MyFollowingList'
 import ContactForm from './pages/contact/ContactForm'
 import FormSubmitted from './pages/contact/FormSubmmited';
+
 
 
 
@@ -40,6 +42,7 @@ function App() {
           <Route exact path="/posts/list" render={() => <PostList />} />
           <Route exact path="/commentslist" render={() => <CommentsList />} />
           <Route exact path="/likeslist" render={() => <LikeList />} />
+          <Route exact path="/users/liked-posts" render={({ match }) => <LikedPost postId={match.params.postId} />} />
           <Route exact path="/followerslist" render={() => <MyFollowersList />} />
           <Route exact path="/followinglist" render={() => <MyFollowingList />} />
           <Route exact path="/contact" render={() => <ContactForm />} />

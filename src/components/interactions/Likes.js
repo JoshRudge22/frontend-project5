@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function Likes({ postId, userId }) {
   const [liked, setLiked] = useState(null);
@@ -53,6 +54,7 @@ function Likes({ postId, userId }) {
       </button>
       <span>{likesCount} {likesCount === 1 ? 'like' : 'likes'}</span>
       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+      <Link to="/users/liked-posts">View liked posts</Link>
     </div>
   );
 }
