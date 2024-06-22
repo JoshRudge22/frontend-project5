@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
 import { useSetCurrentUser } from '../../contexts/CurrentUserContext';
 import signStyles from '../../styles/SigningForm.module.css';
+import buttonStyles from '../../styles/Buttons.module.css'
 
 function SignInForm() {
   const [signInData, setSignInData] = useState({
@@ -34,13 +35,13 @@ function SignInForm() {
 };
 
   return (
-    <Container>
+    <Container className={signStyles.container}>
       <h1 className={signStyles.title}>Sign In Here</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="username">
           <Form.Label className={signStyles.label}>Username</Form.Label>
           <Form.Control
-            className={signStyles.input}
+            className={signStyles.login}
             type="text"
             placeholder="Username"
             name="username"
@@ -54,7 +55,7 @@ function SignInForm() {
         <Form.Group controlId="password">
           <Form.Label className={signStyles.label}>Password</Form.Label>
           <Form.Control
-            className={signStyles.input}
+            className={signStyles.login}
             type="password"
             placeholder="Password"
             name="password"
@@ -65,12 +66,12 @@ function SignInForm() {
         {errors.password && errors.password.map((message, idx) => (
           <Alert key={idx} variant="warning">{message}</Alert>
         ))}
-        <Button type="submit">Sign In</Button>
+        <Button className={buttonStyles.login} type="submit">Sign In</Button>
         {errors.non_field_errors && errors.non_field_errors.map((message, idx) => (
           <Alert key={idx} variant="warning" className="mt-3">{message}</Alert>
         ))}
       </Form>
-      <p>Don't have an account? Click on <Link to="/signup">Sign Up</Link></p>
+      <p className={signStyles.otherlink}>Don't have an account? Click on <Link to="/signup">Sign Up</Link></p>
     </Container>
   );
 }

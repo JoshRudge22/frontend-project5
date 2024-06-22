@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import signStyles from '../../styles/SigningForm.module.css';
+import buttonStyles from '../../styles/Buttons.module.css'
 
 const signUp = async (signUpData) => {
   const response = await axios.post('/dj-rest-auth/registration/', signUpData);
@@ -61,13 +62,13 @@ function SignUpForm() {
   };
 
   return (
-    <Container>
+    <Container className={signStyles.container}>
       <h1 className={signStyles.title}>Sign Up Here</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="username">
           <Form.Label className={signStyles.label}>Username</Form.Label>
           <Form.Control
-            className={signStyles.input}
+            className={signStyles.login}
             type="text"
             placeholder="Username"
             name="username"
@@ -82,7 +83,7 @@ function SignUpForm() {
         <Form.Group controlId="password1">
           <Form.Label className={signStyles.label}>Password</Form.Label>
           <Form.Control
-            className={signStyles.input}
+            className={signStyles.login}
             type="password"
             placeholder="Password"
             name="password1"
@@ -97,7 +98,7 @@ function SignUpForm() {
         <Form.Group controlId="password2">
           <Form.Label className={signStyles.label}>Confirm Password</Form.Label>
           <Form.Control
-            className={signStyles.input}
+            className={signStyles.login}
             type="password"
             placeholder="Confirm Password"
             name="password2"
@@ -109,12 +110,12 @@ function SignUpForm() {
         {errors.password2 && errors.password2.map((message, idx) => (
           <Alert key={idx} variant="warning">{message}</Alert>
         ))}
-        <Button type="submit">Sign Up</Button>
+        <Button className={buttonStyles.login} type="submit">Sign Up</Button>
         {errors.non_field_errors && errors.non_field_errors.map((message, idx) => (
           <Alert key={idx} variant="warning" className="mt-3">{message}</Alert>
         ))}
       </Form>
-      <p>Already have an account? Click on <Link to="/signin">Login</Link></p>
+      <p className={signStyles.otherlink}>Already have an account? Click on <Link to="/signin">Login</Link></p>
     </Container>
   );
 }

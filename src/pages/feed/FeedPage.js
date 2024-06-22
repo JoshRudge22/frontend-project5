@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import LikeButton from '../../components/interactions/Likes';
+import Comments from '../../components/interactions/Comments'
 import feedStyles from '../../styles/FeedPage.module.css';
 
 const FeedPage = () => {
@@ -43,8 +44,8 @@ const FeedPage = () => {
         {feedData.map(item => {
           return (
             <li key={item.id} className={feedStyles.container}>
-              <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
-              {item.owner}
+              <Link to={`/profile/${item.user.username}`} className={feedStyles.username}>
+              {item.user.username}
               </Link>
                 <h3>{item.caption}</h3>
                 {item.image && (
@@ -57,6 +58,7 @@ const FeedPage = () => {
                 </video>
             )}
             <LikeButton postId={item.id} />
+            <Comments postId={item.id} owner={item.user.username}/>
             </li>
           );
         })}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { axiosReq } from "../../api/axiosDefaults";
 import Comments from '../../components/interactions/Comments';
+import LikeButton from '../../components/interactions/Likes';
 import feedStyles from '../../styles/FeedPage.module.css'
 import buttonStyles from '../../styles/Buttons.module.css'
 
@@ -61,7 +62,8 @@ const PostList = () => {
                             </video>
                         )}
                         <p>{post.caption}</p>
-                        <Comments postId={post.id} />
+                        <LikeButton postId={post.id} />
+                        <Comments postId={post.id} owner={post.owner} />
                         <button className={buttonStyles.delete} onClick={() => handleDeletePost(post.id)}>Delete</button>
                     </div>
                 ))
