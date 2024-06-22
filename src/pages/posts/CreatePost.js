@@ -7,10 +7,8 @@ import Buttonstyles from '../../styles/Buttons.module.css';
 
 const CreatePost = () => {
     const [image, setImage] = useState(null);
-    const [video, setVideo] = useState(null);
     const [caption, setCaption] = useState('');
     const [imagePreview, setImagePreview] = useState('');
-    const [videoPreview, setVideoPreview] = useState('');
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const history = useHistory();
@@ -30,21 +28,6 @@ const CreatePost = () => {
         }
     };
 
-    const handleVideoChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setVideo(file);
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setVideoPreview(reader.result);
-            };
-            reader.readAsDataURL(file);
-        } else {
-            setVideo(null);
-            setVideoPreview('');
-        }
-    };
-
     const handleCaptionChange = (e) => {
         setCaption(e.target.value);
     };
@@ -52,7 +35,6 @@ const CreatePost = () => {
     const validateForm = () => {
         const newErrors = {};
         if (!caption.trim()) newErrors.caption = "Caption cannot be empty";
-        if (image && video) newErrors.media = "Please upload either an image or a video, not both";
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -69,7 +51,6 @@ const CreatePost = () => {
 
         const formData = new FormData();
         if (image) formData.append('image', image);
-        if (video) formData.append('video', video);
         formData.append('caption', caption);
 
         try {
@@ -99,17 +80,10 @@ const CreatePost = () => {
                     {errors.image && <p className={Poststyles.error}>{errors.image}</p>}
                 </div>
                 <div>
-                    <Form.Label className={Poststyles.label} htmlFor="video">Video:</Form.Label>
-                    <input type="file" id="video" accept="video/*" onChange={handleVideoChange} />
-                    {videoPreview && <video src={videoPreview} controls className={Poststyles.preview} />}
-                    {errors.video && <p className={Poststyles.error}>{errors.video}</p>}
-                </div>
-                <div>
                     <Form.Label className={Poststyles.label} htmlFor="caption">Caption:</Form.Label>
                     <textarea id="caption" value={caption} onChange={handleCaptionChange} className={Poststyles.textarea} />
                     {errors.caption && <p className={Poststyles.error}>{errors.caption}</p>}
                 </div>
-                {errors.media && <p className={Poststyles.error}>{errors.media}</p>}
                 {errors.general && <p className={Poststyles.error}>{errors.general}</p>}
                 <Button className={Buttonstyles.save} type="submit" disabled={loading}>Create Post</Button>
                 {loading && <p>Loading...</p>}

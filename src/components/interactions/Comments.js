@@ -77,7 +77,7 @@ const Comments = ({ postId }) => {
     };
 
     return (
-        <div className={commentStyles.container}>
+        <div className={commentStyles.commentContainer}>
             {error && <p>{error}</p>}
             <div>
                 <h3>Comments</h3>

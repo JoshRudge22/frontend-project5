@@ -48,15 +48,9 @@ const FollowingFeedPage = () => {
             <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
               {item.owner}
             </Link>
-              <h3>{item.caption}</h3>
-              {item.image && (
+            <h3>{item.caption}</h3>
+            {item.image && (
               <img src={item.image} alt={item.caption} />
-              )}
-              {item.video && (
-              <video controls>
-                <source src={item.video} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
             )}
             <LikeButton postId={item.id} />
             <Comments postId={item.id} owner={item.user.username} />
