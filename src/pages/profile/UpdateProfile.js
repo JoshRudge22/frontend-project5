@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 import profileStyles from '../../styles/Profile.module.css';
 import buttonStyles from '../../styles/Buttons.module.css';
-import { useParams } from 'react-router-dom';
+
 
 const UpdateProfile = () => {
   const { profileId } = useParams();
   const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    location: '',
     bio: '',
     profileImage: '',
     currentProfileImage: '',
@@ -19,6 +23,9 @@ const UpdateProfile = () => {
         const profileData = await getUserProfile(profileId);
         console.log('Fetched profile data:', profileData);
         setFormData({
+          fullName: profileData.full_name,
+          email: profileData.email,
+          location: profileData.location,
           bio: profileData.bio,
           currentProfileImage: profileData.profile_image,
         });
@@ -52,16 +59,19 @@ const UpdateProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formDataToSend = new FormData();
+    formDataToSend.append('full_name', formData.fullName);
+    formDataToSend.append('email', formData.email);
+    formDataToSend.append('location', formData.location);
     formDataToSend.append('bio', formData.bio);
     if (formData.profileImage) {
       formDataToSend.append('profile_image', formData.profileImage);
     }
     try {
-        axios.patch(`/profiles/update/${profileId}/`, formDataToSend, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
+      axios.patch(`/profiles/update/${profileId}/`, formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       alert('Profile updated successfully!');
     } catch (error) {
       console.error('Error updating profile:', error);
@@ -87,8 +97,20 @@ const UpdateProfile = () => {
           <input type="file" id="profileImage" name="profileImage" onChange={handleInputChange} />
         </div>
         <div>
+          <Form.Label htmlFor="fullName">Full Name:</Form.Label>
+          <input type="text" id="fullName" name="fullName" value={formData.fullName} onChange={handleInputChange} />
+        </div>
+        <div>
           <Form.Label htmlFor="bio">Bio:</Form.Label>
           <textarea id="bio" name="bio" value={formData.bio} onChange={handleInputChange} />
+        </div>
+        <div>
+          <Form.Label htmlFor="email">Email:</Form.Label>
+          <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} />
+        </div>
+        <div>
+          <Form.Label htmlFor="location">Location:</Form.Label>
+          <input type="text" id="location" name="location" value={formData.location} onChange={handleInputChange} />
         </div>
         <Button className={buttonStyles} type="submit">
           Update Profile

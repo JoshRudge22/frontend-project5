@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Navbar, Container, Nav, NavDropdown, Form, Button, ListGroup } from "react-bootstrap";
 import navStyles from '../styles/NavBar.module.css';
 import btnStyles from '../styles/Buttons.module.css';
-import { NavLink, useHistory  } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useCurrentUser, useSetCurrentUser } from '../contexts/CurrentUserContext';
 import axios from 'axios';
 
@@ -12,7 +12,7 @@ const NavBar = () => {
   const history = useHistory();
 
   const currentUser = useCurrentUser();
-  const { setCurrentUser } = useSetCurrentUser();
+  const setCurrentUser = useSetCurrentUser();
 
   const handleSignOut = async () => {
     try {
@@ -40,6 +40,7 @@ const NavBar = () => {
 
   const handleProfileClick = (username) => {
     history.push(`/profile/${username}`);
+    setSearchResults([]);
   };
 
   const loggedInIcons = currentUser ? (
@@ -122,29 +123,30 @@ const NavBar = () => {
             {loggedInIcons}
             {loggedOutIcons}
           </Nav>
-          <Form className="d-flex align-items-center" onSubmit={handleSearchSubmit}>
-          <Form.Control
-            type="search"
-            placeholder="Search"
-            className="me-2"
-            aria-label="Search"
-            value={searchQuery}
-            onChange={handleSearchInputChange}
-          />
-          <Button className={btnStyles.button} type="submit">Search</Button>
-        </Form>
-        {searchResults.length > 0 && (
-          <ListGroup className={navStyles.searchResults}>
-            {searchResults.map(user => (
-              <ListGroup.Item
-                key={user.profile_id}
-                onClick={() => handleProfileClick(user.user)}
-              >
-                {user.user}
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
-          )}
+          <Form className="d-flex align-items-center" onSubmit={handleSearchSubmit} style={{ position: 'relative' }}>
+            <Form.Control
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              aria-label="Search"
+              value={searchQuery}
+              onChange={handleSearchInputChange}
+            />
+            <Button className={btnStyles.button} type="submit">Search</Button>
+            {searchResults.length > 0 && (
+              <ListGroup className={navStyles.searchResults}>
+                {searchResults.map(user => (
+                  <ListGroup.Item
+                    key={user.profile_id}
+                    onClick={() => handleProfileClick(user.user)}
+                    action
+                  >
+                    {user.user}
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+            )}
+          </Form>
         </Navbar.Collapse>
       </Container>
     </Navbar>

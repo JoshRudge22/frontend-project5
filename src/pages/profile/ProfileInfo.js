@@ -28,8 +28,10 @@ const ProfileInfo = () => {
     <div className={profileStyles.container}>
       <h2 className={profileStyles.heading}>Welcome, {profileData.user}</h2>
       <p>Full Name: {profileData.full_name}</p>
-      <p>Bio: {profileData.bio}</p>
       <img src={profileData.profile_image} alt="Profile" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
+      <p>Bio: {profileData.bio}</p>
+      <p>Email: {profileData.email}</p>
+      <p>Location: {profileData.location}</p>
     </div>
   );
 };
