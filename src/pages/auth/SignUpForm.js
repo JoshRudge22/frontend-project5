@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
+import { useRedirect } from '../../hooks/useRedirect';
 import axios from 'axios';
 import signStyles from '../../styles/SigningForm.module.css';
 import buttonStyles from '../../styles/Buttons.module.css'
@@ -25,6 +26,8 @@ function SignUpForm() {
   const [errors, setErrors] = useState({});
   const history = useHistory();
 
+  useRedirect('loggedOut');
+  
   const handleChange = (event) => {
     setSignUpData({
       ...signUpData,
