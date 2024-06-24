@@ -93,7 +93,7 @@ const NavBar = () => {
         <i className="fa-solid fa-file-contract"></i> Contact Us
         </NavDropdown.Item>
         <NavDropdown.Item onClick={() => history.push(`/profiles/delete/${currentUser.profile_id}`)}>
-        <i className="fa-solid fa-file-contract"></i> Delete Profile
+        <i class="fa-solid fa-trash"></i> Delete Profile
         </NavDropdown.Item>
         </NavDropdown>
     </>

@@ -1,6 +1,7 @@
 import React from 'react';
 import ProfileInfo from './ProfileInfo';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
+import profileStyles from '../../styles/profilestyles/Profile.module.css';
 
 const ProfilePage = () => {
   const currentUser = useCurrentUser();
@@ -11,7 +12,7 @@ const ProfilePage = () => {
 
   return (
     <div>
-      <ProfileInfo profileId={currentUser.id} />
+      <ProfileInfo profileId={currentUser.id} className={profileStyles}/>
     </div>
   );
 };

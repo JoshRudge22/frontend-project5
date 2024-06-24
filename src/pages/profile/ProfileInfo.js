@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Container } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import profileStyles from '../../styles/Profile.module.css';
+import profileStyles from '../../styles/profilestyles/Profile.module.css';
 
 const ProfileInfo = () => {
   const { profileId } = useParams();
@@ -25,14 +26,14 @@ const ProfileInfo = () => {
   }
 
   return (
-    <div className={profileStyles.container}>
+    <Container className={profileStyles.container}>
       <h2 className={profileStyles.heading}>Welcome, {profileData.user}</h2>
-      <p>Full Name: {profileData.full_name}</p>
-      <img src={profileData.profile_image} alt="Profile" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
-      <p>Bio: {profileData.bio}</p>
-      <p>Email: {profileData.email}</p>
-      <p>Location: {profileData.location}</p>
-    </div>
+      <p><span>Full Name:</span> {profileData.full_name}</p>
+      <img className={profileStyles.image} src={profileData.profile_image} alt="Profile" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
+      <p><span>Bio:</span> {profileData.bio}</p>
+      <p><span>Email:</span> {profileData.email}</p>
+      <p><span>Location:</span> {profileData.location}</p>
+    </Container>
   );
 };
 

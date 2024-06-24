@@ -33,7 +33,7 @@ const CommentsList = () => {
   }
 
   if (!Array.isArray(commentedPosts) || commentedPosts.length === 0) {
-    return <p>No commented posts found</p>;
+    return <p>You've not commented on anyones post. <Link to='/'>Click here</Link> to discover other users posts</p>;
   }
 
   return (

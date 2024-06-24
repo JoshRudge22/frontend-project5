@@ -36,7 +36,7 @@ const FollowingFeedPage = () => {
   }
 
   if (!Array.isArray(feedData) || feedData.length === 0) {
-    return <p>No posts available from users you are following</p>;
+    return <p>No posts have been created from the users you are following</p>;
   }
 
   return (

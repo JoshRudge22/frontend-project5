@@ -33,7 +33,7 @@ const FeedPage = () => {
   }
 
   if (!Array.isArray(feedData) || feedData.length === 0) {
-    return <p>No data available</p>;
+    return <p>No-one has created a post</p>;
   }
 
   return (

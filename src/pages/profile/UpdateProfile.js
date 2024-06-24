@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Form, Button } from 'react-bootstrap';
+import { Container, Form, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import profileStyles from '../../styles/Profile.module.css';
+import profileStyles from '../../styles/profilestyles/Profile.module.css';
 import buttonStyles from '../../styles/Buttons.module.css';
 
 
@@ -80,43 +80,42 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div className={profileStyles.container}>
+    <Container className={profileStyles.container}>
       <h2 className={profileStyles.heading}>Edit Profile</h2>
       <Form onSubmit={handleSubmit}>
         <div>
           <Form.Label htmlFor="profileImage">Profile Picture:</Form.Label>
           {formData.currentProfileImage && (
             <div>
-              <img
+              <img className={profileStyles.image}
                 src={formData.currentProfileImage}
                 alt="Profile"
-                style={{ width: '100px', height: '100px', objectFit: 'cover' }}
               />
             </div>
           )}
           <input type="file" id="profileImage" name="profileImage" onChange={handleInputChange} />
         </div>
         <div>
-          <Form.Label htmlFor="fullName">Full Name:</Form.Label>
-          <input type="text" id="fullName" name="fullName" value={formData.fullName} onChange={handleInputChange} />
+          <Form.Label className={profileStyles.label} htmlFor="fullName">Full Name:</Form.Label>
+          <input className={profileStyles.input} type="text" id="fullName" name="fullName" value={formData.fullName} onChange={handleInputChange} />
         </div>
         <div>
-          <Form.Label htmlFor="bio">Bio:</Form.Label>
-          <textarea id="bio" name="bio" value={formData.bio} onChange={handleInputChange} />
+          <Form.Label className={profileStyles.label} htmlFor="bio">Bio:</Form.Label>
+          <textarea  className={profileStyles.textarea} id="bio" name="bio" value={formData.bio} onChange={handleInputChange} />
         </div>
         <div>
-          <Form.Label htmlFor="email">Email:</Form.Label>
-          <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} />
+          <Form.Label className={profileStyles.label} htmlFor="email">Email:</Form.Label>
+          <input className={profileStyles.input} type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} />
         </div>
         <div>
-          <Form.Label htmlFor="location">Location:</Form.Label>
-          <input type="text" id="location" name="location" value={formData.location} onChange={handleInputChange} />
+          <Form.Label className={profileStyles.label} htmlFor="location">Location:</Form.Label>
+          <input className={profileStyles.input} type="text" id="location" name="location" value={formData.location} onChange={handleInputChange} />
         </div>
         <Button className={buttonStyles} type="submit">
           Update Profile
         </Button>
       </Form>
-    </div>
+    </Container>
   );
 };
 

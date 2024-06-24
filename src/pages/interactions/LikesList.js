@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function LikeList() {
   const [likedPosts, setLikedPosts] = useState([]);
@@ -29,9 +30,12 @@ function LikeList() {
     return <div>Error: {error}</div>;
   }
 
+  if (!Array.isArray(likedPosts) || likedPosts.length === 0) {
+    return <p>You haven't liked any posts yet. <Link to='/'>Click here</Link> to discover other users posts</p>;
+  }
+
   return (
     <div>
-      <h2>Likes:</h2>
       <ul>
         {likedPosts.map((post) => (
           <li key={post.id}>

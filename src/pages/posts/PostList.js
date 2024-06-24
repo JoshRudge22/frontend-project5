@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { axiosReq } from "../../api/axiosDefaults";
+import { Link } from 'react-router-dom';
 import Comments from '../../components/interactions/Comments';
 import LikeButton from '../../components/interactions/Likes';
 import feedStyles from '../../styles/FeedPage.module.css'
@@ -68,7 +69,7 @@ const PostList = () => {
                     </div>
                 ))
             ) : (
-                <p>No posts found.</p>
+                <p>No posts have been created. <Link to='/posts/create'>Click Here</Link> to create one.</p>
             )}
         </div>
     );
