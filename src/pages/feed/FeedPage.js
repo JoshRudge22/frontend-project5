@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import feedStyles from '../../styles/FeedPage.module.css';
+import Comments from '../../components/interactions/Comments';
+import LikeButton from '../../components/interactions/Likes';
+import feedStyles from '../../styles/feedstyles/FeedPage.module.css';
 
 
 const FeedPage = () => {
@@ -40,19 +42,19 @@ const FeedPage = () => {
     <div>
       <h2 className={feedStyles.title}>Discover Feed!</h2>
       <ul className={feedStyles.ul}>
-        {feedData.map(item => {
-          return (
-            <li key={item.id} className={feedStyles.container}>
-              <Link to={`/profile/${item.user.username}`} className={feedStyles.username}>
-                {item.user.username}
-              </Link>
-              <h3>{item.caption}</h3>
-              {item.image && (
-                <img src={item.image} alt={item.caption} />
-              )}
-            </li>
-          );
-        })}
+        {feedData.map(item => (
+          <li key={item.id}>
+            <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
+              {item.owner}
+            </Link>
+            <h3>{item.caption}</h3>
+            {item.image && (
+              <img className={feedStyles.img} src={item.image} alt={item.caption} />
+            )}
+            <LikeButton postId={item.id} />
+            <Comments postId={item.id} owner={item.user.username} />
+          </li>
+        ))}
       </ul>
     </div>
   );

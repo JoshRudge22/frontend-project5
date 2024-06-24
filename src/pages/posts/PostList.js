@@ -3,8 +3,7 @@ import { axiosReq } from "../../api/axiosDefaults";
 import { Link } from 'react-router-dom';
 import Comments from '../../components/interactions/Comments';
 import LikeButton from '../../components/interactions/Likes';
-import feedStyles from '../../styles/FeedPage.module.css'
-import buttonStyles from '../../styles/Buttons.module.css'
+import buttonStyles from '../../styles/Buttons.module.css';
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
@@ -54,7 +53,7 @@ const PostList = () => {
             <h1>Your Posts</h1>
             {posts.length > 0 ? (
                 posts.map(post => (
-                    <div className={feedStyles.container} key={post.id}>
+                    <div key={post.id}>
                         {post.image && <img src={post.image} alt="Post" />}
                         {post.video && (
                             <video controls style={{ maxWidth: '100%' }}>

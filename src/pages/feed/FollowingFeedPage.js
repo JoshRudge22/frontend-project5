@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Comments from '../../components/interactions/Comments';
 import LikeButton from '../../components/interactions/Likes';
-import feedStyles from '../../styles/FeedPage.module.css';
+import feedStyles from '../../styles/feedstyles/FollowingFeedPage.module.css';
 
 const FollowingFeedPage = () => {
   const [feedData, setFeedData] = useState([]);
@@ -36,7 +36,7 @@ const FollowingFeedPage = () => {
   }
 
   if (!Array.isArray(feedData) || feedData.length === 0) {
-    return <p>No posts have been created from the users you are following</p>;
+    return <p>No posts have been created from the users you are following. <Link to='/'>Click Here</Link> to discover users you may like</p>;
   }
 
   return (

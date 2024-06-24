@@ -21,8 +21,8 @@ ul {
     font-size: 20px;
   }
   
-  .post img {
-    max-width: 100%;
+  .img {
+    width: 300px;
     height: auto;
   }
   
