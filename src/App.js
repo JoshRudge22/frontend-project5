@@ -7,6 +7,7 @@ import SignUpForm from './pages/auth/SignUpForm';
 import WelcomePage from './pages/auth/WelcomePage';
 import ProfilePage from './pages/profile/ProfilePage';
 import EditProfile from './pages/profile/EditProfile';
+import DeleteProfile from './pages/profile/DeleteProfile';
 import UsersPage from './pages/profile/UsersPage';
 import CreatePost from './pages/posts/CreatePost';
 import PostList from './pages/posts/PostList'
@@ -38,6 +39,7 @@ function App() {
           <Route exact path="/profiles/:profileId" render={() => <ProfilePage />} />
           <Route exact path="/edit/:profileId" render={() => <EditProfile />} />
           <Route exact path="/profile/:username" render={(props) => <UsersPage {...props} />} />
+          <Route exact path="/profiles/delete/:profileId" render={() => <DeleteProfile />} />
           <Route exact path="/posts/create" render={() => <CreatePost />} />
           <Route exact path="/posts/list" render={() => <PostList />} />
           <Route exact path="/commentslist" render={() => <CommentsList />} />

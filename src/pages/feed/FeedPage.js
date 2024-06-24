@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import LikeButton from '../../components/interactions/Likes';
-import Comments from '../../components/interactions/Comments'
 import feedStyles from '../../styles/FeedPage.module.css';
-import likesStyles from '../../styles/Likes.module.css'
+
 
 const FeedPage = () => {
   const [feedData, setFeedData] = useState([]);
@@ -52,8 +50,6 @@ const FeedPage = () => {
               {item.image && (
                 <img src={item.image} alt={item.caption} />
               )}
-              <LikeButton className={likesStyles.likes} postId={item.id} />
-              <Comments postId={item.id} owner={item.user.username}/>
             </li>
           );
         })}

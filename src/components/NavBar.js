@@ -12,7 +12,7 @@ const NavBar = () => {
   const history = useHistory();
 
   const currentUser = useCurrentUser();
-  const setCurrentUser = useSetCurrentUser();
+  const { setCurrentUser } = useSetCurrentUser();
 
   const handleSignOut = async () => {
     try {
@@ -91,6 +91,9 @@ const NavBar = () => {
         </NavDropdown.Item>
         <NavDropdown.Item onClick={() => history.push("/contact")}>
         <i className="fa-solid fa-file-contract"></i> Contact Us
+        </NavDropdown.Item>
+        <NavDropdown.Item onClick={() => history.push(`/profiles/delete/${currentUser.profile_id}`)}>
+        <i className="fa-solid fa-file-contract"></i> Delete Profile
         </NavDropdown.Item>
         </NavDropdown>
     </>

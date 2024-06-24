@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const LikedPost = () => {
   const [likedPosts, setLikedPosts] = useState([]);
@@ -48,7 +49,9 @@ const LikedPost = () => {
             <ul>
               {likedBy[post.id] && likedBy[post.id].length > 0 ? (
                 likedBy[post.id].map((username) => (
-                  <li key={username}>{username}</li>
+                  <li key={username}>
+                    <Link to={`/profile/${username}`}>{username}</Link>
+                  </li>
                 ))
               ) : (
                 <li>No likes yet</li>

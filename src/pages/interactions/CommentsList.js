@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Comments from '../../components/interactions/Comments';
 
 const CommentsList = () => {
   const [commentedPosts, setCommentedPosts] = useState([]);
@@ -48,7 +49,7 @@ const CommentsList = () => {
               </Link>
             </p>
             <img src={post.image} alt={post.caption} />
-            <p>At: {post.created_at}</p>
+            <Comments postId={post.id} owner={post.owner} />
           </li>
         ))}
       </ul>
