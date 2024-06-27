@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { axiosReq } from "../../api/axiosDefaults";
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Container } from 'react-bootstrap';
 import commentStyles from '../../styles/Comments.module.css';
 import buttonStyles from '../../styles/Buttons.module.css';
 import { Link } from 'react-router-dom';
@@ -77,7 +77,7 @@ const Comments = ({ postId }) => {
     };
 
     return (
-        <div className={commentStyles.commentContainer}>
+        <Container>
             {error && <p>{error}</p>}
             <div>
                 <h3>Comments</h3>
@@ -118,7 +118,7 @@ const Comments = ({ postId }) => {
                 </Form.Group>
                 <Button className={buttonStyles.save} onClick={handleAddComment}>Submit</Button>
             </div>
-        </div>
+        </Container>
     );
 };
 

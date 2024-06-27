@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Form, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import profileStyles from '../../styles/profilestyles/Profile.module.css';
-import buttonStyles from '../../styles/Buttons.module.css';
+import profileStyles from '../../../styles/Profile.module.css';
+import buttonStyles from '../../../styles/Buttons.module.css';
 
 
 const UpdateProfile = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
-import { useCurrentUser } from '../../contexts/CurrentUserContext';
+import { useCurrentUser } from '../../../contexts/CurrentUserContext';
 import { useHistory } from 'react-router-dom';
 
 const DeleteProfile = () => {

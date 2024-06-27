@@ -5,10 +5,10 @@ import { Container } from 'react-bootstrap';
 import SignInForm from './pages/auth/SignInForm';
 import SignUpForm from './pages/auth/SignUpForm';
 import WelcomePage from './pages/auth/WelcomePage';
-import ProfilePage from './pages/profile/ProfilePage';
-import EditProfile from './pages/profile/EditProfile';
-import DeleteProfile from './pages/profile/DeleteProfile';
-import UsersPage from './pages/profile/UsersPage';
+import ProfilePage from './pages/profile/info/ProfilePage';
+import EditProfile from './pages/profile/update/EditProfile';
+import DeleteProfile from './pages/profile/other/DeleteProfile';
+import UsersPage from './pages/profile/other/UsersPage';
 import CreatePost from './pages/posts/CreatePost';
 import PostList from './pages/posts/PostList'
 import FeedPage from './pages/feed/FeedPage';

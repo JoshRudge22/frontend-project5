@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import feedStyles from '../../styles/FeedPage.module.css';
 
 const LikedPost = () => {
   const [likedPosts, setLikedPosts] = useState([]);
@@ -44,7 +45,8 @@ const LikedPost = () => {
       <ul>
         {likedPosts.map((post) => (
           <li key={post.id}>
-            <img src={post.image} alt={`Post ${post.id}`} />
+            <div className={feedStyles.post}>
+            <img className={feedStyles.img} src={post.image} alt={`Post ${post.id}`} />
             <h4>Liked By:</h4>
             <ul>
               {likedBy[post.id] && likedBy[post.id].length > 0 ? (
@@ -57,6 +59,7 @@ const LikedPost = () => {
                 <li>No likes yet</li>
               )}
             </ul>
+            </div>
           </li>
         ))}
       </ul>

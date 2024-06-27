@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { axiosReq } from "../../api/axiosDefaults";
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Container } from 'react-bootstrap';
 import Poststyles from '../../styles/CreatingPost.module.css';
 import Buttonstyles from '../../styles/Buttons.module.css';
 
@@ -70,7 +70,7 @@ const CreatePost = () => {
     };
 
     return (
-        <div className={Poststyles.container}>
+        <Container className={Poststyles.container}>
             <h1 className={Poststyles.title}>Create Post</h1>
             <Form className={Poststyles.form} onSubmit={handleSubmit}>
                 <div>
@@ -88,7 +88,7 @@ const CreatePost = () => {
                 <Button className={Buttonstyles.save} type="submit" disabled={loading}>Create Post</Button>
                 {loading && <p>Loading...</p>}
             </Form>
-        </div>
+        </Container>
     );
 };
 

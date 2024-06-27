@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import FollowButton from '../../components/follow/FollowButton';
-import FollowingList from '../../components/follow/FollowingList';
-import FollowersList from '../../components/follow/FollowersList';
+import FollowButton from '../../../components/follow/FollowButton';
+import FollowingList from '../../../components/follow/FollowingList';
+import FollowersList from '../../../components/follow/FollowersList';
 
 const UsersPage = () => {
   const { username } = useParams();

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
-import { useRedirect } from '../../hooks/useRedirect';
 import { useSetCurrentUser } from '../../contexts/CurrentUserContext';
 import signStyles from '../../styles/SigningForm.module.css';
 import buttonStyles from '../../styles/Buttons.module.css'
@@ -15,8 +14,6 @@ function SignInForm() {
   const [errors, setErrors] = useState({});
   const history = useHistory();
   const { login } = useSetCurrentUser();
-
-  useRedirect('loggedOut');
 
   const handleChange = (event) => {
     setSignInData({

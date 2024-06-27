@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { axiosReq } from "../../api/axiosDefaults";
 import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 import Comments from '../../components/interactions/Comments';
 import LikeButton from '../../components/interactions/Likes';
+import feedStyles from '../../styles/FeedPage.module.css';
 import buttonStyles from '../../styles/Buttons.module.css';
 
 const PostList = () => {
@@ -53,18 +55,16 @@ const PostList = () => {
             <h1>Your Posts</h1>
             {posts.length > 0 ? (
                 posts.map(post => (
-                    <div key={post.id}>
-                        {post.image && <img src={post.image} alt="Post" />}
-                        {post.video && (
-                            <video controls style={{ maxWidth: '100%' }}>
-                                <source src={post.video} type="video/mp4" />
-                                Your browser does not support the video tag.
-                            </video>
-                        )}
-                        <p>{post.caption}</p>
-                        <LikeButton postId={post.id} />
-                        <Comments postId={post.id} owner={post.owner} />
-                        <button className={buttonStyles.delete} onClick={() => handleDeletePost(post.id)}>Delete</button>
+                    <div key={post.id} className={feedStyles.container}>
+                        <div className={feedStyles.post}>
+                            {post.image && <img className={feedStyles.img} src={post.image} alt="Post" />}
+                            <p>{post.caption}</p>
+                            <div className={feedStyles.interactions}>
+                                <LikeButton postId={post.id} />
+                                <Comments postId={post.id} owner={post.owner} />
+                                <Button className={buttonStyles.delete} onClick={() => handleDeletePost(post.id)}>Delete</Button>
+                            </div>
+                        </div>
                     </div>
                 ))
             ) : (

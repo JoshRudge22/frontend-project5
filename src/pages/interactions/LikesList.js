@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import likeStyles from '../../styles/Likes.module.css';
 
 function LikeList() {
   const [likedPosts, setLikedPosts] = useState([]);
@@ -39,8 +40,9 @@ function LikeList() {
       <ul>
         {likedPosts.map((post) => (
           <li key={post.id}>
-            <p>{post.caption}</p>
-            <img src={post.image} alt={post.caption} />
+            <h2>{post.caption}</h2>
+            <p>Posted by:<Link to={`/profile/${post.owner}`}>{post.owner}</Link></p>
+            <img className={likeStyles.img} src={post.image} alt={post.caption} />
           </li>
         ))}
       </ul>

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import { useHistory } from "react-router";
@@ -38,7 +38,7 @@ export const CurrentUserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    axiosReq.interceptors.request.use(
+    const requestInterceptor = axiosReq.interceptors.request.use(
       async (config) => {
         try {
           await axios.post("/dj-rest-auth/token/refresh/");
@@ -58,12 +58,13 @@ export const CurrentUserProvider = ({ children }) => {
       }
     );
 
-    axiosRes.interceptors.response.use(
+    const responseInterceptor = axiosRes.interceptors.response.use(
       (response) => response,
       async (err) => {
         if (err.response?.status === 401) {
           try {
             await axios.post("/dj-rest-auth/token/refresh/");
+            return axios(err.config);
           } catch (err) {
             setCurrentUser((prevCurrentUser) => {
               if (prevCurrentUser) {
@@ -72,15 +73,25 @@ export const CurrentUserProvider = ({ children }) => {
               return null;
             });
           }
-          return axios(err.config);
         }
         return Promise.reject(err);
       }
     );
+
+    return () => {
+      axiosReq.interceptors.request.eject(requestInterceptor);
+      axiosRes.interceptors.response.eject(responseInterceptor);
+    };
   }, [history]);
 
+  const memoizedValue = useMemo(() => ({
+    currentUser,
+    setCurrentUser,
+    login,
+  }), [currentUser]);
+
   return (
-    <CurrentUserContext.Provider value={currentUser}>
+    <CurrentUserContext.Provider value={memoizedValue.currentUser}>
       <SetCurrentUserContext.Provider value={{ setCurrentUser, login }}>
         {children}
       </SetCurrentUserContext.Provider>

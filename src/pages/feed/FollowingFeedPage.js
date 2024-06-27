@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Comments from '../../components/interactions/Comments';
 import LikeButton from '../../components/interactions/Likes';
-import feedStyles from '../../styles/feedstyles/FollowingFeedPage.module.css';
+import feedStyles from '../../styles/FeedPage.module.css';
 
 const FollowingFeedPage = () => {
   const [feedData, setFeedData] = useState([]);
@@ -45,15 +45,19 @@ const FollowingFeedPage = () => {
       <ul className={feedStyles.ul}>
         {feedData.map(item => (
           <li key={item.id} className={feedStyles.container}>
-            <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
-              {item.owner}
-            </Link>
-            <h3>{item.caption}</h3>
-            {item.image && (
-              <img src={item.image} alt={item.caption} />
-            )}
-            <LikeButton postId={item.id} />
-            <Comments postId={item.id} owner={item.user.username} />
+            <div className={feedStyles.post}>
+              <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
+                {item.owner}
+              </Link>
+              <h3>{item.caption}</h3>
+              {item.image && (
+                <img className={feedStyles.img} src={item.image} alt={item.caption} />
+              )}
+              <div className={feedStyles.interactions}>
+                <LikeButton postId={item.id} />
+                <Comments postId={item.id} owner={item.user.username} />
+              </div>
+            </div>
           </li>
         ))}
       </ul>

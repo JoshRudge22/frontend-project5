@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
-import { useRedirect } from '../../hooks/useRedirect';
 import axios from 'axios';
+import { useSetCurrentUser } from '../../contexts/CurrentUserContext';
 import signStyles from '../../styles/SigningForm.module.css';
 import buttonStyles from '../../styles/Buttons.module.css'
 
@@ -25,8 +25,8 @@ function SignUpForm() {
   const { username, password1, password2 } = signUpData;
   const [errors, setErrors] = useState({});
   const history = useHistory();
+  const { setCurrentUser } = useSetCurrentUser();
 
-  useRedirect('loggedOut');
   
   const handleChange = (event) => {
     setSignUpData({
@@ -51,6 +51,7 @@ function SignUpForm() {
         console.log("Login Response:", loginResponse);
 
         if (loginResponse.status === 200) {
+          setCurrentUser(loginResponse.data.user);
           history.push(`/WelcomePage/`);
         } else {
           throw new Error("Failed to log in after registration");
