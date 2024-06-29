@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import followStyles from '../../styles/Follow.module.css';
 
 const FollowingList = ({ username }) => {
   const [followingList, setFollowingList] = useState([]);
@@ -34,10 +35,10 @@ const FollowingList = ({ username }) => {
 
   return (
     <div>
-      <h2>{username} is following</h2>
-      <ul>
+      <h2 className={followStyles.title}>{username} Is Following:</h2>
+      <ul className={followStyles.list}>
         {followingList.map(following => (
-          <li key={following.id}>
+          <li className={followStyles.follow} key={following.id}>
             <Link to={`/profile/${following.following_username}`}>
               {following.following_username}
             </Link>

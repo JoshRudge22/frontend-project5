@@ -22,37 +22,24 @@ const FollowButton = ({ profileId, username }) => {
 
   const handleFollow = async () => {
     try {
-      const response = await axios.post(`/profiles/${username}/follow/`, {
-        following: profileId,
-      });
-
+      const response = await axios.post(`/profiles/${username}/follow/`);
       if (response.status === 201) {
         setIsFollowing(true);
+      } else {
+        console.log(response.data.message);
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleUnfollow = async () => {
-    try {
-      const response = await axios.delete(`/profiles/${profileId}/unfollow/`);
-
-      if (response.status === 204) {
-        setIsFollowing(false);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  if (isFollowing) {
+    return null;
+  }
 
   return (
     <div>
-      {isFollowing ? (
-        <button onClick={handleUnfollow}>Unfollow</button>
-      ) : (
-        <button onClick={handleFollow}>Follow</button>
-      )}
+      <button onClick={handleFollow}>Follow</button>
     </div>
   );
 };

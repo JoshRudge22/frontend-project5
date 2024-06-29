@@ -11,7 +11,7 @@ const CommentsList = () => {
   useEffect(() => {
     const fetchCommentedPosts = async () => {
       try {
-        const response = await axios.get(`/comments/user/4`); /*Need to find the correct id*/
+        const response = await axios.get(`/comments/user/1`);
         setCommentedPosts(response.data);
         setLoading(false);
       } catch (error) {

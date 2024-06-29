@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import followStyles from '../../styles/Follow.module.css'
 
 const FollowersList = ({ username }) => {
   const [followersList, setFollowersList] = useState([]);
@@ -33,11 +34,11 @@ const FollowersList = ({ username }) => {
   }
 
   return (
-    <div>
-      <h2>Followers of {username}</h2>
-      <ul>
+    <div className={followStyles.followersList}>
+      <h2 className={followStyles.title}>Followers of are: {username}</h2>
+      <ul className={followStyles.list}>
         {followersList.map(follower => (
-          <li key={follower.id}>
+          <li className={followStyles.follow} key={follower.id}>
             <Link to={`/profile/${follower.follower_username}`}>
               {follower.follower_username}
             </Link>

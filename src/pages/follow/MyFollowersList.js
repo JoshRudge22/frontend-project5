@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FollowersList from '../../components/follow/FollowersList';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
+import followStyles from '../../styles/Follow.module.css'
 
 const MyFollowersList = () => {
   const currentUser = useCurrentUser();
@@ -11,7 +12,7 @@ const MyFollowersList = () => {
     if (currentUser) {
       const fetchFollowerCount = async () => {
         try {
-          const response = await axios.get(`/profiles/${currentUser.username}/follow_count/`);
+          const response = await axios.get(`/profiles/${currentUser.username}/following_count/`);
           setFollowerCount(response.data.follower_count);
         } catch (error) {
           console.error('Error fetching follower count:', error);
@@ -30,7 +31,7 @@ const MyFollowersList = () => {
 
   return (
     <div>
-      <p>Number of Follower: {followerCount}</p>
+      <h2 className={followStyles.Number}>Number of Follower: {followerCount}</h2>
       <FollowersList username={currentUser.username} />
     </div>
   );
