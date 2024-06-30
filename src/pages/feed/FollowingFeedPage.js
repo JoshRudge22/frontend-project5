@@ -13,12 +13,10 @@ const FollowingFeedPage = () => {
   useEffect(() => {
     const fetchFollowingFeed = async () => {
       try {
-        const response = await axios.get('/feed/following');
-        console.log("API response for following feed:", response.data);
-        setFeedData(response.data);
+        const response = await axios.get('/feed/following/');
+        setFeedData(response.data.posts);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching following feed:', error);
         setError(error.message);
         setLoading(false);
       }
@@ -46,8 +44,8 @@ const FollowingFeedPage = () => {
         {feedData.map(item => (
           <li key={item.id} className={feedStyles.container}>
             <div className={feedStyles.post}>
-              <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
-                {item.owner}
+              <Link to={`/profile/${item.user.username}`} className={feedStyles.username}>
+                {item.user.username}
               </Link>
               <h3>{item.caption}</h3>
               {item.image && (

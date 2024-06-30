@@ -5,7 +5,6 @@ import Comments from '../../components/interactions/Comments';
 import LikeButton from '../../components/interactions/Likes';
 import feedStyles from '../../styles/FeedPage.module.css';
 
-
 const FeedPage = () => {
   const [feedData, setFeedData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,7 +14,7 @@ const FeedPage = () => {
     const fetchFeedData = async () => {
       try {
         const response = await axios.get('/feed/');
-        setFeedData(response.data.results);
+        setFeedData(response.data.posts);
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -34,10 +33,6 @@ const FeedPage = () => {
     return <p>Error: {error}</p>;
   }
 
-  if (!Array.isArray(feedData) || feedData.length === 0) {
-    return <p>No-one has created a post</p>;
-  }
-
   return (
     <div>
       <h2 className={feedStyles.title}>Discover Feed!</h2>
@@ -45,8 +40,8 @@ const FeedPage = () => {
         {feedData.map(item => (
           <li key={item.id} className={feedStyles.container}>
             <div className={feedStyles.post}>
-              <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
-                {item.owner}
+              <Link to={`/profile/${item.user.username}`} className={feedStyles.username}>
+                {item.user.username}
               </Link>
               <h3>{item.caption}</h3>
               {item.image && (

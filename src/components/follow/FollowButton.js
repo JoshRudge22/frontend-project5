@@ -7,11 +7,8 @@ const FollowButton = ({ profileId, username }) => {
   useEffect(() => {
     const checkIfFollowing = async () => {
       try {
-        const response = await axios.get(`/following/${username}/`);
-        console.log("API response for following list:", response.data);
-        const { results } = response.data;
-        const followingIds = results.map(follower => follower.following);
-        setIsFollowing(followingIds.includes(profileId));
+        const response = await axios.get(`/profiles/${username}/is_following/`);
+        setIsFollowing(response.data.is_following);
       } catch (error) {
         console.error(error);
       }
@@ -22,24 +19,31 @@ const FollowButton = ({ profileId, username }) => {
 
   const handleFollow = async () => {
     try {
-      const response = await axios.post(`/profiles/${username}/follow/`);
-      if (response.status === 201) {
-        setIsFollowing(true);
+      if (isFollowing) {
+        // Unfollow
+        const response = await axios.delete(`/profiles/${username}/unfollow/`);
+        if (response.status === 204) {
+          setIsFollowing(false);
+        } else {
+          console.log(response.data.message);
+        }
       } else {
-        console.log(response.data.message);
+        // Follow
+        const response = await axios.post(`/profiles/${username}/follow/`);
+        if (response.status === 201) {
+          setIsFollowing(true);
+        } else {
+          console.log(response.data.message);
+        }
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  if (isFollowing) {
-    return null;
-  }
-
   return (
     <div>
-      <button onClick={handleFollow}>Follow</button>
+      <button onClick={handleFollow}>{isFollowing ? 'Unfollow' : 'Follow'}</button>
     </div>
   );
 };
