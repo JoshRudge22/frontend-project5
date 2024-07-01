@@ -14,7 +14,7 @@ const FollowingFeedPage = () => {
     const fetchFollowingFeed = async () => {
       try {
         const response = await axios.get('/feed/following/');
-        setFeedData(response.data.posts);
+        setFeedData(response.data);
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -41,11 +41,11 @@ const FollowingFeedPage = () => {
     <div>
       <h2 className={feedStyles.title}>Following Feed!</h2>
       <ul className={feedStyles.ul}>
-        {feedData.map(item => (
+        {feedData.map((item) => (
           <li key={item.id} className={feedStyles.container}>
             <div className={feedStyles.post}>
-              <Link to={`/profile/${item.user.username}`} className={feedStyles.username}>
-                {item.user.username}
+              <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
+                {item.owner}
               </Link>
               <h3>{item.caption}</h3>
               {item.image && (
@@ -53,7 +53,7 @@ const FollowingFeedPage = () => {
               )}
               <div className={feedStyles.interactions}>
                 <LikeButton postId={item.id} />
-                <Comments postId={item.id} owner={item.user.username} />
+                <Comments postId={item.id} owner={item.owner} />
               </div>
             </div>
           </li>

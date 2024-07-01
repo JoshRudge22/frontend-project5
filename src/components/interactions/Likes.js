@@ -52,17 +52,17 @@ function Likes({ postId, userId }) {
 
   return (
     <div>
-    <div>
-      <Button className={buttonStyles.like} onClick={handleLike} disabled={liked === null}>
-        {liked ? 'Unlike' : 'Like'}
-      </Button>
       <div>
-      <span>{likesCount} {likesCount === 1 ? 'like' : 'likes'}</span>
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+        <Button className={buttonStyles.like} onClick={handleLike} disabled={liked === null}>
+          {liked ? 'Unlike' : 'Like'}
+        </Button>
+        <div>
+          <span>{likesCount} {likesCount === 1 ? 'like' : 'likes'}</span>
+          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+        </div>
       </div>
+      <Link className={likeStyles.link} to={`/posts/${postId}/likes`}>View likes</Link>
     </div>
-    <Link className={likeStyles.link} to="/users/liked-posts">View liked posts</Link>
-  </div>
   );
 }
 

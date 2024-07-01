@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import likeStyles from '../../styles/Likes.module.css';
 
-function LikeList() {
+function LikeList({ postId }) {
+  console.log("Received postId:", postId);
   const [likedPosts, setLikedPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -12,8 +11,8 @@ function LikeList() {
     const fetchLikedPosts = async () => {
       setLoading(true);
       try {
-        const response = await axios.get('/users/liked-posts/');
-        setLikedPosts(response.data);
+        const response = await axios.get(`/posts/${postId}/likes/`);
+        setLikedPosts(response.data.usernames);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -21,31 +20,20 @@ function LikeList() {
       }
     };
     fetchLikedPosts();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!Array.isArray(likedPosts) || likedPosts.length === 0) {
-    return <p>You haven't liked any posts yet. <Link to='/'>Click here</Link> to discover other users posts</p>;
-  }
+  }, [postId]);
 
   return (
     <div>
-      <ul>
-        {likedPosts.map((post) => (
-          <li key={post.id}>
-            <h2>{post.caption}</h2>
-            <p>Posted by:<Link to={`/profile/${post.owner}`}>{post.owner}</Link></p>
-            <img className={likeStyles.img} src={post.image} alt={post.caption} />
-          </li>
-        ))}
-      </ul>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <ul>
+          {likedPosts.map((username) => (
+            <li key={username}>{username}</li>
+          ))}
+        </ul>
+      )}
+      {error && <p>Error: {error}</p>}
     </div>
   );
 }

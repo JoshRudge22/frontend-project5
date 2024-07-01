@@ -43,7 +43,7 @@ function App() {
           <Route exact path="/posts/create" render={() => <CreatePost />} />
           <Route exact path="/posts/list" render={() => <PostList />} />
           <Route exact path="/commentslist" render={() => <CommentsList />} />
-          <Route exact path="/likeslist" render={() => <LikeList />} />
+          <Route exact path="/posts/:postId/likes" render={({ match }) => <LikeList postId={match.params.postId} />} />
           <Route exact path="/users/liked-posts" render={({ match }) => <LikedPost postId={match.params.postId} />} />
           <Route exact path="/followerslist" render={() => <MyFollowersList />} />
           <Route exact path="/followinglist" render={() => <MyFollowingList />} />

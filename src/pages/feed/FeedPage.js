@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import Comments from '../../components/interactions/Comments';
 import LikeButton from '../../components/interactions/Likes';
 import feedStyles from '../../styles/FeedPage.module.css';
@@ -9,12 +10,15 @@ const FeedPage = () => {
   const [feedData, setFeedData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [nextUrl, setNextUrl] = useState(null);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     const fetchFeedData = async () => {
       try {
         const response = await axios.get('/feed/');
-        setFeedData(response.data.posts);
+        setFeedData(response.data.results);
+        setNextUrl(response.data.next);
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -25,6 +29,21 @@ const FeedPage = () => {
     fetchFeedData();
   }, []);
 
+  const fetchMoreData = async () => {
+    if (nextUrl) {
+      try {
+        const response = await axios.get(nextUrl);
+        setFeedData([...feedData, ...response.data.results]);
+        setNextUrl(response.data.next);
+        if (!response.data.next) {
+          setHasMore(false);
+        }
+      } catch (error) {
+        setError(error.message);
+      }
+    }
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -34,10 +53,15 @@ const FeedPage = () => {
   }
 
   return (
-    <div>
+    <InfiniteScroll
+      dataLength={feedData.length}
+      next={fetchMoreData}
+      hasMore={hasMore}
+      loader={<h4>Loading...</h4>}
+    >
       <h2 className={feedStyles.title}>Discover Feed!</h2>
       <ul className={feedStyles.ul}>
-        {feedData.map(item => (
+        {Array.isArray(feedData) && feedData.map((item) => (
           <li key={item.id} className={feedStyles.container}>
             <div className={feedStyles.post}>
               <Link to={`/profile/${item.user.username}`} className={feedStyles.username}>
@@ -55,7 +79,7 @@ const FeedPage = () => {
           </li>
         ))}
       </ul>
-    </div>
+    </InfiniteScroll>
   );
 };
 

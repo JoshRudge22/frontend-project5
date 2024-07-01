@@ -24,7 +24,6 @@ const UpdateProfile = () => {
         console.log('Fetched profile data:', profileData);
         setFormData({
           fullName: profileData.full_name,
-          email: profileData.email,
           location: profileData.location,
           bio: profileData.bio,
           currentProfileImage: profileData.profile_image,
@@ -60,7 +59,6 @@ const UpdateProfile = () => {
     e.preventDefault();
     const formDataToSend = new FormData();
     formDataToSend.append('full_name', formData.fullName);
-    formDataToSend.append('email', formData.email);
     formDataToSend.append('location', formData.location);
     formDataToSend.append('bio', formData.bio);
     if (formData.profileImage) {
@@ -102,10 +100,6 @@ const UpdateProfile = () => {
         <div>
           <Form.Label className={profileStyles.label} htmlFor="bio">Bio:</Form.Label>
           <textarea  className={profileStyles.textarea} id="bio" name="bio" value={formData.bio} onChange={handleInputChange} />
-        </div>
-        <div>
-          <Form.Label className={profileStyles.label} htmlFor="email">Email:</Form.Label>
-          <input className={profileStyles.input} type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} />
         </div>
         <div>
           <Form.Label className={profileStyles.label} htmlFor="location">Location:</Form.Label>
