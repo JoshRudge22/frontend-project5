@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import likeStyles from '../../styles/Likes.module.css'
+import likeStyles from '../../styles/likes/Likes.module.css'
 import buttonStyles from '../../styles/Buttons.module.css'
 
 function Likes({ postId, userId }) {

@@ -64,8 +64,8 @@ const FeedPage = () => {
         {Array.isArray(feedData) && feedData.map((item) => (
           <li key={item.id} className={feedStyles.container}>
             <div className={feedStyles.post}>
-              <Link to={`/profile/${item.user.username}`} className={feedStyles.username}>
-                {item.user.username}
+              <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
+                {item.owner}
               </Link>
               <h3>{item.caption}</h3>
               {item.image && (

@@ -13,7 +13,19 @@ const FollowingList = ({ username }) => {
       try {
         const response = await axios.get(`/following/${username}/`);
         console.log("API response for following list:", response.data);
-        setFollowingList(response.data.results);
+
+        // Fetch profile images for each following user
+        const followingWithImages = await Promise.all(
+          response.data.results.map(async (following) => {
+            const profileResponse = await axios.get(`/profiles/${following.following_username}/`);
+            return {
+              ...following,
+              profileImage: profileResponse.data.profile_image,
+            };
+          })
+        );
+
+        setFollowingList(followingWithImages);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching following list:', error);
@@ -35,11 +47,16 @@ const FollowingList = ({ username }) => {
 
   return (
     <div>
-      <h2 className={followStyles.title}>{username} Is Following:</h2>
+      <h2 className={followStyles.title}>You Are Following:</h2>
       <ul className={followStyles.list}>
-        {followingList.map(following => (
+        {followingList.map((following) => (
           <li className={followStyles.follow} key={following.id}>
             <Link to={`/profile/${following.following_username}`}>
+              <img 
+                className={followStyles.image}
+                src={following.profileImage} 
+                alt={`${following.following_username}'s profile`} 
+              />
               {following.following_username}
             </Link>
           </li>

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import feedStyles from '../../styles/FeedPage.module.css';
+import likeStyles from '../../styles/likes/Likeslist.module.css'
 
 const LikedPost = () => {
   const [likedPosts, setLikedPosts] = useState([]);
@@ -41,28 +42,31 @@ const LikedPost = () => {
 
   return (
     <div>
-      <h2>Liked Posts</h2>
-      <ul>
-        {likedPosts.map((post) => (
-          <li key={post.id}>
-            <div className={feedStyles.post}>
-            <img className={feedStyles.img} src={post.image} alt={`Post ${post.id}`} />
-            <h4>Liked By:</h4>
-            <ul>
-              {likedBy[post.id] && likedBy[post.id].length > 0 ? (
-                likedBy[post.id].map((username) => (
-                  <li key={username}>
-                    <Link to={`/profile/${username}`}>{username}</Link>
-                  </li>
-                ))
-              ) : (
-                <li>No likes yet</li>
-              )}
-            </ul>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <h2 className={likeStyles.pagetitle}>Liked Posts</h2>
+      <Container className={likeStyles.container}>
+        <ul className={likeStyles.list}>
+          {likedPosts.map((post) => (
+            <li className={likeStyles.post} key={post.id}>
+              <img 
+              className={likeStyles.img} 
+              src={post.image} 
+              alt={`Post ${post.id}`} />
+              <h4 className={likeStyles.h4}>Liked By:</h4>
+              <ul className={likeStyles.username}>
+                {likedBy[post.id] && likedBy[post.id].length > 0 ? (
+                  likedBy[post.id].map((username) => (
+                    <li className={likeStyles.usernamelist} key={username}>
+                      <Link to={`/profile/${username}`}>{username}</Link>
+                    </li>
+                  ))
+                ) : (
+                  <li className={likeStyles.nolikes} >No likes yet</li>
+                )}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </Container>
     </div>
   );
 };

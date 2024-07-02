@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { axiosReq } from "../../api/axiosDefaults";
 import { Form, Button, Container } from 'react-bootstrap';
-import commentStyles from '../../styles/Comments.module.css';
+import commentStyles from '../../styles//comments/Comments.module.css';
 import buttonStyles from '../../styles/Buttons.module.css';
 import { Link } from 'react-router-dom';
 

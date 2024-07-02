@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 import Comments from '../../components/interactions/Comments';
+import commentsStyles from '../../styles/comments/CommentsList.module.css'
 
 const CommentsList = () => {
   const [commentedPosts, setCommentedPosts] = useState([]);
@@ -39,20 +41,18 @@ const CommentsList = () => {
   return (
     <div>
       <h2>Your Commented Posts</h2>
-      <ul>
-        {commentedPosts.map(post => (
-          <li key={post.id}>
-            <p>{post.caption}</p>
-            <p>Post by: 
-              <Link to={`/profile/${post.owner}`}>
-                {post.owner}
-              </Link>
-            </p>
-            <img src={post.image} alt={post.caption} />
-            <Comments postId={post.id} owner={post.owner} />
-          </li>
-        ))}
-      </ul>
+      <Container className={commentsStyles.container}>
+        <ul className={commentsStyles.postlist}>
+          {commentedPosts.map(post => (
+            <li key={post.id}>
+              <h3 className={commentsStyles.username}>Post by: <Link to={`/profile/${post.owner}`}>{post.owner}</Link></h3>
+              <img className={commentsStyles.img} src={post.image} alt={post.caption} />
+              <p className={commentsStyles.caption}>{post.caption}</p>
+              <Comments postId={post.id} owner={post.owner} />
+            </li>
+          ))}
+        </ul>
+      </Container>
     </div>
   );
 };

@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Container } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import { useCurrentUser } from '../../../contexts/CurrentUserContext';
 import FollowButton from '../../../components/follow/FollowButton';
-import FollowingList from '../../../components/follow/FollowingList';
-import FollowersList from '../../../components/follow/FollowersList';
+import userprofileStyles from '../../../styles/profiles/UsersPage.module.css';
 
 const UsersPage = () => {
   const { username } = useParams();
+  const currentUser = useCurrentUser();
   const [profileData, setProfileData] = useState(null);
+  const [followerCount, setFollowerCount] = useState(0);
+  const [followingCount, setFollowingCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -25,8 +29,32 @@ const UsersPage = () => {
       }
     };
 
+    const fetchFollowerCount = async () => {
+      if (currentUser) {
+        try {
+          const response = await axios.get(`/profiles/${currentUser.username}/follower_count/`);
+          setFollowerCount(response.data.follower_count);
+        } catch (error) {
+          console.error('Error fetching follower count:', error);
+        }
+      }
+    };
+
+    const fetchFollowingCount = async () => {
+      if (currentUser) {
+        try {
+          const response = await axios.get(`/profiles/${currentUser.username}/following_count/`);
+          setFollowingCount(response.data.following_count);
+        } catch (error) {
+          console.error('Error fetching following count:', error);
+        }
+      }
+    };
+
     fetchProfileData();
-  }, [username]);
+    fetchFollowerCount();
+    fetchFollowingCount()
+  }, [username, currentUser]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -41,14 +69,19 @@ const UsersPage = () => {
   }
 
   return (
-    <div>
-      <h2>{profileData.username}'s Profile</h2>
-      <p>Bio: {profileData.bio}</p>
-      <img src={profileData.profile_image} alt="Profile" style={{ width: '100px', height: '100px', objectFit: 'cover' }} />
-      <FollowButton username={username} profileId={profileData.id} />
-      <FollowingList username={username} />
-      <FollowersList username={username} />
-    </div>
+    <Container className={userprofileStyles.container}>
+      <h2 className={userprofileStyles.heading}>{profileData.username}'s Profile</h2>
+      <img
+        className={userprofileStyles.image}  
+        src={profileData.profile_image} 
+        alt="Profile"/>
+        <p className={userprofileStyles.info}><span className={userprofileStyles.span}>Full Name:</span> {profileData.full_name}</p>
+        <p className={userprofileStyles.info}><span className={userprofileStyles.span}>Bio:</span> {profileData.bio}</p>
+        <p className={userprofileStyles.info}><span className={userprofileStyles.span}>Location:</span> {profileData.location}</p>
+        <p className={userprofileStyles.info}><span className={userprofileStyles.span}>Followers:</span> {followerCount}</p>
+        <p className={userprofileStyles.info}><span className={userprofileStyles.span}>Following:</span> {followingCount}</p>
+        <FollowButton username={username} profileId={profileData.id} />
+    </Container>
   );
 };
 

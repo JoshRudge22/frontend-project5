@@ -12,7 +12,7 @@ const NavBar = () => {
   const history = useHistory();
 
   const currentUser = useCurrentUser();
-  const { setCurrentUser } = useSetCurrentUser();
+  const setCurrentUser = useSetCurrentUser();
 
   const handleSignOut = async () => {
     try {
@@ -62,11 +62,11 @@ const NavBar = () => {
         </NavDropdown.Item>
       </NavDropdown>
       <NavDropdown title="Profile" id="navbarScrollingDropdown" className={navStyles.NavLink}>
-        <NavDropdown.Item onClick={() =>  history.push(`/profiles/${currentUser.profile_id}`)}>
-        <i className="fa-solid fa-user"></i> Profile
+        <NavDropdown.Item onClick={() => history.push(`/profiles/${currentUser.profile_id}`)}>
+          <i className="fa-solid fa-user"></i> Profile
         </NavDropdown.Item>
         <NavDropdown.Item onClick={() => history.push(`/edit/${currentUser.profile_id}`)}>
-        <i className="fa-solid fa-user-pen"></i> Update Profile
+          <i className="fa-solid fa-user-pen"></i> Update Profile
         </NavDropdown.Item>
       </NavDropdown>
       <NavDropdown title="Interactions" id="navbarScrollingDropdown" className={navStyles.NavLink}>
@@ -74,28 +74,28 @@ const NavBar = () => {
           <i className="fa-solid fa-comments"></i> Comments
         </NavDropdown.Item>
         <NavDropdown.Item onClick={() => history.push("/users/liked-posts")}>
-          <i className="fa-solid fa-thumbs-up"></i>Likes
+          <i className="fa-solid fa-thumbs-up"></i> Likes
         </NavDropdown.Item>
-        </NavDropdown>
-        <NavDropdown title="Follow" id="navbarScrollingDropdown" className={navStyles.NavLink}>
+      </NavDropdown>
+      <NavDropdown title="Follow" id="navbarScrollingDropdown" className={navStyles.NavLink}>
         <NavDropdown.Item onClick={() => history.push("/followerslist")}>
-        <i className="fa-solid fa-user-group"></i> Followers
+          <i className="fa-solid fa-user-group"></i> Followers
         </NavDropdown.Item>
         <NavDropdown.Item onClick={() => history.push("/followinglist")}>
-        <i className="fa-solid fa-people-robbery"></i> Following
+          <i className="fa-solid fa-people-robbery"></i> Following
         </NavDropdown.Item>
-        </NavDropdown>
-        <NavDropdown title="Signing Out" id="navbarScrollingDropdown" className={navStyles.NavLink}>
+      </NavDropdown>
+      <NavDropdown title="Signing Out" id="navbarScrollingDropdown" className={navStyles.NavLink}>
         <NavDropdown.Item onClick={handleSignOut}>
-        <i className="fas fa-sign-out-alt"></i> Sign out
+          <i className="fas fa-sign-out-alt"></i> Sign out
         </NavDropdown.Item>
         <NavDropdown.Item onClick={() => history.push("/contact")}>
-        <i className="fa-solid fa-file-contract"></i> Contact Us
+          <i className="fa-solid fa-file-contract"></i> Contact Us
         </NavDropdown.Item>
         <NavDropdown.Item onClick={() => history.push(`/profiles/delete/${currentUser.profile_id}`)}>
-        <i class="fa-solid fa-trash"></i> Delete Profile
+          <i className="fa-solid fa-trash"></i> Delete Profile
         </NavDropdown.Item>
-        </NavDropdown>
+      </NavDropdown>
     </>
   ) : null;
 
@@ -129,7 +129,7 @@ const NavBar = () => {
           <Form className="d-flex align-items-center" onSubmit={handleSearchSubmit} style={{ position: 'relative' }}>
             <Form.Control
               type="search"
-              placeholder="Search"
+              placeholder="Search by username, location, or full name"
               className="me-2"
               aria-label="Search"
               value={searchQuery}
@@ -144,7 +144,7 @@ const NavBar = () => {
                     onClick={() => handleProfileClick(user.user)}
                     action
                   >
-                    {user.user}
+                    {user.user} - {user.full_name} - {user.location}
                   </ListGroup.Item>
                 ))}
               </ListGroup>

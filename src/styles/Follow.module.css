@@ -44,3 +44,11 @@
   .follow a:hover {
     color: #0e2d47;
   }
+
+  .image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 30px;
+    margin-bottom: 20px;
+  }

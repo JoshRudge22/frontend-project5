@@ -31,7 +31,7 @@ const MyFollowersList = () => {
 
   return (
     <div>
-      <h2 className={followStyles.Number}>Number of Follower: {followerCount}</h2>
+      <h2 className={followStyles.Number}>Number of Followers: {followerCount}</h2>
       <FollowersList username={currentUser.username} />
     </div>
   );

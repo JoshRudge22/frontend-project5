@@ -1,7 +1,7 @@
 import React from 'react';
 import ProfileInfo from './ProfileInfo';
 import { useCurrentUser } from '../../../contexts/CurrentUserContext';
-import profileStyles from '../../../styles/Profile.module.css';
+import profileStyles from '../../../styles//profiles/Profile.module.css';
 
 const ProfilePage = () => {
   const currentUser = useCurrentUser();

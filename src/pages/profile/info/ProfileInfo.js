@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Container } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { useCurrentUser } from '../../../contexts/CurrentUserContext';
-import profileStyles from '../../../styles/Profile.module.css';
+import profileStyles from '../../../styles/profiles/Profile.module.css';
 
 const ProfileInfo = () => {
   const { profileId } = useParams();
