@@ -16,7 +16,7 @@ const FeedPage = () => {
   useEffect(() => {
     const fetchFeedData = async () => {
       try {
-        const response = await axios.get('/feed/');
+        const response = await axios.get('/feed/?limit=5&offset=0');
         setFeedData(response.data.results);
         setNextUrl(response.data.next);
         setLoading(false);

@@ -13,7 +13,7 @@ const CommentsList = () => {
   useEffect(() => {
     const fetchCommentedPosts = async () => {
       try {
-        const response = await axios.get(`/comments/user/1`);
+        const response = await axios.get(`/comments/user/`);
         setCommentedPosts(response.data);
         setLoading(false);
       } catch (error) {
