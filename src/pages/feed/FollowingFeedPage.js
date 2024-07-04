@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import Comments from '../../components/interactions/Comments';
 import LikeButton from '../../components/interactions/Likes';
 import feedStyles from '../../styles/FeedPage.module.css';
+import NoContentStyles from '../../styles/NoContent.module.css'
+import logo from '../../logo.png';
 
 const FollowingFeedPage = () => {
   const [feedData, setFeedData] = useState([]);
@@ -34,7 +36,13 @@ const FollowingFeedPage = () => {
   }
 
   if (!Array.isArray(feedData) || feedData.length === 0) {
-    return <p>No posts have been created from the users you are following. <Link to='/'>Click Here</Link> to discover users you may like</p>;
+    return (
+      <>
+        <h2 className={NoContentStyles.message}>No posts have been created from the users you are following.</h2>
+        <img className={NoContentStyles.logo} src={logo} alt="Logo" />
+        <h2 className={NoContentStyles.message}><Link to='/'>Click Here</Link> to discover users you may like</h2>
+      </>
+    );
   }
 
   return (

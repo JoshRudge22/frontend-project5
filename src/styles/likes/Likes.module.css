@@ -1,16 +1,15 @@
-.link {
-    display: block;
-    margin-top: 10px;
-    font-size: 14px;
-    color: #337ab7;
-    text-decoration: none;
-  }
+.link {  
+  display: block;
+  margin-top: 10px;
+  font-size: 25px;
+  color: #337ab7;
+  text-decoration: none;
+}
   
-  .link:hover {
-    text-decoration: underline;
-  }
+.link:hover {
+  text-decoration: underline;
+}
 
-  .img {
-    width: 300px;
-    height: auto;
-  }
+.count {
+  font-size: 25px;
+}

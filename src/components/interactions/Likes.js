@@ -57,7 +57,7 @@ function Likes({ postId, userId }) {
           {liked ? 'Unlike' : 'Like'}
         </Button>
         <div>
-          <span>{likesCount} {likesCount === 1 ? 'like' : 'likes'}</span>
+          <span className={likeStyles.count}>{likesCount} {likesCount === 1 ? 'like' : 'likes'}</span>
           {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         </div>
       </div>
