@@ -1,35 +1,37 @@
-import React, { useEffect } from 'react';
-import { axiosReq, axiosRes } from '../../../api/axiosDefaults';
-import { useCurrentUser, useSetCurrentUser } from '../../../contexts/CurrentUserContext';
-import { useHistory } from 'react-router-dom';
-
+import React from 'react';
+import { Container, Row, Col, Card } from 'react-bootstrap';
+import Delete from '../../../components/interactions/Delete';
 
 const DeleteProfile = () => {
-  const currentUser = useCurrentUser();
-  const history = useHistory();
-  const setCurrentUser = useSetCurrentUser();
-
-  useEffect(() => {
-    if (!currentUser) {
-      history.push('/signin');
-    }
-  }, [currentUser, history]);
-
-  const handleDelete = async () => {
-    try {
-      await axiosReq.delete(`/profiles/delete/${currentUser.username}/`);
-      await axiosRes.post("dj-rest-auth/logout/");
-      setCurrentUser(null);
-      history.push('/signin');
-    } catch (error) {
-      console.error('Error deleting profile:', error);
-    }
-  };
-
   return (
-    <div>
-      <button onClick={handleDelete}>Delete Profile</button>
-    </div>
+    <Container>
+      <Row className="justify-content-center">
+        <Col md={8}>
+          <Card>
+            <Card.Header>
+              <h2>Profile Settings</h2>
+            </Card.Header>
+            <Card.Body>
+              <h3>Deleting Your Profile</h3>
+              <p>
+                Deleting your profile is a permanent action and cannot be undone. If you proceed with deleting your profile, the following will occur:
+              </p>
+              <ul>
+                <li>All of your posts will be permanently deleted.</li>
+                <li>All of your comments on other posts will be permanently deleted.</li>
+                <li>All of your likes on other posts will be permanently deleted.</li>
+                <li>All of your followers will be lost.</li>
+                <li>All of the users you are following will be unfollowed.</li>
+              </ul>
+              <p>
+                If you are sure you want to delete your profile, click the button below. Please note that this action is irreversible.
+              </p>
+              <Delete />
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

@@ -1,39 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
 function LikeList({ postId }) {
-  console.log("Received postId:", postId);
-  const [likedPosts, setLikedPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [likedUsers, setLikedUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchLikedPosts = async () => {
-      setLoading(true);
+    const fetchLikedUsers = async () => {
       try {
         const response = await axios.get(`/posts/${postId}/likes/`);
-        setLikedPosts(response.data.usernames);
+        const likedUsernames = response.data.usernames;
+
+        const likedUsersWithImages = await Promise.all(
+          likedUsernames.map(async (username) => {
+            const profileResponse = await axios.get(`/profiles/${username}/`);
+            return {
+              username,
+              profileImage: profileResponse.data.profile_image,
+            };
+          })
+        );
+
+        setLikedUsers(likedUsersWithImages);
+        setLoading(false);
       } catch (error) {
+        console.error('Error fetching liked users list:', error);
         setError(error.message);
-      } finally {
         setLoading(false);
       }
     };
-    fetchLikedPosts();
+
+    fetchLikedUsers();
   }, [postId]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
 
   return (
     <div>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <ul>
-          {likedPosts.map((username) => (
-            <li key={username}>{username}</li>
-          ))}
-        </ul>
-      )}
-      {error && <p>Error: {error}</p>}
+      <h2>Users Who Liked This Post</h2>
+      <ul>
+        {likedUsers.map((user) => (
+          <li key={user.username}>
+            <img
+              src={user.profileImage}
+              alt={`${user.username}'s profile`}
+            />
+            {user.username}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

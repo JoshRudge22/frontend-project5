@@ -128,29 +128,34 @@ const NavBar = () => {
           </Nav>
           {currentUser && (
             <Form className="d-flex align-items-center" onSubmit={handleSearchSubmit} style={{ position: 'relative' }}>
-              <Form.Control
-                type="search"
-                placeholder="Search by username, location, or full name"
-                className="me-2"
-                aria-label="Search"
-                value={searchQuery}
-                onChange={handleSearchInputChange}
-              />
-              <Button className={btnStyles.button} type="submit">Search</Button>
-              {searchResults.length > 0 && (
-                <ListGroup className={navStyles.searchResults}>
-                  {searchResults.map(user => (
-                    <ListGroup.Item
-                      key={user.profile_id}
-                      onClick={() => handleProfileClick(user.user)}
-                      action
-                    >
-                      {user.user} - {user.full_name} - {user.location}
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
-              )}
-            </Form>
+            <Form.Control
+              type="search"
+              placeholder="Search by username, location, or full name"
+              className="me-2"
+              aria-label="Search"
+              value={searchQuery}
+              onChange={handleSearchInputChange}
+            />
+            <Button className={btnStyles.button} type="submit">Search</Button>
+            {searchResults.length > 0 && (
+              <ListGroup className={navStyles.searchResults}>
+                {searchResults.map(user => (
+                  <ListGroup.Item
+                    key={user.profile_id}
+                    onClick={() => handleProfileClick(user.user)}
+                    action
+                  >
+                    {user.user} - {user.full_name} - {user.location}
+                  </ListGroup.Item>
+                ))}
+                <Button
+                  className={btnStyles.button}
+                  onClick={() => setSearchResults([])}>
+                  <i className="fas fa-times" />
+                </Button>
+              </ListGroup>
+            )}
+          </Form>
           )}
         </Navbar.Collapse>
       </Container>

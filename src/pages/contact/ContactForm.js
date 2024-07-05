@@ -36,7 +36,7 @@ const ContactForm = () => {
       if (response.status === 200) {
         alert('Form submitted successfully!');
         setFormData({ name: '', email: '', number: '', message: '' });
-        history.push('/formsubmitted');
+        history.push('/submitted');
       } else {
         const errorMessage = response.data;
         alert('Error: ' + errorMessage);

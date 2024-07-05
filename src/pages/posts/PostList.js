@@ -57,13 +57,13 @@ const PostList = () => {
                 posts.map(post => (
                     <div key={post.id} className={feedStyles.container}>
                         <div className={feedStyles.post}>
-                            {post.image && <img className={feedStyles.img} src={post.image} alt="Post" />}
-                            <p>{post.caption}</p>
-                            <div className={feedStyles.interactions}>
-                                <LikeButton postId={post.id} />
-                                <Comments postId={post.id} owner={post.owner} />
-                                <Button className={buttonStyles.delete} onClick={() => handleDeletePost(post.id)}>Delete</Button>
-                            </div>
+                        <h2>{post.caption}</h2>
+                        {post.image && <img className={feedStyles.img} src={post.image} alt="Post" />}
+                        <div className={feedStyles.interactions}>
+                            <LikeButton postId={post.id} />
+                            <Comments postId={post.id} owner={post.owner} />
+                            <Button className={buttonStyles.deletepost} onClick={() => handleDeletePost(post.id)}>Delete Post</Button>
+                        </div>
                         </div>
                     </div>
                 ))
