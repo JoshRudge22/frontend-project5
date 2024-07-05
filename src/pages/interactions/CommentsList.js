@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
 import Comments from '../../components/interactions/Comments';
-import commentsStyles from '../../styles/comments/CommentsList.module.css'
+import LikeButton from '../../components/interactions/Likes';
+import commentsListStyles from '../../styles/FeedPage.module.css';
 
 const CommentsList = () => {
   const [commentedPosts, setCommentedPosts] = useState([]);
@@ -41,18 +41,22 @@ const CommentsList = () => {
   return (
     <div>
       <h2>Your Commented Posts</h2>
-      <Container className={commentsStyles.container}>
-        <ul className={commentsStyles.postlist}>
-          {commentedPosts.map(post => (
-            <li key={post.id}>
-              <h3 className={commentsStyles.username}>Post by: <Link to={`/profile/${post.owner}`}>{post.owner}</Link></h3>
-              <img className={commentsStyles.img} src={post.image} alt={post.caption} />
-              <p className={commentsStyles.caption}>{post.caption}</p>
+      <ul className={commentsListStyles.ul}>
+        {commentedPosts.map(post => (
+          <li className={commentsListStyles.container} key={post.id}>
+            <div className={commentsListStyles.post}>
+              <h3 className={commentsListStyles.username}>Post by: <Link to={`/profile/${post.owner}`}>{post.owner}</Link></h3>
+              <h3>{post.caption}</h3>
+              <img className={commentsListStyles.img} src={post.image} alt={post.caption} />
+            <div className={commentsListStyles.interactions}>
+              <LikeButton postId={post.id} />
               <Comments postId={post.id} owner={post.owner} />
-            </li>
-          ))}
-        </ul>
-      </Container>
+            </div>  
+            </div>
+          </li>
+        ))}
+      </ul>
+      
     </div>
   );
 };

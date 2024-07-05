@@ -85,7 +85,7 @@ const CreatePost = () => {
                     {errors.caption && <p className={Poststyles.error}>{errors.caption}</p>}
                 </div>
                 {errors.general && <p className={Poststyles.error}>{errors.general}</p>}
-                <Button className={Buttonstyles.save} type="submit" disabled={loading}>Create Post</Button>
+                <Button className={Buttonstyles.create} type="submit" disabled={loading}>Create Post</Button>
                 {loading && <p>Loading...</p>}
             </Form>
         </Container>

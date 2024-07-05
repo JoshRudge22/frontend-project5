@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
+import { axiosReq, axiosRes } from '../../../api/axiosDefaults';
 import { useCurrentUser, useSetCurrentUser } from '../../../contexts/CurrentUserContext';
 import { useHistory } from 'react-router-dom';
 
@@ -17,8 +17,8 @@ const DeleteProfile = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/profiles/delete/${currentUser.username}/`);
-      await axios.post("dj-rest-auth/logout/");
+      await axiosReq.delete(`/profiles/delete/${currentUser.username}/`);
+      await axiosRes.post("dj-rest-auth/logout/");
       setCurrentUser(null);
       history.push('/signin');
     } catch (error) {

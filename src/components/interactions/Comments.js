@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { axiosReq } from "../../api/axiosDefaults";
 import { Form, Button, Container } from 'react-bootstrap';
-import commentStyles from '../../styles//comments/Comments.module.css';
+import commentStyles from '../../styles/comments/Comments.module.css';
 import buttonStyles from '../../styles/Buttons.module.css';
 import { Link } from 'react-router-dom';
+import { useCurrentUser } from '../../contexts/CurrentUserContext';
 
 const Comments = ({ postId }) => {
     const [comments, setComments] = useState([]);
@@ -11,6 +12,7 @@ const Comments = ({ postId }) => {
     const [editComment, setEditComment] = useState(null);
     const [editContent, setEditContent] = useState('');
     const [error, setError] = useState(null);
+    const currentUser = useCurrentUser();
 
     useEffect(() => {
         if (!postId) {
@@ -99,8 +101,12 @@ const Comments = ({ postId }) => {
                                     </Link>{" "}
                                     says: {comment.content}
                                 </p>
-                                <Button className={buttonStyles.edit} onClick={() => { setEditComment(comment.id); setEditContent(comment.content); }}>Edit</Button>
-                                <Button className={buttonStyles.delete} onClick={() => handleDeleteComment(comment.id)}>Delete</Button>
+                                {currentUser && currentUser.username === comment.user && (
+                                    <>
+                                        <Button className={buttonStyles.edit} onClick={() => { setEditComment(comment.id); setEditContent(comment.content); }}>Edit</Button>
+                                        <Button className={buttonStyles.delete} onClick={() => handleDeleteComment(comment.id)}>Delete</Button>
+                                    </>
+                                )}
                             </>
                         )}
                     </div>

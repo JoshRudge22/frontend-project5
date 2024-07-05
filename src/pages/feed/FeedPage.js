@@ -73,7 +73,7 @@ const FeedPage = () => {
               )}
               <div className={feedStyles.interactions}>
                 <LikeButton postId={item.id} />
-                <Comments postId={item.id} owner={item.user.username} />
+                <Comments postId={item.id} />
               </div>
             </div>
           </li>

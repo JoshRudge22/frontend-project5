@@ -1,6 +1,6 @@
 .edit {
   background-color: #28a745;
-  font-size: 20px;
+  font-size: 15px;
   align-self: center;
   border-radius: 100px;
   border-color: transparent;
@@ -17,7 +17,7 @@
 
 .delete {
   background-color: #dc3545;
-  font-size: 20px;
+  font-size: 15px;
   align-self: center;
   border-radius: 100px;
   border-color: transparent;
@@ -30,7 +30,7 @@
 
 .save {
   background-color: #ffc107;
-  font-size: 20px;
+  font-size: 15px;
   align-self: center;
   border-radius: 100px;
   border-color: transparent;
@@ -53,6 +53,26 @@
 .like {
   background-color: #1d56d1;
   font-size: 20px;
+  align-self: center;
+  padding: 4px 10px; 
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.create {
+  background-color: #1d56d1;
+  font-size: 25px;
+  align-self: center;
+  padding: 4px 10px; 
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.update {
+  background-color: #1d56d1;
+  font-size: 25px;
   align-self: center;
   padding: 4px 10px; 
   margin-top: 20px;

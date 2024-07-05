@@ -105,7 +105,7 @@ const UpdateProfile = () => {
           <Form.Label className={profileStyles.label} htmlFor="location">Location:</Form.Label>
           <input className={profileStyles.input} type="text" id="location" name="location" value={formData.location} onChange={handleInputChange} />
         </div>
-        <Button className={buttonStyles} type="submit">
+        <Button className={buttonStyles.update} type="submit">
           Update Profile
         </Button>
       </Form>

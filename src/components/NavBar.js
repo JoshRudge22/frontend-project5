@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { axiosReq, axiosRes } from '../api/axiosDefaults';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useCurrentUser, useSetCurrentUser } from '../contexts/CurrentUserContext';
 import { Navbar, Container, Nav, NavDropdown, Form, Button, ListGroup } from "react-bootstrap";
@@ -16,11 +16,11 @@ const NavBar = () => {
 
   const handleSignOut = async () => {
     try {
-      await axios.post("dj-rest-auth/logout/");
+      await axiosRes.post("dj-rest-auth/logout/");
       setCurrentUser(null);
       history.push('/');
     } catch (err) {
-      console.error(err);
+      console.error("Error during sign out:", err);
     }
   };
 
@@ -31,7 +31,7 @@ const NavBar = () => {
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get(`/profiles/?search=${searchQuery}`);
+      const response = await axiosReq.get(`/profiles/?search=${searchQuery}`);
       setSearchResults(response.data.results);
     } catch (error) {
       console.error("Error searching users:", error);
