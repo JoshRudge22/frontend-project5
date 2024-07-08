@@ -6,6 +6,8 @@ import Comments from '../../components/interactions/Comments';
 import LikeButton from '../../components/interactions/Likes';
 import feedStyles from '../../styles/FeedPage.module.css';
 import buttonStyles from '../../styles/Buttons.module.css';
+import NoContentStyles from '../../styles/NoContent.module.css';
+import logo from '../../logo.png'
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
@@ -50,13 +52,24 @@ const PostList = () => {
         return <div>{error}</div>;
     }
 
+    if (!Array.isArray(posts) || posts.length === 0) {
+        return (
+            <div className={NoContentStyles.container}>
+                <h2 className={NoContentStyles.message}>No posts have been created by the users you are following.</h2>
+                <img className={NoContentStyles.logo} src={logo} alt="Logo" />
+                <h2 className={NoContentStyles.message}>
+                    <Link to='/'>Click Here</Link> to discover users you may like
+                </h2>
+            </div>
+        );
+    }
+
     return (
         <div>
             <h1>Your Posts</h1>
-            {posts.length > 0 ? (
-                posts.map(post => (
-                    <div key={post.id} className={feedStyles.container}>
-                        <div className={feedStyles.post}>
+            {posts.map(post => (
+                <div key={post.id} className={feedStyles.container}>
+                    <div className={feedStyles.post}>
                         <h2>{post.caption}</h2>
                         {post.image && <img className={feedStyles.img} src={post.image} alt="Post" />}
                         <div className={feedStyles.interactions}>
@@ -64,12 +77,9 @@ const PostList = () => {
                             <Comments postId={post.id} owner={post.owner} />
                             <Button className={buttonStyles.deletepost} onClick={() => handleDeletePost(post.id)}>Delete Post</Button>
                         </div>
-                        </div>
                     </div>
-                ))
-            ) : (
-                <p>No posts have been created. <Link to='/posts/create'>Click Here</Link> to create one.</p>
-            )}
+                </div>
+            ))}
         </div>
     );
 };

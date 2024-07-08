@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { axiosReq, axiosRes } from '../api/axiosDefaults';
-import { NavLink, useHistory } from 'react-router-dom';
-import { useCurrentUser, useSetCurrentUser } from '../contexts/CurrentUserContext';
 import { Navbar, Container, Nav, NavDropdown, Form, Button, ListGroup } from "react-bootstrap";
 import navStyles from '../styles/NavBar.module.css';
 import btnStyles from '../styles/Buttons.module.css';
+import { NavLink, useHistory } from 'react-router-dom';
+import { useCurrentUser, useSetCurrentUser } from '../contexts/CurrentUserContext';
+import axios from 'axios';
 
 const NavBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -16,11 +16,11 @@ const NavBar = () => {
 
   const handleSignOut = async () => {
     try {
-      await axiosRes.post("dj-rest-auth/logout/");
+      await axios.post("dj-rest-auth/logout/");
       setCurrentUser(null);
       history.push('/');
     } catch (err) {
-      console.error("Error during sign out:", err);
+      console.error(err);
     }
   };
 
@@ -31,7 +31,7 @@ const NavBar = () => {
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axiosReq.get(`/profiles/?search=${searchQuery}`);
+      const response = await axios.get(`/profiles/?search=${searchQuery}`);
       setSearchResults(response.data.results);
     } catch (error) {
       console.error("Error searching users:", error);
@@ -126,8 +126,7 @@ const NavBar = () => {
             {loggedInIcons}
             {loggedOutIcons}
           </Nav>
-          {currentUser && (
-            <Form className="d-flex align-items-center" onSubmit={handleSearchSubmit} style={{ position: 'relative' }}>
+          <Form className="d-flex align-items-center" onSubmit={handleSearchSubmit} style={{ position: 'relative' }}>
             <Form.Control
               type="search"
               placeholder="Search by username, location, or full name"
@@ -148,15 +147,9 @@ const NavBar = () => {
                     {user.user} - {user.full_name} - {user.location}
                   </ListGroup.Item>
                 ))}
-                <Button
-                  className={btnStyles.button}
-                  onClick={() => setSearchResults([])}>
-                  <i className="fas fa-times" />
-                </Button>
               </ListGroup>
             )}
           </Form>
-          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>

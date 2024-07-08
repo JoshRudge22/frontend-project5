@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import followStyles from '../../styles/Follow.module.css';
 
 
 function LikeList({ postId }) {
@@ -44,12 +45,13 @@ function LikeList({ postId }) {
   }
 
   return (
-    <div>
-      <h2>Users Who Liked This Post</h2>
-      <ul>
+    <div className={followStyles.followersList}>
+      <h2 className={followStyles.title}>Users Who Liked This Post</h2>
+      <ul className={followStyles.list}>
         {likedUsers.map((user) => (
-          <li key={user.username}>
+          <li className={followStyles.follow} key={user.username}>
             <img
+              className={followStyles.image}
               src={user.profileImage}
               alt={`${user.username}'s profile`}
             />

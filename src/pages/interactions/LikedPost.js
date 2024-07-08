@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Comments from '../../components/interactions/Comments';
 import LikeButton from '../../components/interactions/Likes';
-import likeStyles from '../../styles/likes/Likeslist.module.css'
+import likeStyles from '../../styles/likes/Likeslist.module.css';
+import NoContentStyles from '../../styles/NoContent.module.css';
+import logo from '../../logo.png';
 
 const LikedPost = () => {
   const [likedPosts, setLikedPosts] = useState([]);
@@ -20,6 +23,18 @@ const LikedPost = () => {
 
     fetchLikedPosts();
   }, []);
+
+  if (!Array.isArray(likedPosts) || likedPosts.length === 0) {
+    return (
+      <div className={NoContentStyles.container}>
+        <h2 className={NoContentStyles.message}>You have not liked any posts yet.</h2>
+        <img className={NoContentStyles.logo} src={logo} alt="Logo" />
+        <h2 className={NoContentStyles.message}>
+          <Link to='/'>Click Here</Link> to discover posts you may like
+        </h2>
+      </div>
+    );
+  }
 
   return (
     <div>

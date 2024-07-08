@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import Comments from '../../components/interactions/Comments';
 import LikeButton from '../../components/interactions/Likes';
 import commentsListStyles from '../../styles/FeedPage.module.css';
+import NoContentStyles from '../../styles/NoContent.module.css';
+import logo from '../../logo.png';
 
 const CommentsList = () => {
   const [commentedPosts, setCommentedPosts] = useState([]);
@@ -35,7 +37,15 @@ const CommentsList = () => {
   }
 
   if (!Array.isArray(commentedPosts) || commentedPosts.length === 0) {
-    return <p>You've not commented on anyones post. <Link to='/'>Click here</Link> to discover other users posts</p>;
+    return  (
+    <div className={NoContentStyles.container}>
+      <h2 className={NoContentStyles.message}>You have not left a comment on anyones post.</h2>
+      <img className={NoContentStyles.logo} src={logo} alt="Logo" />
+      <h2 className={NoContentStyles.message}>
+        <Link to='/'>Click Here</Link> to discover users you may like to comment on
+      </h2>
+    </div>
+    )
   }
 
   return (
