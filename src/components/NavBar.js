@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Navbar, Container, Nav, NavDropdown, Form, Button, ListGroup } from "react-bootstrap";
-import navStyles from '../styles/NavBar.module.css';
-import btnStyles from '../styles/Buttons.module.css';
+import axios from 'axios';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useCurrentUser, useSetCurrentUser } from '../contexts/CurrentUserContext';
-import axios from 'axios';
+import { removeTokenTimestamp } from '../utils/utils';
+import navStyles from '../styles/NavBar.module.css';
+import btnStyles from '../styles/Buttons.module.css';
 
 const NavBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -18,9 +19,9 @@ const NavBar = () => {
     try {
       await axios.post("dj-rest-auth/logout/");
       setCurrentUser(null);
-      history.push('/');
+      removeTokenTimestamp();
     } catch (err) {
-      console.error(err);
+      console.log("Error during sign out:", err);
     }
   };
 

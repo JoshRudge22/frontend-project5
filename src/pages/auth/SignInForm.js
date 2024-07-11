@@ -5,7 +5,15 @@ import { useSetCurrentUser } from '../../contexts/CurrentUserContext';
 import signStyles from '../../styles/SigningForm.module.css';
 import buttonStyles from '../../styles/Buttons.module.css'
 
+import { setTokenTimestamp } from "../../utils/utils";
+
+import axios from "axios";
+
+
 function SignInForm() {
+
+  const setCurrentUser = useSetCurrentUser();
+
   const [signInData, setSignInData] = useState({
     username: "",
     password: ""
@@ -13,7 +21,21 @@ function SignInForm() {
   const { username, password } = signInData;
   const [errors, setErrors] = useState({});
   const history = useHistory();
-  const { login } = useSetCurrentUser();
+  // const { login } = useSetCurrentUser();
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { data } = await axios.post("/dj-rest-auth/login/", signInData);
+      setCurrentUser(data.user);
+      setTokenTimestamp(data);
+      history.goBack();
+    } catch (err) {
+      setErrors(err.response?.data);
+    }
+  };
 
   const handleChange = (event) => {
     setSignInData({
@@ -22,17 +44,18 @@ function SignInForm() {
     });
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-        const userData = await login(signInData);
-        console.log("Server Response:", userData);
-        const profileId = userData.data.user.profile_id;
-        history.push(`/profiles/${profileId}`);
-    } catch (err) {
-        setErrors(err.response?.data || {});
-    }
-};
+  
+
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   try {
+  //       const userData = await login(signInData);
+  //       console.log("Server Response:", userData);
+  //       const profileId = userData.data.user.profile_id;
+  //       history.push(`/profiles/${profileId}`);
+  //   } catch (err) {
+  //       setErrors(err.response?.data || {});
+  //   }
 
   return (
     <Container className={signStyles.container}>
