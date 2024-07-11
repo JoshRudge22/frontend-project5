@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import axios from "axios";
 import { Container, Form, Button, Alert } from 'react-bootstrap';
 import { useSetCurrentUser } from '../../contexts/CurrentUserContext';
+import { setTokenTimestamp } from "../../utils/utils";
 import signStyles from '../../styles/SigningForm.module.css';
 import buttonStyles from '../../styles/Buttons.module.css'
 
-import { setTokenTimestamp } from "../../utils/utils";
-
-import axios from "axios";
 
 
 function SignInForm() {
@@ -21,7 +20,6 @@ function SignInForm() {
   const { username, password } = signInData;
   const [errors, setErrors] = useState({});
   const history = useHistory();
-  // const { login } = useSetCurrentUser();
 
 
   const handleSubmit = async (event) => {
@@ -44,18 +42,6 @@ function SignInForm() {
     });
   };
 
-  
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //       const userData = await login(signInData);
-  //       console.log("Server Response:", userData);
-  //       const profileId = userData.data.user.profile_id;
-  //       history.push(`/profiles/${profileId}`);
-  //   } catch (err) {
-  //       setErrors(err.response?.data || {});
-  //   }
 
   return (
     <Container className={signStyles.container}>

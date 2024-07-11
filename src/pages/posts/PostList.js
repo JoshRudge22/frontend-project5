@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { axiosReq } from "../../api/axiosDefaults";
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import Comments from '../../components/interactions/Comments';
 import LikeButton from '../../components/interactions/Likes';
 import feedStyles from '../../styles/FeedPage.module.css';
@@ -13,12 +14,15 @@ const PostList = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [nextUrl, setNextUrl] = useState(null);
+    const [hasMore, setHasMore] = useState(true);
 
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await axiosReq.get('/posts/user');
+                const response = await axiosReq.get('/posts/user/?limit=5&offset=0');
                 setPosts(response.data.results);
+                setNextUrl(response.data.next); 
             } catch (error) {
                 console.error('Error fetching posts:', error);
                 setError('Error fetching posts');
@@ -29,6 +33,21 @@ const PostList = () => {
 
         fetchPosts();
     }, []);
+
+    const fetchMorePosts = async () => {
+        if (nextUrl) {
+            try {
+                const response = await axiosReq.get(nextUrl);
+                setPosts(prevPosts => [...prevPosts, ...response.data.results]);
+                setNextUrl(response.data.next);
+                if (!response.data.next) {
+                    setHasMore(false);
+                }
+            } catch (error) {
+                setError(error.message);
+            }
+        }
+    };
 
     const handleDeletePost = async (postId) => {
         const confirmDelete = window.confirm('Are you sure you want to delete this post?');
@@ -65,22 +84,27 @@ const PostList = () => {
     }
 
     return (
-        <div>
-            <h1>Your Posts</h1>
-            {posts.map(post => (
-                <div key={post.id} className={feedStyles.container}>
-                    <div className={feedStyles.post}>
-                        <h2>{post.caption}</h2>
-                        {post.image && <img className={feedStyles.img} src={post.image} alt="Post" />}
-                        <div className={feedStyles.interactions}>
-                            <LikeButton postId={post.id} />
-                            <Comments postId={post.id} owner={post.owner} />
-                            <Button className={buttonStyles.deletepost} onClick={() => handleDeletePost(post.id)}>Delete Post</Button>
-                        </div>
+    <InfiniteScroll
+    dataLength={posts.length}
+    next={fetchMorePosts}
+    hasMore={hasMore}
+    loader={<h4>Loading...</h4>}
+    >
+        <h1>Your Posts</h1>
+        {posts.map(post => (
+            <div key={post.id} className={feedStyles.container}>
+                <div className={feedStyles.post}>
+                    <h2>{post.caption}</h2>
+                    {post.image && <img className={feedStyles.img} src={post.image} alt="Post" />}
+                    <div className={feedStyles.interactions}>
+                        <LikeButton postId={post.id} />
+                        <Comments postId={post.id} owner={post.owner} />
+                        <Button className={buttonStyles.deletepost} onClick={() => handleDeletePost(post.id)}>Delete Post</Button>
                     </div>
                 </div>
-            ))}
-        </div>
+            </div>
+        ))}
+    </InfiniteScroll>
     );
 };
 
