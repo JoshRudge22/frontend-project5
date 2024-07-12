@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
-import likeStyles from '../../styles/likes/Likes.module.css'
-import buttonStyles from '../../styles/Buttons.module.css'
+import likeStyles from '../../styles/likes/Likes.module.css';
+import buttonStyles from '../../styles/Buttons.module.css';
 
-function Likes({ postId, userId }) {
+function Likes({ postId, currentUser }) {
   const [liked, setLiked] = useState(null);
   const [likesCount, setLikesCount] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
@@ -18,7 +17,9 @@ function Likes({ postId, userId }) {
 
         if (Array.isArray(likes)) {
           setLikesCount(likes.length);
-          setLiked(likes.includes(userId));
+          if (currentUser) {
+            setLiked(likes.includes(currentUser.username));
+          }
         } else {
           console.error("Expected an array of usernames.");
         }
@@ -29,7 +30,7 @@ function Likes({ postId, userId }) {
     };
 
     fetchLikes();
-  }, [postId, userId]);
+  }, [postId, currentUser]);
 
   const handleLike = async () => {
     try {
@@ -53,15 +54,21 @@ function Likes({ postId, userId }) {
   return (
     <div>
       <div>
-        <Button className={buttonStyles.like} onClick={handleLike} disabled={liked === null}>
-          {liked ? 'Unlike' : 'Like'}
-        </Button>
+        {currentUser ? (
+          <>
+            <button className={buttonStyles.like} onClick={handleLike} disabled={liked === null}>
+              {liked ? 'Unlike' : 'Like'}
+            </button>
+            <Link className={likeStyles.link} to={`/posts/${postId}/likes`}>View likes</Link>
+          </>
+        ) : (
+          <p>Please log in to like this post.</p>
+        )}
         <div>
           <span className={likeStyles.count}>{likesCount} {likesCount === 1 ? 'like' : 'likes'}</span>
           {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         </div>
       </div>
-      <Link className={likeStyles.link} to={`/posts/${postId}/likes`}>View likes</Link>
     </div>
   );
 }

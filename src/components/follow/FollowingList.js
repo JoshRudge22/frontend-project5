@@ -13,8 +13,6 @@ const FollowingList = ({ username }) => {
       try {
         const response = await axios.get(`/following/${username}/`);
         console.log("API response for following list:", response.data);
-
-        // Fetch profile images for each following user
         const followingWithImages = await Promise.all(
           response.data.results.map(async (following) => {
             const profileResponse = await axios.get(`/profiles/${following.following_username}/`);
