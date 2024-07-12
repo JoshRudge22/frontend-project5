@@ -12,7 +12,6 @@ import buttonStyles from '../../styles/Buttons.module.css'
 function SignInForm() {
 
   const setCurrentUser = useSetCurrentUser();
-
   const [signInData, setSignInData] = useState({
     username: "",
     password: ""
@@ -29,7 +28,7 @@ function SignInForm() {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
       setCurrentUser(data.user);
       setTokenTimestamp(data);
-      history.goBack();
+      history.push(`/profiles/${data.user.profile_id}`);
     } catch (err) {
       setErrors(err.response?.data);
     }

@@ -6,7 +6,7 @@ import FollowButton from '../../../components/follow/FollowButton';
 import userprofileStyles from '../../../styles/profiles/UsersPage.module.css';
 
 const UsersPage = () => {
-  const { username } = useParams();  // Username from URL params
+  const { username } = useParams();
   const [profileData, setProfileData] = useState(null);
   const [followerCount, setFollowerCount] = useState(0);
   const [followingCount, setFollowingCount] = useState(0);

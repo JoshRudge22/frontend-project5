@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { axiosReq } from "../../api/axiosDefaults";
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Comments from '../../components/interactions/Comments';
 import LikeButton from '../../components/interactions/Likes';
@@ -16,6 +17,7 @@ const PostList = () => {
     const [error, setError] = useState(null);
     const [nextUrl, setNextUrl] = useState(null);
     const [hasMore, setHasMore] = useState(true);
+    const currentUser = useCurrentUser();
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -84,27 +86,27 @@ const PostList = () => {
     }
 
     return (
-    <InfiniteScroll
-    dataLength={posts.length}
-    next={fetchMorePosts}
-    hasMore={hasMore}
-    loader={<h4>Loading...</h4>}
-    >
-        <h1>Your Posts</h1>
-        {posts.map(post => (
-            <div key={post.id} className={feedStyles.container}>
-                <div className={feedStyles.post}>
-                    <h2>{post.caption}</h2>
-                    {post.image && <img className={feedStyles.img} src={post.image} alt="Post" />}
-                    <div className={feedStyles.interactions}>
-                        <LikeButton postId={post.id} />
-                        <Comments postId={post.id} owner={post.owner} />
-                        <Button className={buttonStyles.deletepost} onClick={() => handleDeletePost(post.id)}>Delete Post</Button>
+        <InfiniteScroll
+            dataLength={posts.length}
+            next={fetchMorePosts}
+            hasMore={hasMore}
+            loader={<h4>Loading...</h4>}
+        >
+            <h1>Your Posts</h1>
+            {posts.map(post => (
+                <div key={post.id} className={feedStyles.container}>
+                    <div className={feedStyles.post}>
+                        <h2>{post.caption}</h2>
+                        {post.image && <img className={feedStyles.img} src={post.image} alt="Post" />}
+                        <div className={feedStyles.interactions}>
+                            <LikeButton postId={post.id} currentUser={currentUser} />
+                            <Comments postId={post.id} currentUser={currentUser} />
+                            <Button className={buttonStyles.deletepost} onClick={() => handleDeletePost(post.id)}>Delete Post</Button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        ))}
-    </InfiniteScroll>
+            ))}
+        </InfiniteScroll>
     );
 };
 

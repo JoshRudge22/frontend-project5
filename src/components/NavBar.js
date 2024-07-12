@@ -20,6 +20,7 @@ const NavBar = () => {
       await axios.post("dj-rest-auth/logout/");
       setCurrentUser(null);
       removeTokenTimestamp();
+      history.push('/signin');
     } catch (err) {
       console.log("Error during sign out:", err);
     }

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Comments from '../../components/interactions/Comments';
-import LikeButton from '../../components/interactions/Likes';
+import Likes from '../../components/interactions/Likes';
 import feedStyles from '../../styles/FeedPage.module.css';
 import NoContentStyles from '../../styles/NoContent.module.css';
 import logo from '../../logo.png';
+
 
 const FollowingFeedPage = () => {
   const [feedData, setFeedData] = useState([]);
@@ -14,6 +16,7 @@ const FollowingFeedPage = () => {
   const [error, setError] = useState(null);
   const [nextUrl, setNextUrl] = useState(null);
   const [hasMore, setHasMore] = useState(true);
+  const currentUser = useCurrentUser();
 
   useEffect(() => {
     const fetchFollowingFeed = async () => {
@@ -86,8 +89,8 @@ const FollowingFeedPage = () => {
                 <img className={feedStyles.img} src={item.image} alt={item.caption} />
               )}
               <div className={feedStyles.interactions}>
-                <LikeButton postId={item.id} />
-                <Comments postId={item.id} owner={item.owner} />
+                <Likes postId={item.id} currentUser={currentUser} />
+                <Comments postId={item.id} currentUser={currentUser} />
               </div>
             </div>
           </li>

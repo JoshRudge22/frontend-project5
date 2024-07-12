@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Comments from '../../components/interactions/Comments';
 import LikeButton from '../../components/interactions/Likes';
 import commentsListStyles from '../../styles/FeedPage.module.css';
@@ -11,6 +12,7 @@ const CommentsList = () => {
   const [commentedPosts, setCommentedPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const currentUser = useCurrentUser();
 
   useEffect(() => {
     const fetchCommentedPosts = async () => {
@@ -39,7 +41,7 @@ const CommentsList = () => {
   if (!Array.isArray(commentedPosts) || commentedPosts.length === 0) {
     return  (
     <div className={NoContentStyles.container}>
-      <h2 className={NoContentStyles.message}>You have not left a comment on anyones post.</h2>
+      <h2 className={NoContentStyles.message}>You have not left a comment on anyone's post.</h2>
       <img className={NoContentStyles.logo} src={logo} alt="Logo" />
       <h2 className={NoContentStyles.message}>
         <Link to='/'>Click Here</Link> to discover users you may like to comment on
@@ -58,15 +60,14 @@ const CommentsList = () => {
               <h3 className={commentsListStyles.username}>Post by: <Link to={`/profile/${post.owner}`}>{post.owner}</Link></h3>
               <h3>{post.caption}</h3>
               <img className={commentsListStyles.img} src={post.image} alt={post.caption} />
-            <div className={commentsListStyles.interactions}>
-              <LikeButton postId={post.id} />
-              <Comments postId={post.id} owner={post.owner} />
-            </div>  
+              <div className={commentsListStyles.interactions}>
+                <LikeButton postId={post.id} currentUser={currentUser} />
+                <Comments postId={post.id} currentUser={currentUser} />
+              </div>  
             </div>
           </li>
         ))}
       </ul>
-      
     </div>
   );
 };

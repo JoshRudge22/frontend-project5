@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Comments from '../../components/interactions/Comments';
 import LikeButton from '../../components/interactions/Likes';
 import likeStyles from '../../styles/likes/Likeslist.module.css';
@@ -10,6 +11,7 @@ import logo from '../../logo.png';
 
 const LikedPost = () => {
   const [likedPosts, setLikedPosts] = useState([]);
+  const currentUser = useCurrentUser();
 
   useEffect(() => {
     const fetchLikedPosts = async () => {
@@ -47,8 +49,8 @@ const LikedPost = () => {
                 <h3>{post.caption}</h3>
                 <img className={likeStyles.img} src={post.image} alt={`Post ${post.id}`} />
                 <div className={likeStyles.interactions}>
-                  <LikeButton postId={post.id} />
-                  <Comments postId={post.id} />
+                  <LikeButton postId={post.id} currentUser={currentUser} />
+                  <Comments postId={post.id} currentUser={currentUser} />
                 </div>
               </div>
             </li>
