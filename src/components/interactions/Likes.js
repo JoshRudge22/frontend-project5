@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import likeStyles from '../../styles/likes/Likes.module.css';
 import buttonStyles from '../../styles/Buttons.module.css';
@@ -56,9 +57,9 @@ function Likes({ postId, currentUser }) {
       <div>
         {currentUser ? (
           <>
-            <button className={buttonStyles.like} onClick={handleLike} disabled={liked === null}>
-              {liked ? 'Unlike' : 'Like'}
-            </button>
+          <Button className={buttonStyles.like} onClick={handleLike} disabled={liked === null}>
+            {liked ? <><i className="fa-regular fa-thumbs-down"></i></> : <><i className="fa-regular fa-thumbs-up"></i></>}
+            </Button>
             <Link className={likeStyles.link} to={`/posts/${postId}/likes`}>View likes</Link>
           </>
         ) : (

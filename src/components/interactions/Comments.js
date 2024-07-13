@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Button, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import commentStyles from '../../styles/comments/Comments.module.css';
 import buttonStyles from '../../styles/Buttons.module.css';
-import { Link } from 'react-router-dom';
+
 
 
 const Comments = ({ postId, currentUser }) => {

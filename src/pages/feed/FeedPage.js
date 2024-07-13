@@ -7,7 +7,6 @@ import Comments from '../../components/interactions/Comments';
 import Likes from '../../components/interactions/Likes';
 import feedStyles from '../../styles/FeedPage.module.css';
 
-
 const FeedPage = () => {
   const [feedData, setFeedData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -62,7 +61,7 @@ const FeedPage = () => {
       hasMore={hasMore}
       loader={<h4>Loading...</h4>}
     >
-      <h2 className={feedStyles.title}>Discover Feed!</h2>
+      <h2 className={feedStyles.title}>Discover Feed</h2>
       <ul className={feedStyles.ul}>
         {Array.isArray(feedData) && feedData.map((item) => (
           <li key={item.id} className={feedStyles.container}>
@@ -70,10 +69,10 @@ const FeedPage = () => {
               <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
                 {item.owner}
               </Link>
-              <h3>{item.caption}</h3>
               {item.image && (
                 <img className={feedStyles.img} src={item.image} alt={item.caption} />
               )}
+              <p className={feedStyles.caption}><b>{item.owner}</b>: {item.caption}</p>
               <div className={feedStyles.interactions}>
                 <Likes postId={item.id} currentUser={currentUser} />
                 <Comments postId={item.id} currentUser={currentUser} />

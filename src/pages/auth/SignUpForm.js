@@ -6,7 +6,7 @@ import { setTokenTimestamp } from '../../utils/utils';
 import { useSetCurrentUser } from '../../contexts/CurrentUserContext';
 import signStyles from '../../styles/SigningForm.module.css';
 import buttonStyles from '../../styles/Buttons.module.css';
-import camera from '../../media/camera.jpg';
+import signup from '../../media/signup.jpg';
 
 const signUp = async (signUpData) => {
   const response = await axios.post('/dj-rest-auth/registration/', signUpData);
@@ -114,7 +114,7 @@ function SignUpForm() {
           <p className={signStyles.otherlink}>Already have an account? Click on <Link to="/signin">Login</Link></p>
         </Col>
         <Col md={6} className="text-center">
-          <img src={camera} alt="Sign Up" className={signStyles.image} />
+          <img src={signup} alt="Sign Up" className={signStyles.image} />
         </Col>
       </Row>
     </Container>

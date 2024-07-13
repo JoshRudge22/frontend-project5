@@ -84,10 +84,10 @@ const FollowingFeedPage = () => {
               <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
                 {item.owner}
               </Link>
-              <h3>{item.caption}</h3>
               {item.image && (
                 <img className={feedStyles.img} src={item.image} alt={item.caption} />
               )}
+               <p className={feedStyles.caption}><b>{item.owner}</b>: {item.caption}</p>
               <div className={feedStyles.interactions}>
                 <Likes postId={item.id} currentUser={currentUser} />
                 <Comments postId={item.id} currentUser={currentUser} />

@@ -1,4 +1,10 @@
-ul {
+  .title {
+  margin-top: 30px;
+  font-size: 80px;
+  font-family: "Oswald", sans-serif;
+}
+
+  ul {
     list-style-type: none;
     padding: 0;
     margin-top: 50px;
@@ -6,6 +12,9 @@ ul {
   }
   
   .container {
+    width: 900px;
+    margin: 40px auto;
+    padding: 20px;
     margin-bottom: 80px;
   }
   
@@ -17,14 +26,21 @@ ul {
   }
 
   .post h3 {
-    margin-top: 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
   }
   
   .img {
-    width: 500px;
+    margin-top: 50px;
+    width: 600px;
     height: auto;
   }
   
+  .caption {
+    margin-top: 20px;
+    font-size: 20px;
+  }
+
   .interactions {
     display: flex;
     flex-direction: column;
@@ -33,5 +49,6 @@ ul {
   
   .username {
     font-weight: bold;
-    font-size: 40px;
+    font-size: 80px;
+    color: black;
   }

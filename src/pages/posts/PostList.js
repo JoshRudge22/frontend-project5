@@ -92,12 +92,12 @@ const PostList = () => {
             hasMore={hasMore}
             loader={<h4>Loading...</h4>}
         >
-            <h1>Your Posts</h1>
+            <h1 className={feedStyles.title}>Your Posts</h1>
             {posts.map(post => (
                 <div key={post.id} className={feedStyles.container}>
                     <div className={feedStyles.post}>
-                        <h2>{post.caption}</h2>
                         {post.image && <img className={feedStyles.img} src={post.image} alt="Post" />}
+                        <p className={feedStyles.caption}>{post.caption}</p>
                         <div className={feedStyles.interactions}>
                             <LikeButton postId={post.id} currentUser={currentUser} />
                             <Comments postId={post.id} currentUser={currentUser} />

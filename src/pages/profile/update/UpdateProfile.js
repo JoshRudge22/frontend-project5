@@ -82,7 +82,7 @@ const UpdateProfile = () => {
       <h2 className={profileStyles.heading}>Edit Profile</h2>
       <Form onSubmit={handleSubmit}>
         <div>
-          <Form.Label htmlFor="profileImage">Profile Picture:</Form.Label>
+          <Form.Label className={profileStyles.label} htmlFor="profileImage">Profile Picture:</Form.Label>
           {formData.currentProfileImage && (
             <div>
               <img className={profileStyles.image}
