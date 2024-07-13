@@ -47,7 +47,7 @@ const NavBar = () => {
 
   const loggedInIcons = currentUser ? (
     <>
-      <NavDropdown title="Feed" id="navbarScrollingDropdown" className={navStyles.NavLink}>
+      <NavDropdown title="Feed" id="navbarScrollingDropdown" className={navStyles.Login}>
         <NavDropdown.Item onClick={() => history.push("/")}>
           <i className="fa-solid fa-eye"></i> Discover Feed
         </NavDropdown.Item>
@@ -55,7 +55,7 @@ const NavBar = () => {
           <i className="fa-solid fa-images"></i> Following Feed
         </NavDropdown.Item>
       </NavDropdown>
-      <NavDropdown title="Posts" id="navbarScrollingDropdown" className={navStyles.NavLink}>
+      <NavDropdown title="Posts" id="navbarScrollingDropdown" className={navStyles.Login}>
         <NavDropdown.Item onClick={() => history.push("/posts/create")}>
           <i className="fa-solid fa-plus"></i> Add Post
         </NavDropdown.Item>
@@ -63,7 +63,7 @@ const NavBar = () => {
           <i className="fa-solid fa-list"></i> Post List
         </NavDropdown.Item>
       </NavDropdown>
-      <NavDropdown title="Profile" id="navbarScrollingDropdown" className={navStyles.NavLink}>
+      <NavDropdown title="Profile" id="navbarScrollingDropdown" className={navStyles.Login}>
         <NavDropdown.Item onClick={() => history.push(`/profiles/${currentUser.profile_id}`)}>
           <i className="fa-solid fa-user"></i> Profile
         </NavDropdown.Item>
@@ -71,7 +71,7 @@ const NavBar = () => {
           <i className="fa-solid fa-user-pen"></i> Update Profile
         </NavDropdown.Item>
       </NavDropdown>
-      <NavDropdown title="Interactions" id="navbarScrollingDropdown" className={navStyles.NavLink}>
+      <NavDropdown title="Interactions" id="navbarScrollingDropdown" className={navStyles.Login}>
         <NavDropdown.Item onClick={() => history.push("/commentslist")}>
           <i className="fa-solid fa-comments"></i> Comments
         </NavDropdown.Item>
@@ -79,7 +79,7 @@ const NavBar = () => {
           <i className="fa-solid fa-thumbs-up"></i> Likes
         </NavDropdown.Item>
       </NavDropdown>
-      <NavDropdown title="Follow" id="navbarScrollingDropdown" className={navStyles.NavLink}>
+      <NavDropdown title="Follow" id="navbarScrollingDropdown" className={navStyles.Login}>
         <NavDropdown.Item onClick={() => history.push("/followerslist")}>
           <i className="fa-solid fa-user-group"></i> Followers
         </NavDropdown.Item>
@@ -87,7 +87,7 @@ const NavBar = () => {
           <i className="fa-solid fa-people-robbery"></i> Following
         </NavDropdown.Item>
       </NavDropdown>
-      <NavDropdown title="Signing Out" id="navbarScrollingDropdown" className={navStyles.NavLink}>
+      <NavDropdown title="Signing Out" id="navbarScrollingDropdown" className={navStyles.Login}>
         <NavDropdown.Item onClick={handleSignOut}>
           <i className="fas fa-sign-out-alt"></i> Sign out
         </NavDropdown.Item>
@@ -103,16 +103,16 @@ const NavBar = () => {
 
   const loggedOutIcons = !currentUser && (
     <>
-      <NavLink className={navStyles.NavLink} to="/">
+      <NavLink className={navStyles.Logout} to="/">
         <i className="fas fa-stream"></i> Feed
       </NavLink>
-      <NavLink className={navStyles.NavLink} to="/signin">
+      <NavLink className={navStyles.Logout} to="/signin">
         <i className="fas fa-sign-in-alt"></i> Sign in
       </NavLink>
-      <NavLink to="/signup" className={navStyles.NavLink}>
+      <NavLink to="/signup" className={navStyles.Logout}>
         <i className="fas fa-user-plus"></i> Sign up
       </NavLink>
-      <NavLink to="/contact" className={navStyles.NavLink}>
+      <NavLink to="/contact" className={navStyles.Logout}>
         <i className="fa-solid fa-file-contract"></i> Contact Us
       </NavLink>
     </>
@@ -131,7 +131,7 @@ const NavBar = () => {
           <Form className="d-flex align-items-center" onSubmit={handleSearchSubmit} style={{ position: 'relative' }}>
             <Form.Control
               type="search"
-              placeholder="Search by username, location, or full name"
+              placeholder="Search Here"
               className="me-2"
               aria-label="Search"
               value={searchQuery}

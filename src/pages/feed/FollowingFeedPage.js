@@ -7,7 +7,7 @@ import Comments from '../../components/interactions/Comments';
 import Likes from '../../components/interactions/Likes';
 import feedStyles from '../../styles/FeedPage.module.css';
 import NoContentStyles from '../../styles/NoContent.module.css';
-import logo from '../../logo.png';
+import logo from '../../media/logo.png';
 
 
 const FollowingFeedPage = () => {

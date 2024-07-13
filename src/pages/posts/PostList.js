@@ -9,7 +9,7 @@ import LikeButton from '../../components/interactions/Likes';
 import feedStyles from '../../styles/FeedPage.module.css';
 import buttonStyles from '../../styles/Buttons.module.css';
 import NoContentStyles from '../../styles/NoContent.module.css';
-import logo from '../../logo.png'
+import logo from '../../media/logo.png';
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);

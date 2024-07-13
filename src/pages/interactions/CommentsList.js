@@ -6,7 +6,7 @@ import Comments from '../../components/interactions/Comments';
 import LikeButton from '../../components/interactions/Likes';
 import commentsListStyles from '../../styles/FeedPage.module.css';
 import NoContentStyles from '../../styles/NoContent.module.css';
-import logo from '../../logo.png';
+import logo from '../../media/logo.png';
 
 const CommentsList = () => {
   const [commentedPosts, setCommentedPosts] = useState([]);
