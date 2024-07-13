@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import contactstyles from '../../styles/Contact.module.css';
+import contactstyles from '../../styles//contact/Contact.module.css';
 import buttonstyles from '../../styles/Buttons.module.css';
 
 const ContactForm = () => {
@@ -49,7 +49,7 @@ const ContactForm = () => {
 
   return (
     <Container className={contactstyles.contactContainer}>
-      <h1>Contact Form</h1>
+      <h1 className={contactstyles.title}>Contact Form</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formName">
           <Form.Label className={contactstyles.contactLabel}>Name:</Form.Label>

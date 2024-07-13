@@ -3,6 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import { axiosRes } from "../../api/axiosDefaults";
 import { useHistory } from "react-router";
 import { useCurrentUser, useSetCurrentUser } from '../../contexts/CurrentUserContext';
+import buttonStyles from '../../styles/Buttons.module.css'
 
 const Delete = () => {
   const [showModal, setShowModal] = useState(false);
@@ -25,7 +26,7 @@ const Delete = () => {
 
   return (
     <div>
-      <Button variant="danger" onClick={handleShowModal}>Delete Profile</Button>
+      <Button className={buttonStyles.delete} variant="danger" onClick={handleShowModal}>Delete Profile</Button>
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Confirm Profile Deletion</Modal.Title>

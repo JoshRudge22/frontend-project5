@@ -1,15 +1,16 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import Delete from '../../../components/interactions/Delete';
+import deleteStyles from '../../../styles/Delete.module.css'
 
 const DeleteProfile = () => {
   return (
-    <Container>
+    <Container className={deleteStyles.container}>
       <Row className="justify-content-center">
         <Col md={8}>
-          <Card>
+          <Card className={deleteStyles.card}>
             <Card.Header>
-              <h2>Profile Settings</h2>
+              <h2 className={deleteStyles.title}>Profile Settings</h2>
             </Card.Header>
             <Card.Body>
               <h3>Deleting Your Profile</h3>

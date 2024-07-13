@@ -1,36 +1,63 @@
+.Number {
+  margin-top: 30px;
+  font-size: 80px;
+  font-family: "Oswald", sans-serif;
+  font-weight: bold;
+  color: #212121;
+  text-align: center;
+  margin-bottom: 60px;
+}
 
-.container {
-  max-width: 800px;
+.followerslist {
+  max-width: 400px;
   margin: 40px auto;
   padding: 20px;
-  } 
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  margin-top: 30px;
+  font-size: 80px;
+  font-family: "Oswald", sans-serif;
+}
 
 .list {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
-  margin-top: 50px;
-  margin-bottom: 50px;
-  }
-
-.post {
-  border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 8px;
-  background-color: #fff;
-  }
-
-.img {
-  width: 500px;
-  height: auto;
+  margin: 20px;
 }
 
-.interactions {
+.follow {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
 }
-  
-.nolikes {
-  color: #999;
-  font-style: italic;
+
+.follow a {
+  display: flex;
+  align-items: center;
+  font-size: 35px;
+  text-decoration: none;
+  color: #337ab7;
+}
+
+.follow a:hover {
+  color: #0e2d47;
+}
+
+.image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.username {
+  font-size: 35px;
+  color: #212121;
 }

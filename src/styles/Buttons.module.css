@@ -18,7 +18,7 @@
 
 .delete {
   background-color: #dc3545;
-  font-size: 15px;
+  font-size: 25px;
   align-self: center;
   border-radius: 100px;
   border-color: transparent;
@@ -94,4 +94,14 @@
   margin-top: 20px;
   cursor: pointer;
   transition: background-color 0.3s;
+}
+
+.follow {
+    background-color: #1d56d1;
+    font-size: 35px;
+    align-self: center;
+    padding: 4px 10px; 
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }

@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { Button } from 'react-bootstrap';
+import buttonStyles from '../../styles/Buttons.module.css';
 
 const FollowButton = ({ profileId, username }) => {
   const [isFollowing, setIsFollowing] = useState(false);
@@ -20,7 +22,6 @@ const FollowButton = ({ profileId, username }) => {
   const handleFollow = async () => {
     try {
       if (isFollowing) {
-        // Unfollow
         const response = await axios.delete(`/profiles/${username}/unfollow/`);
         if (response.status === 204) {
           setIsFollowing(false);
@@ -28,7 +29,6 @@ const FollowButton = ({ profileId, username }) => {
           console.log(response.data.message);
         }
       } else {
-        // Follow
         const response = await axios.post(`/profiles/${username}/follow/`);
         if (response.status === 201) {
           setIsFollowing(true);
@@ -43,7 +43,7 @@ const FollowButton = ({ profileId, username }) => {
 
   return (
     <div>
-      <button onClick={handleFollow}>{isFollowing ? 'Unfollow' : 'Follow'}</button>
+      <Button className={buttonStyles.follow} onClick={handleFollow}>{isFollowing ? 'Unfollow' : 'Follow'}</Button>
     </div>
   );
 };

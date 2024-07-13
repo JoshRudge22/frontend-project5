@@ -40,14 +40,15 @@ const LikedPost = () => {
 
   return (
     <div>
-      <h2 className={likeStyles.pagetitle}>Liked Posts</h2>
+      <h2 className={likeStyles.title}>Liked Posts</h2>
       <Container className={likeStyles.container}>
-        <ul className={likeStyles.list}>
+        <ul className={likeStyles.ul}>
           {likedPosts.map((post) => (
             <li className={likeStyles.container} key={post.id}>
               <div className={likeStyles.post}>
-                <h3>{post.caption}</h3>
+              <h3 className={likeStyles.username}>Post by: <Link to={`/profile/${post.owner}`}>{post.owner}</Link></h3>
                 <img className={likeStyles.img} src={post.image} alt={`Post ${post.id}`} />
+                <p className={likeStyles.caption}><b>{post.owner}</b>: {post.caption}</p>
                 <div className={likeStyles.interactions}>
                   <LikeButton postId={post.id} currentUser={currentUser} />
                   <Comments postId={post.id} currentUser={currentUser} />

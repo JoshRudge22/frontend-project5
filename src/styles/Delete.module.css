@@ -1,0 +1,44 @@
+.title {
+    margin-top: 30px;
+    font-size: 80px;
+    font-family: "Oswald", sans-serif;
+  }
+
+.card {
+    margin-top: 50px;
+    width: 800px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
+}
+  
+.card-header {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+}
+  
+h3 {
+    font-size: 40px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+  
+p {
+    font-size: 25px;
+    color: #555;
+    margin-bottom: 15px;
+}
+  
+ul {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+  
+li {
+    font-size: 30px;
+    font-weight: 800;
+    color: #f52c2c;
+    margin-bottom: 10px;
+}

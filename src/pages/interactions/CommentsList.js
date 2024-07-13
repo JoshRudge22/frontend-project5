@@ -52,14 +52,14 @@ const CommentsList = () => {
 
   return (
     <div>
-      <h2>Your Commented Posts</h2>
+      <h2 className={commentsListStyles.title}>Your Commented Posts</h2>
       <ul className={commentsListStyles.ul}>
         {commentedPosts.map(post => (
           <li className={commentsListStyles.container} key={post.id}>
             <div className={commentsListStyles.post}>
               <h3 className={commentsListStyles.username}>Post by: <Link to={`/profile/${post.owner}`}>{post.owner}</Link></h3>
-              <h3>{post.caption}</h3>
               <img className={commentsListStyles.img} src={post.image} alt={post.caption} />
+              <p className={commentsListStyles.caption}><b>{post.owner}</b>: {post.caption}</p>
               <div className={commentsListStyles.interactions}>
                 <LikeButton postId={post.id} currentUser={currentUser} />
                 <Comments postId={post.id} currentUser={currentUser} />
