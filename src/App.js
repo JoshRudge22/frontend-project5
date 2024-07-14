@@ -11,6 +11,7 @@ import DeleteProfile from './pages/profile/other/DeleteProfile';
 import UsersPage from './pages/profile/other/UsersPage';
 import CreatePost from './pages/posts/CreatePost';
 import PostList from './pages/posts/PostList'
+import OtherUsersPostList from './pages/profile/other/OtherUsersPostList';
 import FeedPage from './pages/feed/FeedPage';
 import CommentsList from './pages/interactions/CommentsList'
 import LikeList from './pages/interactions/LikesList';
@@ -39,6 +40,7 @@ function App() {
           <Route exact path="/profiles/:profileId" render={() => <ProfilePage />} />
           <Route exact path="/edit/:profileId" render={() => <EditProfile />} />
           <Route exact path="/profile/:username" render={(props) => <UsersPage {...props} />} />
+          <Route exact path="/user/:username/posts" render={(props) => <OtherUsersPostList {...props} />} />
           <Route exact path="/profiles/delete/:profileId" render={() => <DeleteProfile />} />
           <Route exact path="/posts/create" render={() => <CreatePost />} />
           <Route exact path="/posts/list" render={() => <PostList />} />

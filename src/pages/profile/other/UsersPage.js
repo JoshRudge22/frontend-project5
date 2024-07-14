@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import FollowButton from '../../../components/follow/FollowButton';
 import userprofileStyles from '../../../styles/profiles/UsersPage.module.css';
 
@@ -74,6 +74,9 @@ const UsersPage = () => {
       <p className={userprofileStyles.info}><span className={userprofileStyles.span}>Location:</span> {profileData.location}</p>
       <p className={userprofileStyles.info}><span className={userprofileStyles.span}>Followers:</span> {followerCount}</p>
       <p className={userprofileStyles.info}><span className={userprofileStyles.span}>Following:</span> {followingCount}</p>
+      <p>
+        Click here to view <Link to={`/user/${username}/posts/`}>{username}'s Posts</Link>
+      </p>
       <FollowButton username={username} profileId={profileData.id} />
     </Container>
   );
