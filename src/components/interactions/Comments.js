@@ -7,8 +7,6 @@ import { Link } from 'react-router-dom';
 import commentStyles from '../../styles/comments/Comments.module.css';
 import buttonStyles from '../../styles/Buttons.module.css';
 
-
-
 const Comments = ({ postId, currentUser }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
@@ -27,8 +25,14 @@ const Comments = ({ postId, currentUser }) => {
       }
     };
 
-    fetchComments();
-  }, [postId]);
+    // Fetch comments only if currentUser is available
+    if (currentUser) {
+      fetchComments();
+    } else {
+      // Reset comments when currentUser is not available
+      setComments([]);
+    }
+  }, [postId, currentUser]);
 
   const handleAddComment = async () => {
     try {
@@ -65,58 +69,56 @@ const Comments = ({ postId, currentUser }) => {
     }
   };
 
+  if (!currentUser) {
+    return <p>Please log in to add a comment.</p>;
+  }
+
   return (
     <Container>
-      {currentUser ? (
-        <>
-          {error && <p>{error}</p>}
-          <div>
-            <h3>Comments</h3>
-            {comments.map(comment => (
-              <div key={comment.id}>
-                {editComment === comment.id ? (
+      {error && <p>{error}</p>}
+      <div>
+        <h3>Comments</h3>
+        {comments.map(comment => (
+          <div key={comment.id}>
+            {editComment === comment.id ? (
+              <>
+                <Form.Group>
+                  <Form.Control as="textarea" rows={3} value={editContent} onChange={(e) => setEditContent(e.target.value)} />
+                </Form.Group>
+                <Button className={buttonStyles.edit} onClick={() => handleEditComment(comment.id)}>Save</Button>
+                <Button className={buttonStyles.delete} onClick={() => setEditComment(null)}>Cancel</Button>
+              </>
+            ) : (
+              <>
+                <p>
+                  <Link className={commentStyles.username} to={`/profile/${comment.user}`}>
+                    {comment.user}
+                  </Link>{" "}
+                  says: {comment.content}
+                </p>
+                {currentUser && currentUser.username === comment.user && (
                   <>
-                    <Form.Group>
-                      <Form.Control as="textarea" rows={3} value={editContent} onChange={(e) => setEditContent(e.target.value)} />
-                    </Form.Group>
-                    <Button className={buttonStyles.edit} onClick={() => handleEditComment(comment.id)}>Save</Button>
-                    <Button className={buttonStyles.delete} onClick={() => setEditComment(null)}>Cancel</Button>
-                  </>
-                ) : (
-                  <>
-                    <p>
-                      <Link to={`/profile/${comment.user}`} className={commentStyles.username}>
-                        {comment.user}
-                      </Link>{" "}
-                      says: {comment.content}
-                    </p>
-                    {currentUser && currentUser.username === comment.user && (
-                      <>
-                        <Button className={buttonStyles.edit} onClick={() => { setEditComment(comment.id); setEditContent(comment.content); }}>Edit</Button>
-                        <Button className={buttonStyles.delete} onClick={() => handleDeleteComment(comment.id)}>Delete</Button>
-                      </>
-                    )}
+                    <Button className={buttonStyles.edit} onClick={() => { setEditComment(comment.id); setEditContent(comment.content); }}>Edit</Button>
+                    <Button className={buttonStyles.delete} onClick={() => handleDeleteComment(comment.id)}>Delete</Button>
                   </>
                 )}
-              </div>
-            ))}
+              </>
+            )}
           </div>
-          <div>
-            <h3 className={commentStyles.add}>Add a Comment</h3>
-            <Form.Group>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-              />
-            </Form.Group>
-            <Button className={buttonStyles.save} onClick={handleAddComment}>Submit</Button>
-          </div>
-        </>
-      ) : (
-        <p>Please log in to add a comment.</p>
-      )}
+        ))}
+      </div>
+      <div>
+        <h3 className={commentStyles.add}>Add a Comment</h3>
+        <Form.Group>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+          />
+        </Form.Group>
+        <Button className={buttonStyles.save} onClick={handleAddComment}>Submit</Button>
+      </div>
     </Container>
   );
 };

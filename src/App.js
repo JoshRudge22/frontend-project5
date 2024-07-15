@@ -4,7 +4,6 @@ import { Route, Switch } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import SignInForm from './pages/auth/SignInForm';
 import SignUpForm from './pages/auth/SignUpForm';
-import WelcomePage from './pages/auth/WelcomePage';
 import ProfilePage from './pages/profile/info/ProfilePage';
 import EditProfile from './pages/profile/update/EditProfile';
 import DeleteProfile from './pages/profile/other/DeleteProfile';
@@ -37,7 +36,6 @@ function App() {
           <Route exact path="/feed" render={() => <FollowingFeedPage />} />
           <Route exact path="/signin" render={() => <SignInForm />} />
           <Route exact path="/signup" render={() => <SignUpForm />} />
-          <Route exact path="/welcomePage" render={() => <WelcomePage />} />
           <Route exact path="/profiles/:profileId" render={() => <ProfilePage />} />
           <Route exact path="/edit/:profileId" render={() => <EditProfile />} />
           <Route exact path="/profile/:username" render={(props) => <UsersPage {...props} />} />

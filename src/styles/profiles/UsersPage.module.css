@@ -36,3 +36,16 @@
   margin-bottom: 30px;
   color: #333;
 }
+
+.span a:hover {
+  color: #070707;
+}
+
+.username {
+  font-size: 35px;
+  color: #212121;
+}
+
+.username a:hover {
+  color: #070707;
+}

@@ -42,11 +42,10 @@
   align-items: center;
   font-size: 35px;
   text-decoration: none;
-  color: #337ab7;
 }
 
 .follow a:hover {
-  color: #0e2d47;
+  color: #ffffff;
 }
 
 .image {

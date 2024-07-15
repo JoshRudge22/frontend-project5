@@ -53,7 +53,7 @@ function SignUpForm() {
       const { data } = await login(loginData);
       setCurrentUser(data.user);
       setTokenTimestamp(data);
-      history.push('/welcomePage');
+      history.push(`/profiles/${data.user.profile_id}`);
     } catch (err) {
       console.error("Error Response:", err.response);
       setErrors(err.response?.data || { non_field_errors: [err.message] });

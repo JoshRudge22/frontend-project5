@@ -2,6 +2,15 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { CurrentUserProvider } from "../../contexts/CurrentUserContext";
 import NavBar from "../NavBar";
+import '@testing-library/jest-dom';
+import { setupServer } from 'msw/node';
+import { handlers } from '../../mocks/handlers';
+
+const server = setupServer(...handlers);
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 test("renders NavBar", () => {
   render(
@@ -10,7 +19,6 @@ test("renders NavBar", () => {
     </Router>
   );
 
-  // screen.debug();
   const signInLink = screen.getByRole("link", { name: "Sign in" });
   expect(signInLink).toBeInTheDocument();
 });

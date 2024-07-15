@@ -16,3 +16,13 @@ p {
   margin-bottom: 10px;
 }
 
+.username {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.username a:hover {
+  color: #070707;
+}
