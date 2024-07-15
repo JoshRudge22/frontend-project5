@@ -12,7 +12,7 @@
   }
   
   .container {
-    width: 900px;
+    width: 700px;
     margin: 40px auto;
     padding: 20px;
     margin-bottom: 80px;
@@ -38,7 +38,7 @@
   
   .caption {
     margin-top: 20px;
-    font-size: 20px;
+    font-size: 25px;
   }
 
   .interactions {
@@ -49,6 +49,6 @@
   
   .username {
     font-weight: bold;
-    font-size: 80px;
+    font-size: 60px;
     color: black;
   }

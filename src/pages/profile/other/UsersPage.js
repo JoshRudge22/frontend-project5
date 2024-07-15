@@ -74,9 +74,7 @@ const UsersPage = () => {
       <p className={userprofileStyles.info}><span className={userprofileStyles.span}>Location:</span> {profileData.location}</p>
       <p className={userprofileStyles.info}><span className={userprofileStyles.span}>Followers:</span> {followerCount}</p>
       <p className={userprofileStyles.info}><span className={userprofileStyles.span}>Following:</span> {followingCount}</p>
-      <p>
-        Click here to view <Link to={`/user/${username}/posts/`}>{username}'s Posts</Link>
-      </p>
+      <p className={`${userprofileStyles.info} ${userprofileStyles.span}`}>Click here to view: <Link className={userprofileStyles.span} to={`/user/${username}/posts/`}>{username}'s Posts</Link></p>
       <FollowButton username={username} profileId={profileData.id} />
     </Container>
   );

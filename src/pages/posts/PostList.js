@@ -90,7 +90,7 @@ const PostList = () => {
             dataLength={posts.length}
             next={fetchMorePosts}
             hasMore={hasMore}
-            loader={<h4>Loading...</h4>}
+            loader={<h4>No more posts</h4>}
         >
             <h1 className={feedStyles.title}>Your Posts</h1>
             {posts.map(post => (

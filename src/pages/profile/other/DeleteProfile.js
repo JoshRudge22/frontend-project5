@@ -18,11 +18,11 @@ const DeleteProfile = () => {
                 Deleting your profile is a permanent action and cannot be undone. If you proceed with deleting your profile, the following will occur:
               </p>
               <ul>
-                <li>All of your posts will be permanently deleted.</li>
-                <li>All of your comments on other posts will be permanently deleted.</li>
-                <li>All of your likes on other posts will be permanently deleted.</li>
-                <li>All of your followers will be lost.</li>
-                <li>All of the users you are following will be unfollowed.</li>
+                <li className={deleteStyles.deletelist}>All of your posts will be permanently deleted.</li>
+                <li className={deleteStyles.deletelist}>All of your comments on other posts will be permanently deleted.</li>
+                <li className={deleteStyles.deletelist}>All of your likes on other posts will be permanently deleted.</li>
+                <li className={deleteStyles.deletelist}>All of your followers will be lost.</li>
+                <li className={deleteStyles.deletelist}>All of the users you are following will be unfollowed.</li>
               </ul>
               <p>
                 If you are sure you want to delete your profile, click the button below. Please note that this action is irreversible.

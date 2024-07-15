@@ -59,7 +59,7 @@ const FeedPage = () => {
       dataLength={feedData.length}
       next={fetchMoreData}
       hasMore={hasMore}
-      loader={<h4>Loading...</h4>}
+      loader={<h4>No more posts</h4>}
     >
       <h2 className={feedStyles.title}>Discover Feed</h2>
       <ul className={feedStyles.ul}>

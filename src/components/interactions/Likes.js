@@ -55,20 +55,20 @@ function Likes({ postId, currentUser }) {
   return (
     <div>
       <div>
+        <div>
+          <span className={likeStyles.count}>{likesCount} {likesCount === 1 ? 'like' : 'likes'}</span>
+          {errorMessage && <p>{errorMessage}</p>}
+        </div>
         {currentUser ? (
           <>
           <Button className={buttonStyles.like} onClick={handleLike} disabled={liked === null}>
-            {liked ? <><i className="fa-regular fa-thumbs-down"></i></> : <><i className="fa-regular fa-thumbs-up"></i></>}
-            </Button>
-            <Link className={likeStyles.link} to={`/posts/${postId}/likes`}>View likes</Link>
+            {liked ? <i className="fa-regular fa-thumbs-down"></i> : <i className="fa-regular fa-thumbs-up"></i>}
+          </Button>
+          <Link className={likeStyles.link} to={`/posts/${postId}/likes`}>View likes</Link>
           </>
-        ) : (
+          ) : (
           <p>Please log in to like this post.</p>
-        )}
-        <div>
-          <span className={likeStyles.count}>{likesCount} {likesCount === 1 ? 'like' : 'likes'}</span>
-          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-        </div>
+          )}
       </div>
     </div>
   );

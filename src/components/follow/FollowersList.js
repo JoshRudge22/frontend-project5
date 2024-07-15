@@ -45,7 +45,7 @@ const FollowersList = ({ username }) => {
 
   return (
     <div className={followStyles.followersList}>
-      <h2 className={followStyles.title}>Your Followers</h2>
+      <h2 className={followStyles.title}>Your Followers:</h2>
       <ul className={followStyles.list}>
         {followersList.map((follower) => (
           <li className={followStyles.follow} key={follower.id}>

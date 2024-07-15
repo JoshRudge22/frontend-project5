@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import listStyles from '../../styles/likes/Likeslist.module.css';
 
-
 function LikeList({ postId }) {
   const [likedUsers, setLikedUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -48,20 +47,24 @@ function LikeList({ postId }) {
   return (
     <div className={listStyles.followersList}>
       <h2 className={listStyles.title}>Users Who Liked This Post</h2>
-      <ul className={listStyles.list}>
-        {likedUsers.map((user) => (
-          <li className={listStyles.follow} key={user.username}>
-            <Link to={`/profile/${user.username}`} className={listStyles.link}>
-              <img
-                className={listStyles.image}
-                src={user.profileImage}
-                alt={`${user.username}'s profile`}
-              />
-              {user.username}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {likedUsers.length === 0 ? (
+        <p>No one has liked this post yet.</p>
+      ) : (
+        <ul className={listStyles.list}>
+          {likedUsers.map((user) => (
+            <li className={listStyles.follow} key={user.username}>
+              <Link to={`/profile/${user.username}`} className={listStyles.link}>
+                <img
+                  className={listStyles.image}
+                  src={user.profileImage}
+                  alt={`${user.username}'s profile`}
+                />
+                {user.username}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

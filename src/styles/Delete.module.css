@@ -36,7 +36,7 @@ ul {
     margin-bottom: 20px;
 }
   
-li {
+.deletelist {
     font-size: 30px;
     font-weight: 800;
     color: #f52c2c;

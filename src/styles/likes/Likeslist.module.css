@@ -58,6 +58,38 @@
 }
 
 .username {
-  font-size: 35px;
-  color: #212121;
+  font-weight: bold;
+  font-size: 60px;
+  color: black;
+}
+
+a.username {
+  color: black;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.container {
+  width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+  margin-bottom: 80px;
+}
+
+.post {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.img {
+  margin-top: 50px;
+  width: 600px;
+  height: auto;
 }
