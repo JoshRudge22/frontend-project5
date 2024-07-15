@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { axiosReq } from "../../api/axiosDefaults";
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import  Button from 'react-bootstrap/Button';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Comments from '../../components/interactions/Comments';

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import buttonStyles from '../../styles/Buttons.module.css';
 
 const FollowButton = ({ profileId, username }) => {
@@ -26,14 +26,14 @@ const FollowButton = ({ profileId, username }) => {
         if (response.status === 204) {
           setIsFollowing(false);
         } else {
-          console.log(response.data.message);
+          //console.log(response.data.message);
         }
       } else {
         const response = await axios.post(`/profiles/${username}/follow/`);
         if (response.status === 201) {
           setIsFollowing(true);
         } else {
-          console.log(response.data.message);
+          //console.log(response.data.message);
         }
       }
     } catch (error) {

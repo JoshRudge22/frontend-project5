@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { axiosReq } from "../../api/axiosDefaults";
-import { Form, Button, Container } from 'react-bootstrap';
+import  Container from 'react-bootstrap/Container';
+import  Form from 'react-bootstrap/Form';
+import  Button from 'react-bootstrap/Button';
 import Poststyles from '../../styles/CreatingPost.module.css';
 import Buttonstyles from '../../styles/Buttons.module.css';
 

@@ -21,6 +21,7 @@ import MyFollowersList from './pages/follow/MyFollowersList'
 import MyFollowingList from './pages/follow/MyFollowingList'
 import ContactForm from './pages/contact/ContactForm'
 import FormSubmitted from './pages/contact/FormSubmmited';
+import NotFound from './components/NotFound';
 
 
 
@@ -51,7 +52,7 @@ function App() {
           <Route exact path="/followinglist" render={() => <MyFollowingList />} />
           <Route exact path="/contact" render={() => <ContactForm />} />
           <Route exact path="/submitted" render={() => <FormSubmitted />} />
-          <Route render={() => <p>Page Not Found!</p>} />
+          <Route render={() => <NotFound />} />
         </Switch>
       </Container>
     </div>

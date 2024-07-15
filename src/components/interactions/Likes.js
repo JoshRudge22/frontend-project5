@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import likeStyles from '../../styles/likes/Likes.module.css';
 import buttonStyles from '../../styles/Buttons.module.css';

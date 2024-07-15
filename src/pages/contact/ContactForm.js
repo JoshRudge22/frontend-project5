@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Container, Form, Button } from 'react-bootstrap';
+import  Container from 'react-bootstrap/Container';
+import  Form from 'react-bootstrap/Form';
+import  Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import contactstyles from '../../styles//contact/Contact.module.css';

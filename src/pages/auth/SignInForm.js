@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from "axios";
-import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import  Container from 'react-bootstrap/Container';
+import  Row from 'react-bootstrap/Row';
+import  Col from 'react-bootstrap/Col';
+import  Form from 'react-bootstrap/Form';
+import  Button from 'react-bootstrap/Button';
+import  Alert from 'react-bootstrap/Alert';
 import { useSetCurrentUser } from '../../contexts/CurrentUserContext';
 import { setTokenTimestamp } from "../../utils/utils";
 import signStyles from '../../styles/SigningForm.module.css';

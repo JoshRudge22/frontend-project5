@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Form, Button } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import { useParams } from 'react-router-dom';
 import profileStyles from '../../../styles/profiles/Profile.module.css';
 import buttonStyles from '../../../styles/Buttons.module.css';
@@ -21,7 +23,7 @@ const UpdateProfile = () => {
     const fetchProfileData = async () => {
       try {
         const profileData = await getUserProfile(profileId);
-        console.log('Fetched profile data:', profileData);
+        //console.log('Fetched profile data:', profileData);
         setFormData({
           fullName: profileData.full_name,
           location: profileData.location,

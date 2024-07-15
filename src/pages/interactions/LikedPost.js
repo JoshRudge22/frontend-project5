@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
 import { Link } from 'react-router-dom';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import Comments from '../../components/interactions/Comments';

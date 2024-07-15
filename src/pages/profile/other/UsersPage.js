@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
 import { useParams, Link } from 'react-router-dom';
 import FollowButton from '../../../components/follow/FollowButton';
 import userprofileStyles from '../../../styles/profiles/UsersPage.module.css';

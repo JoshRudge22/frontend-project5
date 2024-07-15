@@ -12,7 +12,7 @@ const FollowersList = ({ username }) => {
     const fetchFollowersList = async () => {
       try {
         const response = await axios.get(`/followers/${username}/`);
-        console.log("API response for followers list:", response.data);
+        //console.log("API response for followers list:", response.data);
         const followersWithImages = await Promise.all(
           response.data.results.map(async (follower) => {
             const profileResponse = await axios.get(`/profiles/${follower.follower_username}/`);
@@ -26,7 +26,7 @@ const FollowersList = ({ username }) => {
         setFollowersList(followersWithImages);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching followers list:', error);
+        //console.error('Error fetching followers list:', error);
         setError(error.message);
         setLoading(false);
       }

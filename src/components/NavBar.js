@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Navbar, Container, Nav, NavDropdown, Form, Button, ListGroup } from "react-bootstrap";
+import Navbar from 'react-bootstrap/Navbar';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import ListGroup from 'react-bootstrap/ListGroup';
 import axios from 'axios';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useCurrentUser, useSetCurrentUser } from '../contexts/CurrentUserContext';
@@ -22,7 +28,7 @@ const NavBar = () => {
       removeTokenTimestamp();
       history.push('/signin');
     } catch (err) {
-      console.log("Error during sign out:", err);
+      //console.log("Error during sign out:", err);
     }
   };
 
