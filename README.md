@@ -172,6 +172,10 @@ Import this file into App.js to be used across all pages
 
 ![image](https://github.com/user-attachments/assets/3aba9ee4-335b-4c1c-9693-59c6cbc39a8b)
 
+<h3>Issues</h3>
+<p>I had an issue near the end of the project where aafter creating the delete profile function the user couldn't either log in or log out. This did take up a few weeks of trying to resolve this with Tutors and Mentors.
+If I had more time I would like to have styled it better, added a like button for the comments, add font awesome icons for the comments and that could show all the comments and a few more ideas that I didn't get to work on.</p>
+
 <h3>Technologies Used - Frontend</h3>
 <h4>Languages</h4>
 <ul>
