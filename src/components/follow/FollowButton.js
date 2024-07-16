@@ -26,14 +26,14 @@ const FollowButton = ({ profileId, username }) => {
         if (response.status === 204) {
           setIsFollowing(false);
         } else {
-          //console.log(response.data.message);
+          // console.log(response.data.message);
         }
       } else {
         const response = await axios.post(`/profiles/${username}/follow/`);
         if (response.status === 201) {
           setIsFollowing(true);
         } else {
-          //console.log(response.data.message);
+          // console.log(response.data.message);
         }
       }
     } catch (error) {
@@ -43,7 +43,9 @@ const FollowButton = ({ profileId, username }) => {
 
   return (
     <div>
-      <Button className={buttonStyles.follow} onClick={handleFollow}>{isFollowing ? 'Unfollow' : 'Follow'}</Button>
+      <Button className={buttonStyles.follow} onClick={handleFollow}>
+        {isFollowing ? 'Unfollow' : 'Follow'}
+      </Button>
     </div>
   );
 };

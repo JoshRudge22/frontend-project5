@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Delete from '../../../components/interactions/Delete';
-import deleteStyles from '../../../styles/Delete.module.css'
+import deleteStyles from '../../../styles/Delete.module.css';
 
 const DeleteProfile = () => {
   return (

@@ -49,7 +49,7 @@ const FollowingList = ({ username }) => {
       <ul className={followStyles.list}>
         {followingList.map((following) => (
           <li className={followStyles.follow} key={following.id}>
-            <Link to={`/profile/${following.following_username}`}>
+            <Link className={followStyles.username} to={`/profile/${following.following_username}`}>
               <img 
                 className={followStyles.image}
                 src={following.profileImage} 
