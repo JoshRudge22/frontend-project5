@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -16,7 +16,6 @@ import btnStyles from '../styles/Buttons.module.css';
 const NavBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [showResults, setShowResults] = useState(false);
   const history = useHistory();
 
   const currentUser = useCurrentUser();
@@ -35,7 +34,6 @@ const NavBar = () => {
 
   const handleSearchInputChange = (e) => {
     setSearchQuery(e.target.value);
-    setShowResults(e.target.value.trim().length > 0);
   };
 
   const handleSearchSubmit = async (e) => {
@@ -51,24 +49,7 @@ const NavBar = () => {
   const handleProfileClick = (username) => {
     history.push(`/profile/${username}`);
     setSearchResults([]);
-    setSearchQuery('');
-    setShowResults(false);
   };
-
-  useEffect(() => {
-    const handleOutsideClick = () => {
-      if (showResults) {
-        setSearchResults([]);
-        setShowResults(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleOutsideClick);
-    
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
-  }, [showResults]);
 
   const loggedInIcons = currentUser ? (
     <>
@@ -163,7 +144,7 @@ const NavBar = () => {
               onChange={handleSearchInputChange}
             />
             <Button className={btnStyles.button} type="submit">Search</Button>
-            {showResults && (
+            {searchResults.length > 0 && (
               <ListGroup className={navStyles.searchResults}>
                 {searchResults.map(user => (
                   <ListGroup.Item
