@@ -8,8 +8,8 @@
   background: linear-gradient(to bottom right, #A9C9FF, #646363);
   padding: 20px;
   box-sizing: border-box;
+  width: 100%;
 }
-
 
 .App-logo {
   height: 30vmin;
@@ -46,5 +46,21 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  .App {
+    padding: 10px;
+  }
+  
+  .App-logo {
+    height: 40vmin;
+  }
+
+  .App-header {
+    font-size: calc(10px + 1.2vmin);
+    padding: 10px;
   }
 }
