@@ -25,10 +25,10 @@ function LikeList({ postId }) {
         );
 
         setLikedUsers(likedUsersWithImages);
-        setLoading(false);
       } catch (error) {
         console.error('Error fetching liked users list:', error);
-        setError(error.message);
+        setError('Failed to load liked users. Please try again later.');
+      } finally {
         setLoading(false);
       }
     };
@@ -37,11 +37,11 @@ function LikeList({ postId }) {
   }, [postId]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <div className={listStyles.loader}>Loading...</div>; // Consider adding a spinner or animation
   }
 
   if (error) {
-    return <p>Error: {error}</p>;
+    return <p className={listStyles.error}>{error}</p>;
   }
 
   return (
