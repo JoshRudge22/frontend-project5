@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { axiosReq } from "../../api/axiosDefaults";
 import { Link } from 'react-router-dom';
-import  Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Comments from '../../components/interactions/Comments';
@@ -10,6 +10,7 @@ import feedStyles from '../../styles/FeedPage.module.css';
 import buttonStyles from '../../styles/Buttons.module.css';
 import NoContentStyles from '../../styles/NoContent.module.css';
 import logo from '../../media/logo.png';
+import Spinner from 'react-bootstrap/Spinner'; // Import Spinner for loading state
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
@@ -66,11 +67,22 @@ const PostList = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className={feedStyles.loader}>
+                <Spinner animation="border" variant="primary" />
+                <span>Loading posts...</span>
+            </div>
+        );
     }
 
     if (error) {
-        return <div>{error}</div>;
+        return (
+            <div className={feedStyles.error}>
+                <h2>Oops! Something went wrong.</h2>
+                <p>{error}</p>
+                <Button onClick={() => setLoading(true)}>Retry</Button>
+            </div>
+        );
     }
 
     if (!Array.isArray(posts) || posts.length === 0) {
@@ -90,13 +102,13 @@ const PostList = () => {
             dataLength={posts.length}
             next={fetchMorePosts}
             hasMore={hasMore}
-            loader={<h4>No more posts</h4>}
+            loader={<h4>Loading more posts...</h4>}
         >
             <h1 className={feedStyles.title}>Your Posts</h1>
             {posts.map(post => (
                 <div key={post.id} className={feedStyles.container}>
                     <div className={feedStyles.post}>
-                        {post.image && <img className={feedStyles.img} src={post.image} alt="Post" />}
+                        {post.image && <img className={feedStyles.img} src={post.image} alt={`Post by ${post.user.username}`} />}
                         <p className={feedStyles.caption}>{post.caption}</p>
                         <div className={feedStyles.interactions}>
                             <LikeButton postId={post.id} currentUser={currentUser} />
