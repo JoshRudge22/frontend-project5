@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom';
 import profileStyles from '../../../styles/profiles/Profile.module.css';
 import buttonStyles from '../../../styles/Buttons.module.css';
 
-
 const UpdateProfile = () => {
   const { profileId } = useParams();
   const [formData, setFormData] = useState({
@@ -18,20 +17,26 @@ const UpdateProfile = () => {
     profileImage: '',
     currentProfileImage: '',
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchProfileData = async () => {
+      setLoading(true);
       try {
         const profileData = await getUserProfile(profileId);
-        //console.log('Fetched profile data:', profileData);
         setFormData({
           fullName: profileData.full_name,
+          email: profileData.email, // Ensure email is fetched
           location: profileData.location,
           bio: profileData.bio,
           currentProfileImage: profileData.profile_image,
         });
       } catch (error) {
         console.error('Error fetching profile data:', error);
+        setError('Failed to fetch profile data.');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -39,19 +44,18 @@ const UpdateProfile = () => {
   }, [profileId]);
 
   const getUserProfile = async (profileId) => {
-    try {
-      const response = await axios.get(`/profiles/update/${profileId}/`);
-      return response.data;
-    } catch (error) {
-      console.error('Error retrieving user profile:', error);
-      throw new Error('Failed to retrieve user profile.');
-    }
+    const response = await axios.get(`/profiles/update/${profileId}/`);
+    return response.data;
   };
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'profileImage') {
-      setFormData({ ...formData, profileImage: files[0], currentProfileImage: URL.createObjectURL(files[0]) });
+      setFormData({ 
+        ...formData, 
+        profileImage: files[0], 
+        currentProfileImage: URL.createObjectURL(files[0]) 
+      });
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -59,6 +63,7 @@ const UpdateProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const formDataToSend = new FormData();
     formDataToSend.append('full_name', formData.fullName);
     formDataToSend.append('location', formData.location);
@@ -67,7 +72,7 @@ const UpdateProfile = () => {
       formDataToSend.append('profile_image', formData.profileImage);
     }
     try {
-      axios.patch(`/profiles/update/${profileId}/`, formDataToSend, {
+      await axios.patch(`/profiles/update/${profileId}/`, formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -75,9 +80,14 @@ const UpdateProfile = () => {
       alert('Profile updated successfully!');
     } catch (error) {
       console.error('Error updating profile:', error);
-      alert('Failed to update profile. Please try again later.');
+      setError('Failed to update profile. Please try again later.');
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) return <div>Loading...</div>; // Loading state
+  if (error) return <div>Error: {error}</div>; // Error state
 
   return (
     <Container className={profileStyles.container}>
@@ -87,28 +97,29 @@ const UpdateProfile = () => {
           <Form.Label className={profileStyles.label} htmlFor="profileImage">Profile Picture:</Form.Label>
           {formData.currentProfileImage && (
             <div>
-              <img className={profileStyles.image}
-                src={formData.currentProfileImage}
-                alt="Profile"
-              />
+              <img className={profileStyles.image} src={formData.currentProfileImage} alt="Profile" />
             </div>
           )}
           <input type="file" id="profileImage" name="profileImage" onChange={handleInputChange} />
         </div>
         <div>
           <Form.Label className={profileStyles.label} htmlFor="fullName">Full Name:</Form.Label>
-          <input className={profileStyles.input} type="text" id="fullName" name="fullName" value={formData.fullName} onChange={handleInputChange} />
+          <input className={profileStyles.input} type="text" id="fullName" name="fullName" value={formData.fullName} onChange={handleInputChange} required />
+        </div>
+        <div>
+          <Form.Label className={profileStyles.label} htmlFor="email">Email:</Form.Label>
+          <input className={profileStyles.input} type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} required />
         </div>
         <div>
           <Form.Label className={profileStyles.label} htmlFor="bio">Bio:</Form.Label>
-          <textarea  className={profileStyles.textarea} id="bio" name="bio" value={formData.bio} onChange={handleInputChange} />
+          <textarea className={profileStyles.textarea} id="bio" name="bio" value={formData.bio} onChange={handleInputChange} />
         </div>
         <div>
           <Form.Label className={profileStyles.label} htmlFor="location">Location:</Form.Label>
           <input className={profileStyles.input} type="text" id="location" name="location" value={formData.location} onChange={handleInputChange} />
         </div>
-        <Button className={buttonStyles.update} type="submit">
-          Update Profile
+        <Button className={buttonStyles.update} type="submit" disabled={loading}>
+          {loading ? 'Updating...' : 'Update Profile'}
         </Button>
       </Form>
     </Container>
