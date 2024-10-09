@@ -6,6 +6,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Comments from '../../components/interactions/Comments';
 import Likes from '../../components/interactions/Likes';
 import feedStyles from '../../styles/FeedPage.module.css';
+import Spinner from '../../components/Spinner'; // Assume you have a Spinner component
 
 const FeedPage = () => {
   const [feedData, setFeedData] = useState([]);
@@ -21,9 +22,9 @@ const FeedPage = () => {
         const response = await axios.get('/feed/?limit=5&offset=0');
         setFeedData(response.data.results);
         setNextUrl(response.data.next);
-        setLoading(false);
       } catch (error) {
         setError(error.message);
+      } finally {
         setLoading(false);
       }
     };
@@ -35,7 +36,7 @@ const FeedPage = () => {
     if (nextUrl) {
       try {
         const response = await axios.get(nextUrl);
-        setFeedData([...feedData, ...response.data.results]);
+        setFeedData(prevFeedData => [...prevFeedData, ...response.data.results]);
         setNextUrl(response.data.next);
         if (!response.data.next) {
           setHasMore(false);
@@ -47,11 +48,15 @@ const FeedPage = () => {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Spinner />; // Replace with your spinner component
   }
 
   if (error) {
     return <p>Error: {error}</p>;
+  }
+
+  if (feedData.length === 0) {
+    return <p>No posts available.</p>; // Empty state message
   }
 
   return (
@@ -59,18 +64,20 @@ const FeedPage = () => {
       dataLength={feedData.length}
       next={fetchMoreData}
       hasMore={hasMore}
-      loader={<h4>No more posts</h4>}
+      loader={<h4>Loading more posts...</h4>}
     >
       <h2 className={feedStyles.title}>Discover Feed</h2>
       <ul className={feedStyles.ul}>
-        {Array.isArray(feedData) && feedData.map((item) => (
+        {feedData.map((item) => (
           <li key={item.id} className={feedStyles.container}>
             <div className={feedStyles.post}>
               <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
                 {item.owner}
               </Link>
-              {item.image && (
+              {item.image ? (
                 <img className={feedStyles.img} src={item.image} alt={item.caption} />
+              ) : (
+                <div className={feedStyles.placeholder}>Image not available</div>
               )}
               <p className={feedStyles.caption}><b>{item.owner}</b>: {item.caption}</p>
               <div className={feedStyles.interactions}>
