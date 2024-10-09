@@ -54,8 +54,9 @@
 }
 
 .image {
-  width: 400px;
-  height: 400px;
+  width: 100%; /* Adjusted to be responsive */
+  max-width: 400px; /* Maintain max width */
+  height: auto; /* Maintain aspect ratio */
   object-fit: cover;
   border-radius: 50%;
   margin-bottom: 20px;
@@ -72,4 +73,51 @@
   font-weight: bold;
   margin-bottom: 30px;
   color: #333;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .heading {
+    font-size: 50px; /* Adjust heading size for tablets */
+  }
+
+  .label {
+    font-size: 22px; /* Adjust label size */
+  }
+
+  .input,
+  .textarea {
+    font-size: 18px; /* Adjust input and textarea sizes */
+  }
+
+  .info {
+    font-size: 24px; /* Adjust info size */
+  }
+
+  .span {
+    font-size: 30px; /* Adjust span size */
+  }
+}
+
+@media (max-width: 480px) {
+  .heading {
+    font-size: 40px; /* Further adjust heading size for mobile */
+  }
+
+  .label {
+    font-size: 20px; /* Further adjust label size */
+  }
+
+  .input,
+  .textarea {
+    font-size: 16px; /* Further adjust input and textarea sizes */
+  }
+
+  .info {
+    font-size: 20px; /* Further adjust info size */
+  }
+
+  .span {
+    font-size: 24px; /* Further adjust span size */
+  }
 }
