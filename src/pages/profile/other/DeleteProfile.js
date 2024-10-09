@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Delete from '../../../components/interactions/Delete';
 import deleteStyles from '../../../styles/Delete.module.css';
+import ConfirmationModal from '../../../components/modals/ConfirmationModal'; // Assuming you have a modal component
 
 const DeleteProfile = () => {
+  const [showModal, setShowModal] = useState(false);
+  
+  const handleDeleteClick = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <Container className={deleteStyles.container}>
       <Row className="justify-content-center">
@@ -30,11 +41,21 @@ const DeleteProfile = () => {
               <p>
                 If you are sure you want to delete your profile, click the button below. Please note that this action is irreversible.
               </p>
-              <Delete />
+              <button onClick={handleDeleteClick} className={deleteStyles.deleteButton}>
+                Delete Profile
+              </button>
+              <Delete /> {/* Assuming Delete component handles the actual deletion */}
             </Card.Body>
           </Card>
         </Col>
       </Row>
+      <ConfirmationModal 
+        show={showModal} 
+        onClose={handleCloseModal} 
+        onConfirm={Delete} // Call the delete function here
+        title="Confirm Deletion"
+        message="Are you sure you want to delete your profile? This action cannot be undone."
+      />
     </Container>
   );
 };
