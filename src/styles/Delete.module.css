@@ -1,44 +1,68 @@
 .title {
-    margin-top: 30px;
-    font-size: 80px;
-    font-family: "Oswald", sans-serif;
-  }
+  margin-top: 30px;
+  font-size: 4rem; /* Use relative size for better scalability */
+  font-family: "Oswald", sans-serif;
+}
 
 .card {
-    margin-top: 50px;
-    width: 800px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 50px;
+  margin-top: 50px;
+  width: 100%; /* Use full width */
+  max-width: 800px; /* Keep max width for larger screens */
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 50px;
 }
-  
+
 .card-header {
-    background-color: #f9f9f9;
-    border-bottom: 1px solid #ddd;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
 }
-  
+
 h3 {
-    font-size: 40px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
+  font-size: 2.5rem; /* Use relative size */
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
 }
-  
+
 p {
-    font-size: 25px;
-    color: #555;
-    margin-bottom: 15px;
+  font-size: 1.5rem; /* Use relative size */
+  color: #555;
+  margin-bottom: 15px;
 }
-  
+
 ul {
-    padding-left: 20px;
-    margin-bottom: 20px;
+  padding-left: 20px;
+  margin-bottom: 20px;
 }
-  
+
 .deletelist {
-    font-size: 30px;
-    font-weight: 800;
-    color: #f52c2c;
-    margin-bottom: 10px;
+  font-size: 1.75rem; /* Use relative size */
+  font-weight: 800;
+  color: #f52c2c;
+  margin-bottom: 10px;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .title {
+    font-size: 3rem; /* Adjust title size for smaller screens */
+  }
+
+  h3 {
+    font-size: 2rem; /* Adjust header size */
+  }
+
+  p {
+    font-size: 1.2rem; /* Adjust paragraph size */
+  }
+
+  .deletelist {
+    font-size: 1.5rem; /* Adjust delete list size */
+  }
+
+  .card {
+    margin: 20px; /* Add some margin on smaller screens */
+  }
 }
