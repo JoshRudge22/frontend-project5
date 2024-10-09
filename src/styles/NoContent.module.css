@@ -1,14 +1,17 @@
 .logo {
     margin-top: 25px;
-    justify-items: center;
-    height: 500px;
-    width: 500px
+    height: 25rem; /* Use rem for responsiveness */
+    width: 25rem; /* Use rem for responsiveness */
+    display: block; /* Ensure the logo is treated as a block element */
+    margin-left: auto; /* Centering horizontally */
+    margin-right: auto; /* Centering horizontally */
 }
 
 .message {
     margin-top: 40px;
     margin-bottom: 100px;
     color: #212121;
+    text-align: center; /* Center text for better presentation */
 }
 
 .message a {
@@ -18,4 +21,7 @@
 
 .message a:hover {
     color: #ffffff;
+    background-color: #007bff; /* Adding a background color for better contrast */
+    padding: 2px 5px; /* Adding some padding to the hover effect */
+    border-radius: 4px; /* Slight rounding of corners for aesthetics */
 }
