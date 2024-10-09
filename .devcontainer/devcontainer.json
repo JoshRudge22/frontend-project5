@@ -1,5 +1,5 @@
 {
-  "name": "Codeinstitute react template",
+  "name": "Codeinstitute React Template",
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspace/template",
@@ -28,8 +28,8 @@
           "**/core.python*": true
         },
         "editor.defaultFormatter": "esbenp.prettier-vscode",
-        "editor.formatOnSave": false,
-        "python.terminal.activateEnvironment": false,
+        "editor.formatOnSave": true,  // Enable formatting on save
+        "python.terminal.activateEnvironment": false, // Ensure correct Python environment is activated
         "workbench.iconTheme": "none"
       }
     }
