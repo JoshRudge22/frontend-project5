@@ -8,7 +8,7 @@ import Likes from '../../components/interactions/Likes';
 import feedStyles from '../../styles/FeedPage.module.css';
 import NoContentStyles from '../../styles/NoContent.module.css';
 import logo from '../../media/logo.png';
-
+import Spinner from '../../components/Spinner'; // Assume you have a Spinner component
 
 const FollowingFeedPage = () => {
   const [feedData, setFeedData] = useState([]);
@@ -24,9 +24,9 @@ const FollowingFeedPage = () => {
         const response = await axios.get('/feed/following/?limit=5&offset=0');
         setFeedData(response.data.results);
         setNextUrl(response.data.next);
-        setLoading(false);
       } catch (error) {
         setError(error.message);
+      } finally {
         setLoading(false);
       }
     };
@@ -50,11 +50,16 @@ const FollowingFeedPage = () => {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Spinner />; // Use a loading spinner here
   }
 
   if (error) {
-    return <p>Error: {error}</p>;
+    return (
+      <div>
+        <p>Error: {error}</p>
+        <button onClick={() => fetchFollowingFeed()}>Retry</button> {/* Retry button */}
+      </div>
+    );
   }
 
   if (!Array.isArray(feedData) || feedData.length === 0) {
@@ -74,7 +79,8 @@ const FollowingFeedPage = () => {
       dataLength={feedData.length}
       next={fetchMoreData}
       hasMore={hasMore}
-      loader={<h4>No more posts</h4>}
+      loader={<h4>Loading more posts...</h4>}
+      endMessage={<h4>No more posts to display.</h4>} // More descriptive end message
     >
       <h2 className={feedStyles.title}>Following Feed!</h2>
       <ul className={feedStyles.ul}>
@@ -84,10 +90,12 @@ const FollowingFeedPage = () => {
               <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
                 {item.owner}
               </Link>
-              {item.image && (
+              {item.image ? (
                 <img className={feedStyles.img} src={item.image} alt={item.caption} />
+              ) : (
+                <div className={feedStyles.placeholder}>Image not available</div> // Placeholder for missing images
               )}
-               <p className={feedStyles.caption}><b>{item.owner}</b>: {item.caption}</p>
+              <p className={feedStyles.caption}><b>{item.owner}</b>: {item.caption}</p>
               <div className={feedStyles.interactions}>
                 <Likes postId={item.id} currentUser={currentUser} />
                 <Comments postId={item.id} currentUser={currentUser} />
