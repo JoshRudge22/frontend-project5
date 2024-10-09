@@ -8,6 +8,7 @@ import LikeButton from '../../../components/interactions/Likes';
 import feedStyles from '../../../styles/FeedPage.module.css';
 import NoContentStyles from '../../../styles/NoContent.module.css';
 import logo from '../../../media/logo.png';
+import Spinner from 'react-bootstrap/Spinner'; // Importing a spinner component for loading state
 
 const OtherUsersPostList = () => {
     const { username } = useParams();
@@ -26,7 +27,7 @@ const OtherUsersPostList = () => {
                 setNextUrl(response.data.next);
             } catch (error) {
                 console.error('Error fetching posts:', error);
-                setError('Error fetching posts');
+                setError('Failed to fetch posts. Please try again later.');
             } finally {
                 setLoading(false);
             }
@@ -45,17 +46,27 @@ const OtherUsersPostList = () => {
                     setHasMore(false);
                 }
             } catch (error) {
-                setError(error.message);
+                setError('Failed to load more posts. Please try again later.');
             }
         }
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <div className={feedStyles.loading}>
+                <Spinner animation="border" />
+                <span>Loading...</span>
+            </div>
+        );
     }
 
     if (error) {
-        return <div>{error}</div>;
+        return (
+            <div className={feedStyles.error}>
+                <span>{error}</span>
+                <button onClick={() => window.location.reload()}>Retry</button> {/* Retry button */}
+            </div>
+        );
     }
 
     if (!Array.isArray(posts) || posts.length === 0) {
@@ -81,7 +92,11 @@ const OtherUsersPostList = () => {
             {posts.map(post => (
                 <div key={post.id} className={feedStyles.container}>
                     <div className={feedStyles.post}>
-                        {post.image && <img className={feedStyles.img} src={post.image} alt="Post" />}
+                        {post.image ? (
+                            <img className={feedStyles.img} src={post.image} alt="Post" onError={(e) => { e.target.onerror = null; e.target.src = '/path/to/placeholder/image.jpg'; }} />
+                        ) : (
+                            <img className={feedStyles.img} src='/path/to/placeholder/image.jpg' alt="Placeholder" />
+                        )}
                         <p className={feedStyles.caption}>{post.caption}</p>
                         <div className={feedStyles.interactions}>
                             <LikeButton postId={post.id} currentUser={currentUser} />
