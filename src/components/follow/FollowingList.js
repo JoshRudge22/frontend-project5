@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import followStyles from '../../styles/Follow.module.css';
+import Spinner from 'react-bootstrap/Spinner'; // Import spinner for loading state
 
 const FollowingList = ({ username }) => {
   const [followingList, setFollowingList] = useState([]);
@@ -12,7 +13,7 @@ const FollowingList = ({ username }) => {
     const fetchFollowingList = async () => {
       try {
         const response = await axios.get(`/following/${username}/`);
-        //console.log("API response for following list:", response.data);
+        
         const followingWithImages = await Promise.all(
           response.data.results.map(async (following) => {
             const profileResponse = await axios.get(`/profiles/${following.following_username}/`);
@@ -26,8 +27,7 @@ const FollowingList = ({ username }) => {
         setFollowingList(followingWithImages);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching following list:', error);
-        setError(error.message);
+        setError("Error fetching following list. Please try again later."); // Improved error message
         setLoading(false);
       }
     };
@@ -36,11 +36,20 @@ const FollowingList = ({ username }) => {
   }, [username]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <div className={followStyles.loading}>
+        <Spinner animation="border" /> {/* Spinner for loading state */}
+        <span>Loading...</span>
+      </div>
+    );
   }
 
   if (error) {
-    return <p>Error: {error}</p>;
+    return <p className={followStyles.error}>{error}</p>; // Enhanced error handling
+  }
+
+  if (followingList.length === 0) {
+    return <p>You are not following anyone yet.</p>; // Empty state handling
   }
 
   return (
@@ -49,7 +58,11 @@ const FollowingList = ({ username }) => {
       <ul className={followStyles.list}>
         {followingList.map((following) => (
           <li className={followStyles.follow} key={following.id}>
-            <Link className={followStyles.username} to={`/profile/${following.following_username}`}>
+            <Link 
+              className={followStyles.username} 
+              to={`/profile/${following.following_username}`} 
+              aria-label={`View ${following.following_username}'s profile`} // Added aria-label for accessibility
+            >
               <img 
                 className={followStyles.image}
                 src={following.profileImage} 
