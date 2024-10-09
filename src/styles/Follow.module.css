@@ -1,6 +1,6 @@
 .Number {
   margin-top: 30px;
-  font-size: 80px;
+  font-size: 5rem; /* Use rem for responsiveness */
   font-family: "Oswald", sans-serif;
   font-weight: bold;
   color: #212121;
@@ -9,7 +9,8 @@
 }
 
 .followerslist {
-  max-width: 400px;
+  max-width: 400px; /* Keep max-width for readability */
+  width: 90%; /* Ensure responsiveness */
   margin: 40px auto;
   padding: 20px;
   background-color: #f9f9f9;
@@ -20,14 +21,14 @@
 
 .title {
   margin-top: 30px;
-  font-size: 80px;
+  font-size: 5rem; /* Use rem for responsiveness */
   font-family: "Oswald", sans-serif;
 }
 
 .list {
   list-style: none;
   padding: 0;
-  margin: 20px;
+  margin: 20px 0; /* Adjust margins for consistency */
 }
 
 .follow {
@@ -40,12 +41,14 @@
 .follow a {
   display: flex;
   align-items: center;
-  font-size: 35px;
+  font-size: 2rem; /* Use rem for scalability */
   text-decoration: none;
+  color: #212121; /* Ensure link color is set */
 }
 
 .follow a:hover {
-  color: #ffffff;
+  color: #ffffff; /* Set hover color */
+  background-color: #007bff; /* Add a background color for better visibility */
 }
 
 .image {
@@ -57,6 +60,25 @@
 }
 
 .username {
-  font-size: 35px;
+  font-size: 2rem; /* Use rem for scalability */
   color: #212121;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .Number {
+    font-size: 4rem; /* Adjust size for smaller screens */
+  }
+
+  .title {
+    font-size: 4rem; /* Adjust size for smaller screens */
+  }
+
+  .follow a {
+    font-size: 1.5rem; /* Adjust size for smaller screens */
+  }
+
+  .username {
+    font-size: 1.5rem; /* Adjust size for smaller screens */
+  }
 }
