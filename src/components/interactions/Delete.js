@@ -8,26 +8,27 @@ import buttonStyles from '../../styles/Buttons.module.css';
 
 const Delete = () => {
   const [showModal, setShowModal] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false); // Loading state
-  const [errorMessage, setErrorMessage] = useState(''); // To store any error message
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
   const history = useHistory();
 
   const handleDelete = async () => {
-    setIsDeleting(true); // Show loading state
-    setErrorMessage(''); // Clear any previous error
+    setIsDeleting(true);
+    setErrorMessage('');
     try {
       await axiosRes.delete(`/profiles/${currentUser.profile_id}`);
       setCurrentUser(null);
-      setShowModal(false); // Close the modal after successful deletion
+      setShowModal(false);
+      // Display success message (could use a toast here instead of alert)
       alert("Profile deleted successfully");
       history.push("/"); // Redirect to home page
     } catch (err) {
       console.error("Error deleting profile:", err);
-      setErrorMessage("Failed to delete profile. Please try again."); // Display error message
+      setErrorMessage(err.response?.data?.detail || "Failed to delete profile. Please try again.");
     } finally {
-      setIsDeleting(false); // End loading state
+      setIsDeleting(false);
     }
   };
 
@@ -44,14 +45,14 @@ const Delete = () => {
         Delete Profile
       </Button>
 
-      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal show={showModal} onHide={handleCloseModal} aria-labelledby="delete-modal-title" aria-describedby="delete-modal-description">
         <Modal.Header closeButton>
-          <Modal.Title>Confirm Profile Deletion</Modal.Title>
+          <Modal.Title id="delete-modal-title">Confirm Profile Deletion</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body id="delete-modal-description">
           <p>Are you sure you want to delete your profile? This action cannot be undone.</p>
           <p>All your posts, comments, likes, followers, and the people you are following will be permanently deleted.</p>
-          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} {/* Show error message if there's any */}
+          {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal} disabled={isDeleting}>
