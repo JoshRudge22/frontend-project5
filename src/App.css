@@ -34,11 +34,19 @@
   color: white;
   padding: 20px;
   box-sizing: border-box;
+  border-radius: 8px; /* Adding some border-radius for aesthetics */
 }
 
 .App-link {
   color: #61dafb;
+  text-decoration: underline; /* Underline for better visibility */
+  transition: color 0.2s; /* Smooth transition for hover effect */
 }
+
+.App-link:hover {
+  color: #21a1f1; /* Slightly darker color on hover */
+}
+
 
 @keyframes App-logo-spin {
   from {
