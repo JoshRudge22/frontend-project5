@@ -1,54 +1,74 @@
-  .title {
+.title {
   margin-top: 30px;
-  font-size: 80px;
+  font-size: 5rem; /* Use relative size for scalability */
   font-family: "Oswald", sans-serif;
+  text-align: center; /* Center title for better visual impact */
 }
 
-  ul {
-    list-style-type: none;
-    padding: 0;
-    margin-top: 50px;
-    margin-bottom: 50px;
-  }
-  
-  .container {
-    width: 700px;
-    margin: 40px auto;
-    padding: 20px;
-    margin-bottom: 80px;
-  }
-  
-  .post {
-    border: 1px solid #ddd;
-    padding: 15px;
-    border-radius: 8px;
-    background-color: #fff;
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 50px 0; /* Simplified margin */
+}
+
+.container {
+  max-width: 800px; /* Set max-width for better responsiveness */
+  width: 90%; /* Use relative width for smaller screens */
+  margin: 40px auto;
+  padding: 20px;
+  margin-bottom: 80px;
+}
+
+.post {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.post h3 {
+  margin: 30px 0; /* Combine top and bottom margin for consistency */
+}
+
+.img {
+  margin-top: 50px;
+  width: 100%; /* Set to full width for responsiveness */
+  max-width: 600px; /* Set max width to prevent overflow */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.caption {
+  margin-top: 20px;
+  font-size: 1.5rem; /* Use relative size */
+}
+
+.interactions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 3rem; /* Use relative size */
+  color: black;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .title {
+    font-size: 4rem; /* Adjust title size for smaller screens */
   }
 
   .post h3 {
-    margin-top: 30px;
-    margin-bottom: 30px;
-  }
-  
-  .img {
-    margin-top: 50px;
-    width: 600px;
-    height: auto;
-  }
-  
-  .caption {
-    margin-top: 20px;
-    font-size: 25px;
+    font-size: 2rem; /* Adjust header size */
   }
 
-  .interactions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  .caption {
+    font-size: 1.25rem; /* Adjust caption size */
   }
-  
+
   .username {
-    font-weight: bold;
-    font-size: 60px;
-    color: black;
+    font-size: 2.5rem; /* Adjust username size */
   }
+}
