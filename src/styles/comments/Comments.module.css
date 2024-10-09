@@ -8,6 +8,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Base styles for h3, p, and .username */
 h3 {
   margin-top: 0;
 }
@@ -25,4 +26,41 @@ p {
 
 .username a:hover {
   color: #070707;
+}
+
+/* Tablet styles (between 768px and 1024px) */
+@media only screen and (max-width: 1024px) {
+  .commentContainer {
+    max-width: 90%;
+    padding: 15px;
+    margin: 30px auto;
+  }
+
+  .username {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+}
+
+/* Mobile styles (up to 767px) */
+@media only screen and (max-width: 767px) {
+  .commentContainer {
+    max-width: 95%;
+    padding: 10px;
+    margin: 20px auto;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  p {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .username {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
 }
