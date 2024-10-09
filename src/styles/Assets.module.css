@@ -4,4 +4,24 @@
     justify-content: center;
     align-items: center;
     min-height: 120px;
-  }
+    padding: 10px; /* Add some padding for spacing */
+    margin: 10px; /* Add margin to create space between assets */
+    border: 1px solid #ddd; /* Optional: Add a border for better visibility */
+    border-radius: 8px; /* Optional: Round corners */
+    background-color: #f9f9f9; /* Optional: Light background color */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .Asset {
+        min-height: 100px; /* Slightly reduce height for tablets */
+        padding: 8px; /* Adjust padding for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .Asset {
+        min-height: 80px; /* Further reduce height for mobile */
+        padding: 5px; /* Further adjust padding for mobile */
+    }
+}
