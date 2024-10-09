@@ -1,40 +1,92 @@
+.contactContainer {
+  max-width: 800px;
+  margin: 80px auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 100px;
+}
+
+/* Title Styling */
+.title {
+  margin-bottom: 30px;
+  font-size: 80px;
+  font-family: "Oswald", sans-serif;
+  text-align: center; /* Center-align the title */
+}
+
+/* Label Styling */
+.contactLabel {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Input and Textarea Styling */
+input[type="text"],  /* Corrected this */
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+textarea {
+  resize: vertical;
+  height: 200px;
+}
+
+/* Responsive Design */
+
+/* Tablet Styles (up to 1024px) */
+@media only screen and (max-width: 1024px) {
   .contactContainer {
-    max-width: 800px;
-    margin: 80px auto;
-    padding: 20px;
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-top: 100px;
+    max-width: 90%;
+    margin-top: 60px;
   }
 
   .title {
-    margin-bottom: 30px;
-    font-size: 80px;
-    font-family: "Oswald", sans-serif;
+    font-size: 60px; /* Reduce title size on smaller screens */
   }
-  
+
   .contactLabel {
-    font-size: 30px;
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-size: 24px; /* Reduce label size */
   }
   
-  input[type=""], /*need to look into this, it was called text */
-  input[type="email"],
+  input[type="text"], 
+  input[type="email"], 
   textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 16px;
+    font-size: 14px; /* Adjust font size */
   }
-  
+}
+
+/* Mobile Styles (up to 767px) */
+@media only screen and (max-width: 767px) {
+  .contactContainer {
+    max-width: 95%;
+    margin-top: 40px;
+    padding: 15px;
+  }
+
+  .title {
+    font-size: 40px; /* Further reduce title size */
+  }
+
+  .contactLabel {
+    font-size: 20px; /* Reduce label size */
+  }
+
+  input[type="text"], 
+  input[type="email"], 
   textarea {
-    resize: vertical;
-    height: 200px;
+    font-size: 12px; /* Smaller font size for inputs */
+    padding: 8px;
   }
+}
