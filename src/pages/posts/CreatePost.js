@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { axiosReq } from "../../api/axiosDefaults";
-import  Container from 'react-bootstrap/Container';
-import  Form from 'react-bootstrap/Form';
-import  Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import Poststyles from '../../styles/CreatingPost.module.css';
 import Buttonstyles from '../../styles/Buttons.module.css';
 
@@ -18,6 +18,16 @@ const CreatePost = () => {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+            if (!validTypes.includes(file.type)) {
+                setErrors({ ...errors, image: "Only JPEG, PNG, or GIF files are allowed." });
+                return;
+            }
+            if (file.size > 5 * 1024 * 1024) { // Limit size to 5 MB
+                setErrors({ ...errors, image: "File size must be less than 5 MB." });
+                return;
+            }
+
             setImage(file);
             const reader = new FileReader();
             reader.onloadend = () => {
