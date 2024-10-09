@@ -8,23 +8,25 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-top: 100px;
   margin-bottom: 400px;
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Align items vertically */
+  align-items: center; /* Center items horizontally */
 }
-
 
 .title {
   font-size: 60px;
   font-weight: bold;
   margin-bottom: 40px;
   text-align: center;
+  color: #333; /* Added color for better contrast */
 }
-
 
 .label {
   font-size: 30px;
   font-weight: bold;
   margin-bottom: 10px;
+  color: #555; /* Added color for better contrast */
 }
-
 
 .login {
   padding: 10px;
@@ -32,15 +34,28 @@
   border-radius: 4px;
   margin: 10px auto;
   width: 80%;
+  max-width: 400px; /* Set a max-width for better responsiveness */
+  transition: border-color 0.3s; /* Smooth transition on focus */
+}
+
+.login:focus {
+  border-color: #007bff; /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add shadow on focus */
 }
 
 .otherlink {
   margin-top: 20px;
   font-size: 25px;
+  color: #007bff; /* Add a color to the link */
+  text-decoration: none; /* Remove underline */
+}
+
+.otherlink:hover {
+  text-decoration: underline; /* Underline on hover */
 }
 
 .image {
-  height: 100%;
+  height: auto; /* Adjust height to auto for better aspect ratio */
   max-width: 100%;
   object-fit: contain;
 }
