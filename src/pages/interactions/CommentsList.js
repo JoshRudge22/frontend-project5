@@ -8,6 +8,13 @@ import commentsListStyles from '../../styles/FeedPage.module.css';
 import NoContentStyles from '../../styles/NoContent.module.css';
 import logo from '../../media/logo.png';
 
+const Spinner = () => (
+  <div className={commentsListStyles.spinner}>
+    <div className={commentsListStyles.dot1}></div>
+    <div className={commentsListStyles.dot2}></div>
+  </div>
+);
+
 const CommentsList = () => {
   const [commentedPosts, setCommentedPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,10 +26,10 @@ const CommentsList = () => {
       try {
         const response = await axios.get(`/comments/user/`);
         setCommentedPosts(response.data);
-        setLoading(false);
       } catch (error) {
         console.error('Error fetching commented posts:', error);
         setError('Error fetching commented posts');
+      } finally {
         setLoading(false);
       }
     };
@@ -31,7 +38,7 @@ const CommentsList = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Spinner />;
   }
 
   if (error) {
@@ -39,15 +46,15 @@ const CommentsList = () => {
   }
 
   if (!Array.isArray(commentedPosts) || commentedPosts.length === 0) {
-    return  (
-    <div className={NoContentStyles.container}>
-      <h2 className={NoContentStyles.message}>You have not left a comment on anyone's post.</h2>
-      <img className={NoContentStyles.logo} src={logo} alt="Logo" />
-      <h2 className={NoContentStyles.message}>
-        <Link to='/'>Click Here</Link> to discover users you may like to comment on
-      </h2>
-    </div>
-    )
+    return (
+      <div className={NoContentStyles.container}>
+        <h2 className={NoContentStyles.message}>You have not left a comment on anyone's post.</h2>
+        <img className={NoContentStyles.logo} src={logo} alt="Logo" />
+        <h2 className={NoContentStyles.message}>
+          <Link to='/'>Click Here</Link> to discover users you may like to comment on
+        </h2>
+      </div>
+    );
   }
 
   return (
@@ -57,7 +64,9 @@ const CommentsList = () => {
         {commentedPosts.map(post => (
           <li className={commentsListStyles.container} key={post.id}>
             <div className={commentsListStyles.post}>
-              <h3 className={commentsListStyles.username}>Post by: <Link to={`/profile/${post.owner}`}>{post.owner}</Link></h3>
+              <h3 className={commentsListStyles.username}>
+                Post by: <Link to={`/profile/${post.owner}`}>{post.owner}</Link>
+              </h3>
               <img className={commentsListStyles.img} src={post.image} alt={post.caption} />
               <p className={commentsListStyles.caption}><b>{post.owner}</b>: {post.caption}</p>
               <div className={commentsListStyles.interactions}>
@@ -72,4 +81,5 @@ const CommentsList = () => {
   );
 };
 
+// Exporting CommentsList component
 export default CommentsList;
