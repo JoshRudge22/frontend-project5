@@ -9,9 +9,11 @@ function Likes({ postId, currentUser }) {
   const [liked, setLiked] = useState(null);
   const [likesCount, setLikesCount] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false); // Loading state
 
   useEffect(() => {
     const fetchLikes = async () => {
+      setLoading(true); // Set loading to true when fetching
       try {
         const response = await axios.get(`/posts/${postId}/likes/`);
         const likes = response.data.usernames;
@@ -27,49 +29,64 @@ function Likes({ postId, currentUser }) {
       } catch (error) {
         console.error(error);
         setErrorMessage('Failed to load likes');
+      } finally {
+        setLoading(false); // Reset loading state
       }
     };
 
     fetchLikes();
   }, [postId, currentUser]);
 
-  const handleLike = async () => {
+  const toggleLike = async () => {
+    setLoading(true); // Set loading to true when toggling like
     try {
       if (!liked) {
         await axios.post(`/posts/${postId}/like/`);
-        setLikesCount(likesCount + 1);
+        setLikesCount((prevCount) => prevCount + 1);
         setLiked(true);
-        setErrorMessage('');
       } else {
         await axios.delete(`/posts/${postId}/like/`);
-        setLikesCount(likesCount - 1);
+        setLikesCount((prevCount) => prevCount - 1);
         setLiked(false);
-        setErrorMessage('');
       }
+      setErrorMessage('');
     } catch (error) {
       console.error(error);
       setErrorMessage('Failed to update like status');
+    } finally {
+      setLoading(false); // Reset loading state
     }
   };
 
   return (
     <div>
       <div>
-        <div>
-          <span className={likeStyles.count}>{likesCount} {likesCount === 1 ? 'like' : 'likes'}</span>
-          {errorMessage && <p>{errorMessage}</p>}
-        </div>
-        {currentUser ? (
-          <>
-          <Button className={buttonStyles.like} onClick={handleLike} disabled={liked === null}>
-            {liked ? <i className="fa-regular fa-thumbs-down"></i> : <i className="fa-regular fa-thumbs-up"></i>}
-          </Button>
-          <Link className={likeStyles.link} to={`/posts/${postId}/likes`}>View likes</Link>
-          </>
-          ) : (
-          <p>Please log in to like this post.</p>
-          )}
+        <span className={likeStyles.count}>
+          {likesCount} {likesCount === 1 ? 'like' : 'likes'}
+        </span>
+        {errorMessage && <p className={likeStyles.error}>{errorMessage}</p>}
       </div>
+      {currentUser ? (
+        <>
+          <Button
+            className={buttonStyles.like}
+            onClick={toggleLike}
+            disabled={loading || liked === null} // Disable button while loading
+            aria-pressed={liked} // Accessibility
+          >
+            {loading ? (
+              <span>Loading...</span> // Loading feedback
+            ) : (
+              <i className={`fa-regular ${liked ? 'fa-thumbs-down' : 'fa-thumbs-up'}`}></i>
+            )}
+          </Button>
+          <Link className={likeStyles.link} to={`/posts/${postId}/likes`}>
+            View likes
+          </Link>
+        </>
+      ) : (
+        <p>Please log in to like this post.</p>
+      )}
     </div>
   );
 }
