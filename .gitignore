@@ -1,23 +1,34 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# IDE and Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+# Logs
+logs
+*.log
+npm-debug.log*
 
-# testing
-/coverage
+# Build Artifacts
+/dist
+/out
 
-# production
-/build
+# Temporary Files
+/temp
+/tmp
 
-# misc
-.DS_Store
+# Optional npm cache directory
+.npm
+
+# Local env files
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# MacOS
+.AppleDouble
+.LSOverride
+Icon
