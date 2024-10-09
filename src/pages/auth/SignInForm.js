@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from "axios";
-import  Container from 'react-bootstrap/Container';
-import  Row from 'react-bootstrap/Row';
-import  Col from 'react-bootstrap/Col';
-import  Form from 'react-bootstrap/Form';
-import  Button from 'react-bootstrap/Button';
-import  Alert from 'react-bootstrap/Alert';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import { useSetCurrentUser } from '../../contexts/CurrentUserContext';
 import { setTokenTimestamp } from "../../utils/utils";
 import signStyles from '../../styles/SigningForm.module.css';
@@ -21,17 +21,23 @@ function SignInForm() {
   });
   const { username, password } = signInData;
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true); // Set loading state
+    setErrors({}); // Reset errors on new submission
+
     try {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
       setCurrentUser(data.user);
       setTokenTimestamp(data);
       history.push(`/profiles/${data.user.profile_id}`);
     } catch (err) {
-      setErrors(err.response?.data);
+      setErrors(err.response?.data || { non_field_errors: ["An error occurred. Please try again."] });
+    } finally {
+      setIsLoading(false); // Reset loading state
     }
   };
 
@@ -40,6 +46,10 @@ function SignInForm() {
       ...signInData,
       [event.target.name]: event.target.value,
     });
+  };
+
+  const isFormValid = () => {
+    return username && password; // Basic validation
   };
 
   return (
@@ -57,6 +67,7 @@ function SignInForm() {
                 name="username"
                 value={username}
                 onChange={handleChange}
+                required
               />
             </Form.Group>
             {errors.username && errors.username.map((message, idx) => (
@@ -71,12 +82,19 @@ function SignInForm() {
                 name="password"
                 value={password}
                 onChange={handleChange}
+                required
               />
             </Form.Group>
             {errors.password && errors.password.map((message, idx) => (
               <Alert key={idx} variant="warning">{message}</Alert>
             ))}
-            <Button className={buttonStyles.login} type="submit">Sign In</Button>
+            <Button
+              className={buttonStyles.login}
+              type="submit"
+              disabled={isLoading || !isFormValid()} // Disable button if loading or form is invalid
+            >
+              {isLoading ? 'Signing In...' : 'Sign In'}
+            </Button>
             {errors.non_field_errors && errors.non_field_errors.map((message, idx) => (
               <Alert key={idx} variant="warning" className="mt-3">{message}</Alert>
             ))}
