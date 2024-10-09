@@ -1,3 +1,20 @@
 .notFound {
-  margin-top: 25vh;
+    display: flex; /* Use flexbox for easy centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    min-height: 70vh; /* Ensure it occupies enough vertical space */
+    text-align: center; /* Center text */
+    margin-top: 25vh; /* Optional: use if needed for spacing */
+    font-size: 30px; /* Adjust font size */
+    color: #333; /* Text color */
+}
+
+.notFound h1 {
+    font-size: 50px; /* Adjust heading size */
+    margin-bottom: 20px; /* Spacing below the heading */
+}
+
+.notFound p {
+    font-size: 20px; /* Size of additional text */
+    color: #555; /* Color for paragraph text */
 }
