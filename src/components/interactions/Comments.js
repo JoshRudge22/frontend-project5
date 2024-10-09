@@ -13,28 +13,36 @@ const Comments = ({ postId, currentUser }) => {
   const [editComment, setEditComment] = useState(null);
   const [editContent, setEditContent] = useState('');
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchComments = async () => {
+      setLoading(true); // Set loading state to true
       try {
         const response = await axios.get(`/posts/${postId}/comments/`);
         setComments(response.data.results);
       } catch (error) {
         console.error('Error fetching comments:', error);
         setError('Error fetching comments');
+      } finally {
+        setLoading(false); // Set loading state to false
       }
     };
 
-    // Fetch comments only if currentUser is available
     if (currentUser) {
       fetchComments();
     } else {
-      // Reset comments when currentUser is not available
       setComments([]);
     }
   }, [postId, currentUser]);
 
   const handleAddComment = async () => {
+    if (newComment.trim() === '') {
+      setError('Comment cannot be empty.');
+      return;
+    }
+
+    setLoading(true); // Set loading state to true
     try {
       const response = await axios.post(`/posts/${postId}/comments/`, {
         content: newComment,
@@ -42,30 +50,47 @@ const Comments = ({ postId, currentUser }) => {
       });
       setComments([response.data, ...comments]);
       setNewComment('');
+      setError(null); // Clear error after successful submission
     } catch (error) {
       console.error('Error adding comment:', error);
       setError('Error adding comment');
+    } finally {
+      setLoading(false); // Set loading state to false
     }
   };
 
   const handleEditComment = async (id) => {
+    if (editContent.trim() === '') {
+      setError('Comment cannot be empty.');
+      return;
+    }
+
+    setLoading(true); // Set loading state to true
     try {
       const response = await axios.patch(`/comments/${id}/`, { content: editContent });
       setComments(comments.map(comment => comment.id === id ? response.data : comment));
       setEditComment(null);
+      setEditContent('');
+      setError(null); // Clear error after successful edit
     } catch (error) {
       console.error('Error editing comment:', error);
       setError('Error editing comment');
+    } finally {
+      setLoading(false); // Set loading state to false
     }
   };
 
   const handleDeleteComment = async (id) => {
+    setLoading(true); // Set loading state to true
     try {
       await axios.delete(`/comments/${id}/`);
       setComments(comments.filter(comment => comment.id !== id));
+      setError(null); // Clear error after successful deletion
     } catch (error) {
       console.error('Error deleting comment:', error);
       setError('Error deleting comment');
+    } finally {
+      setLoading(false); // Set loading state to false
     }
   };
 
@@ -75,31 +100,38 @@ const Comments = ({ postId, currentUser }) => {
 
   return (
     <Container>
-      {error && <p>{error}</p>}
+      {error && <p className={commentStyles.error}>{error}</p>}
       <div>
         <h3>Comments</h3>
-        {comments.map(comment => (
-          <div key={comment.id}>
-            {editComment === comment.id ? (
+        {loading && <p>Loading comments...</p>} {/* Loading state */}
+        {comments.map(({ id, user, content }) => (
+          <div key={id}>
+            {editComment === id ? (
               <>
                 <Form.Group>
-                  <Form.Control as="textarea" rows={3} value={editContent} onChange={(e) => setEditContent(e.target.value)} />
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    value={editContent}
+                    onChange={(e) => setEditContent(e.target.value)}
+                    aria-label="Edit comment"
+                  />
                 </Form.Group>
-                <Button className={buttonStyles.edit} onClick={() => handleEditComment(comment.id)}>Save</Button>
+                <Button className={buttonStyles.edit} onClick={() => handleEditComment(id)}>Save</Button>
                 <Button className={buttonStyles.delete} onClick={() => setEditComment(null)}>Cancel</Button>
               </>
             ) : (
               <>
                 <p>
-                  <Link className={commentStyles.username} to={`/profile/${comment.user}`}>
-                    {comment.user}
+                  <Link className={commentStyles.username} to={`/profile/${user}`}>
+                    {user}
                   </Link>{" "}
-                  says: {comment.content}
+                  says: {content}
                 </p>
-                {currentUser && currentUser.username === comment.user && (
+                {currentUser && currentUser.username === user && (
                   <>
-                    <Button className={buttonStyles.edit} onClick={() => { setEditComment(comment.id); setEditContent(comment.content); }}>Edit</Button>
-                    <Button className={buttonStyles.delete} onClick={() => handleDeleteComment(comment.id)}>Delete</Button>
+                    <Button className={buttonStyles.edit} onClick={() => { setEditComment(id); setEditContent(content); }}>Edit</Button>
+                    <Button className={buttonStyles.delete} onClick={() => handleDeleteComment(id)}>Delete</Button>
                   </>
                 )}
               </>
@@ -115,9 +147,12 @@ const Comments = ({ postId, currentUser }) => {
             rows={3}
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
+            aria-label="Add new comment"
           />
         </Form.Group>
-        <Button className={buttonStyles.save} onClick={handleAddComment}>Submit</Button>
+        <Button className={buttonStyles.save} onClick={handleAddComment} disabled={loading}> {/* Disable during loading */}
+          {loading ? 'Submitting...' : 'Submit'}
+        </Button>
       </div>
     </Container>
   );
