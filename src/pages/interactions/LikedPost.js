@@ -1,16 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Container from 'react-bootstrap/Container';
-import { Link } from 'react-router-dom';
-import { useCurrentUser } from '../../contexts/CurrentUserContext';
-import Comments from '../../components/interactions/Comments';
-import LikeButton from '../../components/interactions/Likes';
-import likeStyles from '../../styles/likes/Likeslist.module.css';
-import NoContentStyles from '../../styles/NoContent.module.css';
-import logo from '../../media/logo.png';
-
 const LikedPost = () => {
   const [likedPosts, setLikedPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const currentUser = useCurrentUser();
 
   useEffect(() => {
@@ -20,11 +10,17 @@ const LikedPost = () => {
         setLikedPosts(response.data);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false); // Set loading to false after fetch
       }
     };
 
     fetchLikedPosts();
   }, []);
+
+  if (loading) {
+    return <div>Loading liked posts...</div>; // Loading state message
+  }
 
   if (!Array.isArray(likedPosts) || likedPosts.length === 0) {
     return (
@@ -46,7 +42,11 @@ const LikedPost = () => {
           {likedPosts.map((post) => (
             <li className={likeStyles.container} key={post.id}>
               <div className={likeStyles.post}>
-              <h3><Link className={likeStyles.username} to={`/profile/${post.owner}`}>{post.owner}</Link></h3>
+                <h3>
+                  <Link className={likeStyles.username} to={`/profile/${post.owner}`}>
+                    {post.owner}
+                  </Link>
+                </h3>
                 <img className={likeStyles.img} src={post.image} alt={`Post ${post.id}`} />
                 <p className={likeStyles.caption}><b>{post.owner}</b>: {post.caption}</p>
                 <div className={likeStyles.interactions}>
@@ -61,5 +61,3 @@ const LikedPost = () => {
     </div>
   );
 };
-
-export default LikedPost;
