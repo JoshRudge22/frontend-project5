@@ -12,6 +12,10 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
+const MockCurrentUserProvider = ({ children, currentUser }) => (
+  <CurrentUserProvider value={currentUser}>{children}</CurrentUserProvider>
+);
+
 test("renders NavBar", () => {
   render(
     <Router>
@@ -24,11 +28,12 @@ test("renders NavBar", () => {
 });
 
 test("renders link to the user profile for a logged in user", async () => {
+  const mockUser = { username: "testuser", id: 1 }; // Mock user object
   render(
     <Router>
-      <CurrentUserProvider>
+      <MockCurrentUserProvider currentUser={mockUser}>
         <NavBar />
-      </CurrentUserProvider>
+      </MockCurrentUserProvider>
     </Router>
   );
 
@@ -37,11 +42,12 @@ test("renders link to the user profile for a logged in user", async () => {
 });
 
 test("renders Sign in and Sign up buttons again on log out", async () => {
+  const mockUser = { username: "testuser", id: 1 };
   render(
     <Router>
-      <CurrentUserProvider>
+      <MockCurrentUserProvider currentUser={mockUser}>
         <NavBar />
-      </CurrentUserProvider>
+      </MockCurrentUserProvider>
     </Router>
   );
 
@@ -54,3 +60,5 @@ test("renders Sign in and Sign up buttons again on log out", async () => {
   expect(signInLink).toBeInTheDocument();
   expect(signUpLink).toBeInTheDocument();
 });
+
+// Add additional tests for error handling, loading states, etc.
