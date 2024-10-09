@@ -9,7 +9,7 @@
 }
 
 .title {
-  font-size: 80px;
+  font-size: 4rem; /* Use relative size for better scalability */
   font-family: "Oswald", sans-serif;
   margin-bottom: 30px;
   color: #333;
@@ -22,7 +22,7 @@
 
 .label {
   display: block;
-  font-size: 25px;
+  font-size: 1.5rem; /* Use relative size */
   margin-bottom: 10px;
   font-weight: bold;
   color: #555;
@@ -37,6 +37,7 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  font-size: 1rem; /* Use relative size */
 }
 
 .form textarea {
@@ -44,6 +45,22 @@
 }
 
 .preview {
-  width: 500px;
+  max-width: 100%; /* Ensure the preview scales with the container */
   height: auto;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .title {
+    font-size: 3rem; /* Adjust title size for smaller screens */
+  }
+
+  .label {
+    font-size: 1.25rem; /* Adjust label size */
+  }
+
+  .form input,
+  .form textarea {
+    padding: 12px; /* Adjust padding for smaller screens */
+  }
 }
