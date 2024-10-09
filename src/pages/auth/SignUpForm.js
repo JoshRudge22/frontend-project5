@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import  Container from 'react-bootstrap/Container';
-import  Row from 'react-bootstrap/Row';
-import  Col from 'react-bootstrap/Col';
-import  Form from 'react-bootstrap/Form';
-import  Button from 'react-bootstrap/Button';
-import  Alert from 'react-bootstrap/Alert';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import { Link, useHistory } from 'react-router-dom';
 import { setTokenTimestamp } from '../../utils/utils';
 import { useSetCurrentUser } from '../../contexts/CurrentUserContext';
@@ -31,6 +31,7 @@ function SignUpForm() {
   });
   const { username, password1, password2 } = signUpData;
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false); // Loading state
   const history = useHistory();
   const setCurrentUser = useSetCurrentUser();
 
@@ -41,8 +42,26 @@ function SignUpForm() {
     });
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+    if (password1 !== password2) {
+      newErrors.password2 = ['Passwords do not match.'];
+    }
+    if (password1.length < 6) {
+      newErrors.password1 = ['Password must be at least 6 characters long.'];
+    }
+    return newErrors;
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    setIsLoading(true); // Set loading state
     try {
       const signUpResponse = await signUp(signUpData);
       console.log("Sign Up Response:", signUpResponse);
@@ -57,6 +76,8 @@ function SignUpForm() {
     } catch (err) {
       console.error("Error Response:", err.response);
       setErrors(err.response?.data || { non_field_errors: [err.message] });
+    } finally {
+      setIsLoading(false); // Reset loading state
     }
   };
 
@@ -76,6 +97,7 @@ function SignUpForm() {
                 value={username}
                 onChange={handleChange}
                 autoComplete="username"
+                required
               />
             </Form.Group>
             {errors.username && errors.username.map((message, idx) => (
@@ -91,6 +113,7 @@ function SignUpForm() {
                 value={password1}
                 onChange={handleChange}
                 autoComplete="new-password"
+                required
               />
             </Form.Group>
             {errors.password1 && errors.password1.map((message, idx) => (
@@ -106,12 +129,15 @@ function SignUpForm() {
                 value={password2}
                 onChange={handleChange}
                 autoComplete="new-password"
+                required
               />
             </Form.Group>
             {errors.password2 && errors.password2.map((message, idx) => (
               <Alert key={idx} variant="warning">{message}</Alert>
             ))}
-            <Button className={buttonStyles.login} type="submit">Sign Up</Button>
+            <Button className={buttonStyles.login} type="submit" disabled={isLoading}>
+              {isLoading ? 'Signing Up...' : 'Sign Up'}
+            </Button>
             {errors.non_field_errors && errors.non_field_errors.map((message, idx) => (
               <Alert key={idx} variant="warning" className="mt-3">{message}</Alert>
             ))}
