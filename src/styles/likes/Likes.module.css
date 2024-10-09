@@ -1,11 +1,11 @@
-.link {  
+.link {
   display: block;
   margin-top: 10px;
   font-size: 25px;
   color: #337ab7;
   text-decoration: none;
 }
-  
+
 .link:hover {
   text-decoration: underline;
 }
@@ -13,4 +13,28 @@
 .count {
   margin-bottom: 40px;
   font-size: 25px;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .link {
+    font-size: 20px; /* Adjust font size for smaller screens */
+    margin-top: 8px; /* Slightly reduce margin */
+  }
+
+  .count {
+    font-size: 20px; /* Adjust font size for smaller screens */
+    margin-bottom: 30px; /* Adjust margin for better spacing */
+  }
+}
+
+@media (max-width: 480px) {
+  .link {
+    font-size: 18px; /* Further adjust font size for very small screens */
+  }
+
+  .count {
+    font-size: 18px; /* Further adjust font size for very small screens */
+    margin-bottom: 20px; /* Further adjust margin */
+  }
 }
