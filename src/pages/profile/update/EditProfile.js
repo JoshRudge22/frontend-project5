@@ -7,13 +7,17 @@ const EditProfile = () => {
   const currentUser = useCurrentUser();
 
   if (!currentUser) {
-    return <div>Loading...</div>;
+    return <div className={profileStyles.loading}>Loading...</div>; // Optional: Apply styles
+  }
+
+  if (!currentUser.id) {
+    return <div className={profileStyles.error}>Error: User not found.</div>; // Handle missing user ID
   }
 
   return (
-    <div>
-      <UpdateProfile className={profileStyles} profileId={currentUser.id} />
-    </div>
+    <>
+      <UpdateProfile profileId={currentUser.id} />
+    </>
   );
 };
 
