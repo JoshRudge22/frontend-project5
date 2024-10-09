@@ -1,16 +1,31 @@
-version: '3'
+version: '3.8' # Update to the latest version if possible
 services:
   app:
     image: public.ecr.aws/m5f1e7g7/ci-project-templates-react:version1.0
     volumes:
       - "/tmp/postgres/socket:/var/run/postgresql"
- 
+    networks:
+      - app-network
+
   psql:
     image: postgres:11.9
     environment:
-      - POSTGRES_PASSWORD=pass1234
-      - POSTGRES_USER=cistudent
-      - POSTGRES_DB=mydb
-    network_mode: service:app
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} # Use .env file for sensitive data
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - "/tmp/postgres/socket:/var/run/postgresql"
+      - postgres_data:/var/lib/postgresql/data # Use a named volume for persistence
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data: # Named volume for PostgreSQL data persistence
