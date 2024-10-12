@@ -1,10 +1,11 @@
 import React, { lazy, Suspense } from 'react';
 import NavBar from './components/NavBar';
 import './App.css';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import NotFound from './components/NotFound';
 
+// Lazy loaded components
 const SignInForm = lazy(() => import('./pages/auth/SignInForm'));
 const SignUpForm = lazy(() => import('./pages/auth/SignUpForm'));
 const ProfilePage = lazy(() => import('./pages/profile/info/ProfilePage'));
@@ -24,23 +25,44 @@ const MyFollowingList = lazy(() => import('./pages/follow/MyFollowingList'));
 const ContactForm = lazy(() => import('./pages/contact/ContactForm'));
 const FormSubmitted = lazy(() => import('./pages/contact/FormSubmitted'));
 
+// Example authentication check
+const isAuthenticated = false; // Replace with actual authentication check logic
+
 function App() {
   return (
     <div className="App">
       <NavBar />
       <Container>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div className="loader">Loading...</div>}>
           <Switch>
             <Route exact path="/" component={FeedPage} />
             <Route exact path="/feed" component={FollowingFeedPage} />
             <Route exact path="/signin" component={SignInForm} />
             <Route exact path="/signup" component={SignUpForm} />
             <Route exact path="/profiles/:profileId" component={ProfilePage} />
-            <Route exact path="/edit/:profileId" component={EditProfile} />
+            <Route
+              exact
+              path="/edit/:profileId"
+              render={(props) => 
+                isAuthenticated ? <EditProfile {...props} /> : <Redirect to="/signin" />
+              }
+            />
             <Route exact path="/profile/:username" component={UsersPage} />
             <Route exact path="/user/:username/posts" component={OtherUsersPostList} />
-            <Route exact path="/profiles/delete/:profileId" component={DeleteProfile} />
-            <Route exact path="/posts/create" component={CreatePost} />
+            <Route
+              exact
+              path="/profiles/delete/:profileId"
+              render={(props) => 
+                isAuthenticated ? <DeleteProfile {...props} /> : <Redirect to="/signin" />
+              }
+            />
+            <Route
+              exact
+              path="/posts/create"
+              render={(props) => 
+                isAuthenticated ? <CreatePost {...props} /> : <Redirect to="/signin" />
+              }
+            />
             <Route exact path="/posts/list" component={PostList} />
             <Route exact path="/commentslist" component={CommentsList} />
             <Route exact path="/posts/:postId/likes" component={LikeList} />
