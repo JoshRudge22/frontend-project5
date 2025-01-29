@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types'; // Import prop-types for type checking
 import Navbar from 'react-bootstrap/Navbar';
+import ConfirmationModal from './ConfirmationModal';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';

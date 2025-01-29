@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Delete from '../../../components/interactions/Delete';
 import deleteStyles from '../../../styles/Delete.module.css';
-import ConfirmationModal from '../../../components/modals/ConfirmationModal'; // Assuming you have a modal component
+import ConfirmationModal from '../../../components/ConfirmationModal';
 
 const DeleteProfile = () => {
   const [showModal, setShowModal] = useState(false);

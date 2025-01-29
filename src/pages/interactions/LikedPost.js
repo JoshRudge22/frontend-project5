@@ -1,3 +1,14 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { useCurrentUser } from '../../contexts/CurrentUserContext';
+import likeStyles from '../../styles/LikedPosts.module.css';
+import NoContentStyles from '../../styles/NoContent.module.css';
+import logo from '../../media/logo.png';
+import LikeButton from '../../components/interactions/LikeButton';
+import Comments from '../../components/interactions/Comments';
+import { Container } from 'react-bootstrap';
+
 const LikedPost = () => {
   const [likedPosts, setLikedPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,7 +22,7 @@ const LikedPost = () => {
       } catch (error) {
         console.error(error);
       } finally {
-        setLoading(false); // Set loading to false after fetch
+        setLoading(false);
       }
     };
 
@@ -19,7 +30,7 @@ const LikedPost = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading liked posts...</div>; // Loading state message
+    return <div>Loading liked posts...</div>;
   }
 
   if (!Array.isArray(likedPosts) || likedPosts.length === 0) {
@@ -61,3 +72,5 @@ const LikedPost = () => {
     </div>
   );
 };
+
+export default LikedPost;

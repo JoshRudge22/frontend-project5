@@ -18,19 +18,22 @@ const FollowingFeedPage = () => {
   const [hasMore, setHasMore] = useState(true);
   const currentUser = useCurrentUser();
 
-  useEffect(() => {
-    const fetchFollowingFeed = async () => {
-      try {
-        const response = await axios.get('/feed/following/?limit=5&offset=0');
-        setFeedData(response.data.results);
-        setNextUrl(response.data.next);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchFollowingFeed = async () => {
+    setLoading(true);
+    setError(null); // Reset error on new fetch
+    try {
+      const response = await axios.get('/feed/following/?limit=5&offset=0');
+      setFeedData(response.data.results);
+      setNextUrl(response.data.next);
+      setHasMore(!!response.data.next); // Set hasMore based on response
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchFollowingFeed();
   }, []);
 
@@ -40,9 +43,7 @@ const FollowingFeedPage = () => {
         const response = await axios.get(nextUrl);
         setFeedData(prevFeedData => [...prevFeedData, ...response.data.results]);
         setNextUrl(response.data.next);
-        if (!response.data.next) {
-          setHasMore(false);
-        }
+        setHasMore(!!response.data.next);
       } catch (error) {
         setError(error.message);
       }
@@ -50,14 +51,14 @@ const FollowingFeedPage = () => {
   };
 
   if (loading) {
-    return <Spinner />; // Use a loading spinner here
+    return <Spinner />;
   }
 
   if (error) {
     return (
       <div>
         <p>Error: {error}</p>
-        <button onClick={() => fetchFollowingFeed()}>Retry</button> {/* Retry button */}
+        <button onClick={fetchFollowingFeed}>Retry</button> {/* Now this works! */}
       </div>
     );
   }
@@ -80,7 +81,7 @@ const FollowingFeedPage = () => {
       next={fetchMoreData}
       hasMore={hasMore}
       loader={<h4>Loading more posts...</h4>}
-      endMessage={<h4>No more posts to display.</h4>} // More descriptive end message
+      endMessage={<h4>No more posts to display.</h4>}
     >
       <h2 className={feedStyles.title}>Following Feed!</h2>
       <ul className={feedStyles.ul}>
@@ -93,7 +94,7 @@ const FollowingFeedPage = () => {
               {item.image ? (
                 <img className={feedStyles.img} src={item.image} alt={item.caption} />
               ) : (
-                <div className={feedStyles.placeholder}>Image not available</div> // Placeholder for missing images
+                <div className={feedStyles.placeholder}>Image not available</div>
               )}
               <p className={feedStyles.caption}><b>{item.owner}</b>: {item.caption}</p>
               <div className={feedStyles.interactions}>
