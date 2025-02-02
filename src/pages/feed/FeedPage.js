@@ -6,7 +6,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Comments from '../../components/interactions/Comments';
 import Likes from '../../components/interactions/Likes';
 import feedStyles from '../../styles/FeedPage.module.css';
-import Spinner from '../../components/Spinner'; // Assume you have a Spinner component
+import Spinner from '../../components/Spinner';
 
 const FeedPage = () => {
   const [feedData, setFeedData] = useState([]);
