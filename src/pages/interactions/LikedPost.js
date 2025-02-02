@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useCurrentUser } from '../../contexts/CurrentUserContext';
-import likeStyles from '../../styles/LikedPosts.module.css';
+import likeStyles from '../../styles//likes/Likeslist.module.css';
 import NoContentStyles from '../../styles/NoContent.module.css';
 import logo from '../../media/logo.png';
-import LikeButton from '../../components/interactions/LikeButton';
+import LikeButton from '../../components/interactions/Likes';
 import Comments from '../../components/interactions/Comments';
 import { Container } from 'react-bootstrap';
 

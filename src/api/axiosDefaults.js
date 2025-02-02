@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Set up the base URL and default headers
-axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL || 'https://api-backend-project-3eba949b1615.herokuapp.com/';
+axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL || 'https://joshapp-backend-efcd8c73d793.herokuapp.com/';
 axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
 axios.defaults.withCredentials = true;
 
