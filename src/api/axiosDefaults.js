@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL || "https://joshapp-backend-efcd8c73d793.herokuapp.com/";
+axios.defaults.baseURL = "https://joshapp-backend-efcd8c73d793.herokuapp.com/";
 axios.defaults.withCredentials = true;
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
@@ -11,9 +11,7 @@ const axiosReq = axios.create({
   },
 });
 
-
 const axiosRes = axios.create();
-
 
 axiosRes.interceptors.response.use(
   (response) => response,
