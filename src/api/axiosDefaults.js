@@ -1,47 +1,36 @@
 import axios from "axios";
 
-// Set up the base URL and default headers
-axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL || 'https://joshapp-backend-efcd8c73d793.herokuapp.com/';
-axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
+axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL || "https://joshapp-backend-efcd8c73d793.herokuapp.com/";
 axios.defaults.withCredentials = true;
 
-// Create an Axios instance for requests
-const axiosReq = axios.create();
+axios.defaults.headers.post["Content-Type"] = "application/json";
 
-// Add a request interceptor
-axiosReq.interceptors.request.use(
-  (config) => {
-    // You can add authentication tokens or any other modifications here
-    return config;
+const axiosReq = axios.create({
+  headers: {
+    "Content-Type": "multipart/form-data",
   },
-  (error) => {
-    // Handle request errors here
-    return Promise.reject(error);
-  }
-);
+});
 
-// Create an Axios instance for responses
+
 const axiosRes = axios.create();
 
-// Add a response interceptor
+
 axiosRes.interceptors.response.use(
-  (response) => {
-    // Return the response data directly
-    return response.data;
-  },
-  (error) => {
-    // Handle common response errors here
-    if (error.response) {
-      if (error.response.status === 401) {
-        // Handle unauthorized error (e.g., redirect to login)
-        console.error("Unauthorized access - Redirecting to login");
-      } else {
-        console.error("An error occurred:", error.response.status, error.response.data);
+  (response) => response,
+  async (error) => {
+    if (error.response?.status === 401) {
+      console.warn("Unauthorized - Attempting token refresh");
+
+      try {
+        await axios.post("dj-rest-auth/token/refresh/", {}, { withCredentials: true });
+        return axios(error.config);
+      } catch (refreshError) {
+        console.error("Refresh token failed - Redirecting to login");
       }
     }
+
     return Promise.reject(error);
   }
 );
 
-// Export both Axios instances for use in your application
 export { axiosReq, axiosRes };
