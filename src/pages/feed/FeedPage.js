@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { useCurrentUser } from '../../contexts/CurrentUserContext';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import Comments from '../../components/interactions/Comments';
-import Likes from '../../components/interactions/Likes';
-import feedStyles from '../../styles/FeedPage.module.css';
-import Spinner from '../../components/Spinner';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link, useHistory } from "react-router-dom";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
+import InfiniteScroll from "react-infinite-scroll-component";
+import Comments from "../../components/interactions/Comments";
+import Likes from "../../components/interactions/Likes";
+import feedStyles from "../../styles/FeedPage.module.css";
+import Spinner from "../../components/Spinner";
+import man from "../../media/man.jpg";
 
 const FeedPage = () => {
   const [feedData, setFeedData] = useState([]);
@@ -15,12 +16,20 @@ const FeedPage = () => {
   const [nextUrl, setNextUrl] = useState(null);
   const [hasMore, setHasMore] = useState(true);
   const currentUser = useCurrentUser();
+  const history = useHistory();
+
+  
+  useEffect(() => {
+    if (!currentUser) {
+      history.push("/signin");
+    }
+  }, [currentUser, history]);
 
   useEffect(() => {
     const fetchFeedData = async () => {
       try {
-        const response = await axios.get('/feed/?limit=5&offset=0');
-        setFeedData(response.data.results);
+        const response = await axios.get("/feed/?limit=5&offset=0");
+        setFeedData(response.data.results || []);
         setNextUrl(response.data.next);
       } catch (error) {
         setError(error.message);
@@ -36,7 +45,10 @@ const FeedPage = () => {
     if (nextUrl) {
       try {
         const response = await axios.get(nextUrl);
-        setFeedData(prevFeedData => [...prevFeedData, ...response.data.results]);
+        setFeedData((prevFeedData) => [
+          ...prevFeedData,
+          ...(response.data.results || []),
+        ]);
         setNextUrl(response.data.next);
         if (!response.data.next) {
           setHasMore(false);
@@ -48,24 +60,19 @@ const FeedPage = () => {
   };
 
   if (loading) {
-    return <Spinner />; // Replace with your spinner component
+    return <Spinner />;
   }
 
   if (error) {
     return <p>Error: {error}</p>;
   }
 
-  if (feedData.length === 0) {
-    return <p>No posts available.</p>; // Empty state message
+  if (!feedData || feedData.length === 0) {
+    return <p>No posts available.</p>;
   }
 
   return (
-    <InfiniteScroll
-      dataLength={feedData.length}
-      next={fetchMoreData}
-      hasMore={hasMore}
-      loader={<h4>Loading more posts...</h4>}
-    >
+    <InfiniteScroll dataLength={feedData.length} next={fetchMoreData} hasMore={hasMore} loader={<h4>Loading more posts...</h4>}>
       <h2 className={feedStyles.title}>Discover Feed</h2>
       <ul className={feedStyles.ul}>
         {feedData.map((item) => (
@@ -74,11 +81,7 @@ const FeedPage = () => {
               <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
                 {item.owner}
               </Link>
-              {item.image ? (
-                <img className={feedStyles.img} src={item.image} alt={item.caption} />
-              ) : (
-                <div className={feedStyles.placeholder}>Image not available</div>
-              )}
+              <img className={feedStyles.img} src={item.image || man} alt={item.caption || "User Avatar"} />
               <p className={feedStyles.caption}><b>{item.owner}</b>: {item.caption}</p>
               <div className={feedStyles.interactions}>
                 <Likes postId={item.id} currentUser={currentUser} />
