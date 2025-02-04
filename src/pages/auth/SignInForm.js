@@ -32,13 +32,13 @@ function SignInForm() {
       setCurrentUser(data.user);
       setTokenTimestamp(data);
 
-      history.push(`/profiles/${data.user.id}/`);
-    } catch (err) {
-      setErrors(err.response?.data || { non_field_errors: ["Invalid username or password."] });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+      history.push(`/profiles/username/${data.user.username}/`);
+  } catch (err) {
+    setErrors(err.response?.data || { non_field_errors: ["Invalid username or password."] });
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   const handleChange = (event) => {
     setSignInData({ ...signInData, [event.target.name]: event.target.value });

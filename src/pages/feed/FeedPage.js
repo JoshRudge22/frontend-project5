@@ -7,7 +7,7 @@ import Comments from "../../components/interactions/Comments";
 import Likes from "../../components/interactions/Likes";
 import feedStyles from "../../styles/FeedPage.module.css";
 import Spinner from "../../components/Spinner";
-import man from "../../media/man.jpg";
+import defaultAvatar from "../../media/man.jpg";
 
 const FeedPage = () => {
   const [feedData, setFeedData] = useState([]);
@@ -44,10 +44,7 @@ const FeedPage = () => {
     if (nextUrl) {
       try {
         const response = await axios.get(nextUrl);
-        setFeedData((prevFeedData) => [
-          ...prevFeedData,
-          ...(response.data.results || []),
-        ]);
+        setFeedData((prevFeedData) => [...prevFeedData, ...(response.data.results || [])]);
         setNextUrl(response.data.next);
         if (!response.data.next) {
           setHasMore(false);
@@ -69,10 +66,10 @@ const FeedPage = () => {
         {feedData.map((item) => (
           <li key={item.id} className={feedStyles.container}>
             <div className={feedStyles.post}>
-              <Link to={`/profiles/${item.owner}`} className={feedStyles.username}>
+              <Link to={`/profiles/username/${item.owner}`} className={feedStyles.username}>
                 {item.owner}
               </Link>
-              <img className={feedStyles.img} src={item.image || man} alt={item.caption || "User Avatar"} />
+              <img className={feedStyles.img} src={item.image || defaultAvatar} alt={item.caption || "User Avatar"} />
               <p className={feedStyles.caption}><b>{item.owner}</b>: {item.caption}</p>
               <div className={feedStyles.interactions}>
                 <Likes postId={item.id} currentUser={currentUser} />
