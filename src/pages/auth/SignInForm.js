@@ -15,10 +15,7 @@ import camera from '../../media/camera.jpg';
 
 function SignInForm() {
   const setCurrentUser = useSetCurrentUser();
-  const [signInData, setSignInData] = useState({
-    username: "",
-    password: ""
-  });
+  const [signInData, setSignInData] = useState({ username: "", password: "" });
   const { username, password } = signInData;
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -26,31 +23,28 @@ function SignInForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsLoading(true); // Set loading state
-    setErrors({}); // Reset errors on new submission
+    setIsLoading(true);
+    setErrors({});
 
     try {
-      const { data } = await axios.post("/dj-rest-auth/login/", signInData);
+      const { data } = await axios.post("/dj-rest-auth/login/", signInData, { withCredentials: true });
+
       setCurrentUser(data.user);
       setTokenTimestamp(data);
-      history.push(`/profiles/${data.user.profile_id}`);
+
+      history.push(`/profiles/${data.user.id}/`);
     } catch (err) {
-      setErrors(err.response?.data || { non_field_errors: ["An error occurred. Please try again."] });
+      setErrors(err.response?.data || { non_field_errors: ["Invalid username or password."] });
     } finally {
-      setIsLoading(false); // Reset loading state
+      setIsLoading(false);
     }
   };
 
   const handleChange = (event) => {
-    setSignInData({
-      ...signInData,
-      [event.target.name]: event.target.value,
-    });
+    setSignInData({ ...signInData, [event.target.name]: event.target.value });
   };
 
-  const isFormValid = () => {
-    return username && password; // Basic validation
-  };
+  const isFormValid = () => username && password;
 
   return (
     <Container className={signStyles.container}>
@@ -70,9 +64,10 @@ function SignInForm() {
                 required
               />
             </Form.Group>
-            {errors.username && errors.username.map((message, idx) => (
+            {errors.username?.map((message, idx) => (
               <Alert key={idx} variant="warning">{message}</Alert>
             ))}
+
             <Form.Group controlId="password">
               <Form.Label className={signStyles.label}>Password</Form.Label>
               <Form.Control
@@ -85,21 +80,22 @@ function SignInForm() {
                 required
               />
             </Form.Group>
-            {errors.password && errors.password.map((message, idx) => (
+            {errors.password?.map((message, idx) => (
               <Alert key={idx} variant="warning">{message}</Alert>
             ))}
+
             <Button
               className={buttonStyles.login}
               type="submit"
-              disabled={isLoading || !isFormValid()} // Disable button if loading or form is invalid
+              disabled={isLoading || !isFormValid()}
             >
               {isLoading ? 'Signing In...' : 'Sign In'}
             </Button>
-            {errors.non_field_errors && errors.non_field_errors.map((message, idx) => (
+            {errors.non_field_errors?.map((message, idx) => (
               <Alert key={idx} variant="warning" className="mt-3">{message}</Alert>
             ))}
           </Form>
-          <p className={signStyles.otherlink}>Don't have an account? Click on <Link to="/signup">Sign Up</Link></p>
+          <p className={signStyles.otherlink}>Don't have an account? <Link to="/signup">Sign Up</Link></p>
         </Col>
         <Col md={6} className="text-center">
           <img src={camera} alt="Sign In" className={signStyles.image} />

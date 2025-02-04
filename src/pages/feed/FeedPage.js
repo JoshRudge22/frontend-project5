@@ -18,7 +18,6 @@ const FeedPage = () => {
   const currentUser = useCurrentUser();
   const history = useHistory();
 
-  
   useEffect(() => {
     if (!currentUser) {
       history.push("/signin");
@@ -59,17 +58,9 @@ const FeedPage = () => {
     }
   };
 
-  if (loading) {
-    return <Spinner />;
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
-
-  if (!feedData || feedData.length === 0) {
-    return <p>No posts available.</p>;
-  }
+  if (loading) return <Spinner />;
+  if (error) return <p>Error: {error}</p>;
+  if (!feedData || feedData.length === 0) return <p>No posts available.</p>;
 
   return (
     <InfiniteScroll dataLength={feedData.length} next={fetchMoreData} hasMore={hasMore} loader={<h4>Loading more posts...</h4>}>
@@ -78,7 +69,7 @@ const FeedPage = () => {
         {feedData.map((item) => (
           <li key={item.id} className={feedStyles.container}>
             <div className={feedStyles.post}>
-              <Link to={`/profile/${item.owner}`} className={feedStyles.username}>
+              <Link to={`/profiles/${item.owner}`} className={feedStyles.username}>
                 {item.owner}
               </Link>
               <img className={feedStyles.img} src={item.image || man} alt={item.caption || "User Avatar"} />
